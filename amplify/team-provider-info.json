@@ -1,0 +1,25 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-fyp-dev-193826-authRole",
+      "UnauthRoleArn": "arn:aws:iam::186359830120:role/amplify-fyp-dev-193826-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::186359830120:role/amplify-fyp-dev-193826-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-fyp-dev-193826-deployment",
+      "UnauthRoleName": "amplify-fyp-dev-193826-unauthRole",
+      "StackName": "amplify-fyp-dev-193826",
+      "StackId": "arn:aws:cloudformation:eu-west-1:186359830120:stack/amplify-fyp-dev-193826/e500f730-2d1d-11ec-a024-06615e7cd019",
+      "AmplifyAppId": "d2fup9zvfzbzm3"
+    },
+    "categories": {
+      "auth": {
+        "fyp25029d85": {
+          "userPoolId": "eu-west-1_AQN8a34Cs",
+          "userPoolName": "FYP-Dev-Pool",
+          "webClientId": "6psb312vf6m4767lus6a2a2ch1",
+          "nativeClientId": "6psb312vf6m4767lus6a2a2ch1"
+        }
+      }
+    }
+  }
+}
