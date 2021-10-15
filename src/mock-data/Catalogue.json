@@ -1,0 +1,17 @@
+{
+    "Catalogue" : {
+        "Products" : [
+            {
+                "ID" : "Int",
+                "Name": "String",
+                "Brand" : "String",               
+                 "Description" : {
+                    "Text" : "String",
+                    "Material" : "String",
+                    "Dimensions" : "String"
+                },
+                "Image" : "IMG"
+            }
+        ]
+    }
+}
