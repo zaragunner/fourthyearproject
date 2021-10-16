@@ -1,7 +1,10 @@
 import { createApp } from 'vue'
+import Vuex from 'vuex'
 import App from './App.vue'
-import './index.css'
 import router from './router/routes.js'
+import store from './store/store.js'
+
+import './index.css'
 
 //Amplify 
 import { 
@@ -19,8 +22,11 @@ import {
 
   
 const app = createApp(App)
-app.use(router)
+app.use(router);
+app.use(store);
+app.use(Vuex);
+
 // add more functionality to myV3App
 
 // now we're ready to mount
-app.mount('#app')
+app.mount('#app');
