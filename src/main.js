@@ -6,6 +6,16 @@ import store from './store/store.js'
 
 import './index.css'
 
+// https://www.npmjs.com/package/@fortawesome/vue-fontawesome
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faUser, faShoppingCart)
+
+
+
+
 //Amplify 
 import { 
     applyPolyfills,
@@ -22,6 +32,7 @@ import {
 
   
 const app = createApp(App)
+app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(router);
 app.use(store);
 app.use(Vuex);

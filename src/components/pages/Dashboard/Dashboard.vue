@@ -1,9 +1,5 @@
 <template>
-    <div> 
-        <span>
-            Nav Bar
-        </span>
-    </div>
+   <Navbar/>
 
     <div>
         <span>
@@ -14,7 +10,11 @@
 </template>
 
 <script> 
+import Navbar from '@/components/nav/NavBar.vue'
 export default {
-    name : 'Dashboard'
+    name : 'Dashboard',
+    components :{
+        Navbar
+    }
 }
 </script>

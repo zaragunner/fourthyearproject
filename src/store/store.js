@@ -22,10 +22,11 @@ const store = new Vuex.Store({
                 confirm(state, showConfirm) {
                     state.confirm = !!showConfirm
                 },
+                
 
             },
             actions: {
-                async login({ dispatch, state }, { email, password }) {
+                async login({ dispatch, state, }, { email, password }) {
                     state.loginError = ''
                     try {
                         await Auth.signIn(email, password)
