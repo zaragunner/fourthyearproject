@@ -1,103 +1,89 @@
 import { Auth } from 'aws-amplify'
 import Vuex from 'vuex'
-
+import router from '@/router/routes.js'
+//reference
+//https://morioh.com/p/33e60f3dbb90
 const store = new Vuex.Store({
     modules: {
         account: {
             namespaced: true,
             state: {
-                authorized: false,
                 user: null,
-                loginError: '',
-                signupError: '',
-                confirm: false,
-                confirmError: '',
+                loginStatus:null,
+               authStatus: false,
                 groups: null
             },
             mutations: {
                 user(state, user) {
-                    state.authorized = !!user && user.attributes && user.attributes.email_verified
-                    state.user = user
+                    state.user = user;
                 },
-                confirm(state, showConfirm) {
-                    state.confirm = !!showConfirm
+                loginStatus(state, error){
+                    state.loginStatus = error;
                 },
-                
+                authStatus(state, status){
+                    state.authStatus = status;
+                },
+
+                groups(state, groups){
+                    state.groups = groups
+                }
 
             },
             actions: {
-                async login({ dispatch, state, }, { email, password }) {
-                    state.loginError = ''
+                async login({commit}, { email, password }) {
+                    commit('loginStatus' , null)
                     try {
-                        await Auth.signIn(email, password)
+                        const user = await Auth.signIn(email, password)
+                            commit('user', user);
+                            commit('authStatus', true)
+                            await store.dispatch('account/fetchUser')
+                            return true;
                     } catch (err) {
                         console.log(`Login Error [${err}]`)
-                        if (err)
-                            state.loginError = err.message || err
-                        return
-                    }
-                    console.log('Login successful!')
-                    await dispatch('fetchUser')
-                },
-                async signup({ commit, state }, { email, password }) {
-                    state.signupError = ''
-                    try {
-                        await Auth.signUp({
-                            username: email,
-                            email: email,
-                            password: password,
-                            attributes: {
-                                email: email,
-                            },
-                            validationData: [],
-                        })
-                        //switch email confirmation form
-                        commit('confirm', true)
-                    } catch (err) {
-                        console.log(`Signup Error [${err}]`)
-                        if (err)
-                            state.signupError = err.message || err
-                        commit('confirm', false)
+                    return false;
                     }
                 },
-                async confirm({ commit, state }, { email, code }) {
-                    state.confirmError = ''
+                
+                async fetchUser({ commit  }) {
                     try {
-                        await Auth.confirmSignUp(email, code, {
-                            forceAliasCreation: true,
-                        })
-                    } catch (err) {
-                        console.log(`Confirm Error [${err}]`)
-                        if (err)
-                            state.confirmError = err.message || err
-                        return
-                    }
-                    commit('confirm', false)
-                },
-                async authState({ commit, dispatch }, state) {
-                    if (state === 'signedIn')
-                        await dispatch('fetchUser')
-                    else
-                        commit('user', null)
-                },
-                async fetchUser({ commit, dispatch }) {
-                    try {
+                       await Auth.currentSession();
+                        commit('authStatus' , true)
                         const user = await Auth.currentAuthenticatedUser()
-                        const expires = user.getSignInUserSession().getIdToken().payload.exp - Math.floor(new Date().getTime() / 1000)
-                        console.log(`Token expires in ${expires} seconds`)
-                        setTimeout(async () => {
-                            console.log('Renewing Token')
-                            await dispatch('fetchUser')
-                        }, expires * 1000)
                         commit('user', user)
+
+                       const token = user.getSignInUserSession().getIdToken().getJwtToken();
+                       localStorage.setItem('JWT', token);
+
+                       console.log('state' + JSON.stringify(store.state.account.authStatus))
+                       return true;
+
                     } catch (err) {
-                        commit('user', null)
+                        await Auth.signOut();
+                        commit('user', null);
+                        localStorage.removeItem('JWT');
+                        commit('authStatus', false);
+
+                        return false;
                     }
                 },
                 async logout({ commit }) {
                     await Auth.signOut()
+                    commit('authStatus', false)
+                    localStorage.removeItem('JWT')
                     commit('user', null)
+                    commit('loginStatus' , null)
+                    router.push('/login')
+                    return true;
+                
                 },
+
+                async getGroups({commit}){
+                    const user =  await Auth.currentAuthenticatedUser();
+                    // Returns an array of groups
+                    const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+                    console.log(groups)
+                    commit('groups', groups)
+                }
 
             },
         }

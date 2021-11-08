@@ -1,20 +1,19 @@
 <template>
-   <Navbar/>
-
+  
     <div>
         <span>
-            Catalogue
+     DASHBOARD CAROUSEL AND PROMOS
         </span>
     </div>
 
 </template>
 
 <script> 
-import Navbar from '@/components/nav/NavBar.vue'
+
 export default {
-    name : 'Dashboard',
+ 
     components :{
-        Navbar
+   
     }
 }
 </script>

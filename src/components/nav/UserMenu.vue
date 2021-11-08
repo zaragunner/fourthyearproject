@@ -15,9 +15,16 @@
                 <MenuItem v-slot="{ active }">
                   <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Settings</a>
                 </MenuItem>
-                <button @click="signOut()">
+              
+                <button  v-if="this.$store.state.account.user" @click="signOut()">
                  SignOut
                 </button>
+                
+             
+                <button  v-if="!this.$store.state.account.user" @click="this.$router.push('/login')">
+                 Sign In / Register
+                </button>
+                
               </MenuItems>
             </transition>
           </Menu>
@@ -38,7 +45,7 @@ export default {
     MenuItem,
     MenuItems,
     },
-    beforeMount(){
+    mounted(){
       this.getUsername()
     },
     methods:{
@@ -47,7 +54,7 @@ export default {
           this.username = store.state.account.user.attributes.name
         }
         else {
-          this.username= 'NO USER';
+          this.username= '';
   
         }
       },

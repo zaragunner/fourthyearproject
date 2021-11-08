@@ -17,9 +17,9 @@
           </div>
           <div class="hidden sm:block sm:ml-6">
             <div class="flex space-x-4">
-             <NavItem name="Dashboard" :current='true' href='/dashboard' />
-             <NavItem name="Catalogue" :current='false' href='/' />
-             <NavItem name="Contact Us" :current='false' href='/' />
+             <router-link to="/">           <NavItem name="Dashboard" :current='active' />    </router-link>
+             <router-link to="catalogue" > <NavItem name="Catalogue" :current='active'/>     </router-link>
+            
              <NavItem v-if="this.$store.state.account.groups =='Admin'" name="Content Management" :current='false' href='/' />
 
             </div>
@@ -50,12 +50,7 @@ import DropCart from '@/components/nav/DropCart.vue'
 import NavItem from '@/components/nav/NavItem.vue'
  
 
-const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Catalogue', href: '#', current: false },
-  { name: 'Contact Us', href: '#', current: false },
-  { name: 'Content Management', href: '#', current: false, permissions: 'admin' },
-]
+
 
 export default {
   components: {
@@ -65,13 +60,10 @@ export default {
     UserMenu,
     DropCart,
     NavItem
-  
-   
-  },
-  setup() {
-    return {
-      navigation,
-    }
-  },
+   },
+   props : {
+     active: Boolean
+   }
+
 }
 </script>
