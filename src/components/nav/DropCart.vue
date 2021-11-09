@@ -9,10 +9,22 @@
           
              <!-- <CartItem/> -->
              <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" v-if="cartOpen">
-                <span> CART ITEM </span>
-                <span> CART ITEM </span>
-                <span> CART ITEM </span>
+               <div>
+                <div v-for="product in this.$store.state.account.cart" :key="product.id">
+                  <span> {{product.name}} </span>
+                </div>
+               </div>
+               <p> Total Price </p>
+               
+                 
+                <button class="bg-gray-700 rounded text-white" @click="clearCart">
+               Clear Cart
+             </button>
+             
              </div>
+
+             
+             
 
                 
             
@@ -29,6 +41,11 @@ export default {
         return {
             cartOpen: false,
         }
+    },
+    methods :{
+      clearCart(){
+        this.$store.dispatch('account/clearCart')
+      }
     }
 
 }

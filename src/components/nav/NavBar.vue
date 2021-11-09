@@ -18,8 +18,7 @@
             <div class="flex space-x-4">
              <router-link to="/">           <NavItem name="Dashboard" :current='active' />    </router-link>
              <router-link to="catalogue" > <NavItem name="Catalogue" :current='active'/>     </router-link>
-            
-             <NavItem v-if="this.$store.state.account.groups =='Admin'" name="Content Management" :current='false' href='/' />
+            <router-link to="/" > <NavItem v-if="this.$store.state.account.groups =='Admin'" name="Content Management" :current='false' /></router-link>
 
             </div>
           </div>

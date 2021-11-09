@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
-  },
+   },
   "dependencies": {
     "@aws-amplify/ui-components": "^1.9.0",
     "@aws-amplify/ui-vue": "^1.1.14",

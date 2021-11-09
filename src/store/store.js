@@ -11,7 +11,8 @@ const store = new Vuex.Store({
                 user: null,
                 loginStatus:null,
                authStatus: false,
-                groups: null
+                groups: null,
+                cart: [],
             },
             mutations: {
                 user(state, user) {
@@ -26,6 +27,12 @@ const store = new Vuex.Store({
 
                 groups(state, groups){
                     state.groups = groups
+                },
+                addToCart(state, product){
+                    state.cart.push(product)
+                },
+                clearCart(state){
+                    state.cart = [];
                 }
 
             },
@@ -83,7 +90,17 @@ const store = new Vuex.Store({
                     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
                     console.log(groups)
                     commit('groups', groups)
+                },
+                
+                async addToCart({commit, state}, product ){
+                    commit('addToCart' , product)
+                    console.log("State.cart " + JSON.stringify(state.cart))
+                },
+
+                async clearCart({commit}){
+                    commit('clearCart')
                 }
+                
 
             },
         }

@@ -27,6 +27,7 @@ const router = createRouter({
 });
 
 router.beforeEach(() => {
+    store.dispatch('account/getGroups')
   store.dispatch('account/fetchUser')
 })
 export default router;

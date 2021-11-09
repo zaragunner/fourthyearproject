@@ -13,7 +13,7 @@
           <p class="mt-1 text-lg font-medium text-gray-900">
             {{ product.price }}
           </p>
-          <button class="bg-gray-800 rounded text-white pr-2 pl-2 pt-1 pb-1">
+          <button class="bg-gray-800 rounded text-white pr-2 pl-2 pt-1 pb-1" @click="addToCart">
             Add to cart
           </button>
           </div>
@@ -37,7 +37,7 @@ export default {
        if(product.id === this.$route.params.id)
       {
         this.product = product;
-        console.log(product)
+        
         break;
       
       }
@@ -45,6 +45,12 @@ export default {
    }
    catch (error){
      console.log(error)
+   }
+ },
+ methods : {
+   addToCart(){
+     this.$store.dispatch('account/addToCart', this.product)
+     console.log("this . prpoduct == " + JSON.stringify(this.product))
    }
  }
 }
