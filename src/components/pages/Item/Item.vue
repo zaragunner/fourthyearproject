@@ -49,7 +49,7 @@ export default {
  },
  methods : {
    addToCart(){
-     this.$store.dispatch('account/addToCart', this.product)
+     this.$store.dispatch('cart/addToCart', this.product)
      console.log("this . prpoduct == " + JSON.stringify(this.product))
    }
  }

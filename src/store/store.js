@@ -28,12 +28,7 @@ const store = new Vuex.Store({
                 groups(state, groups){
                     state.groups = groups
                 },
-                addToCart(state, product){
-                    state.cart.push(product)
-                },
-                clearCart(state){
-                    state.cart = [];
-                }
+               
 
             },
             actions: {
@@ -92,18 +87,47 @@ const store = new Vuex.Store({
                     commit('groups', groups)
                 },
                 
-                async addToCart({commit, state}, product ){
-                    commit('addToCart' , product)
-                    console.log("State.cart " + JSON.stringify(state.cart))
-                },
-
-                async clearCart({commit}){
-                    commit('clearCart')
-                }
-                
-
+               
             },
+        },
+
+        cart : {
+            namespaced: true,
+            state: {
+                cart : [],
+                total: 0
+
+        },
+        mutations :{
+            addToCart(state, product){
+                state.cart.push(product)
+            },
+            clearCart(state){
+                state.cart = [];
+            },
+            addTotal(state , price){
+                state.total += price
+                console.log(state.total)
+            }
+        },
+        actions: {
+            async addToCart({commit}, product ){
+                commit('addToCart' , product)
+                var price = product.price
+                commit('addTotal', price )
+                
+            },
+
+            async clearCart({commit}){
+                commit('clearCart')
+            }
+
+
+            
+            
+
         }
+    }
     }
 });
 

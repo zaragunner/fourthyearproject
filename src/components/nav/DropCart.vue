@@ -8,27 +8,34 @@
             </div>
           
              <!-- <CartItem/> -->
-             <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" v-if="cartOpen">
+             <div class="origin-top-right absolute right-0 mt-2 w-72 rounded-md shadow-lg py-1 pr-2 pl-2 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" v-if="cartOpen">
                <div>
-                <div v-for="product in this.$store.state.account.cart" :key="product.id">
-                  <span> {{product.name}} </span>
+                <div v-for="product in this.$store.state.cart.cart" :key="product.id">
+                  <div class="bg-gray-100 mt-2 p-2 ">
+                    <span class="text-md font-semibold"> {{product.name}} </span>
+                
+                  <span class="ml-4">{{product.price}} </span>
+                </div>
                 </div>
                </div>
-               <p> Total Price </p>
-               
-                 
-                <button class="bg-gray-700 rounded text-white" @click="clearCart">
+               <div class="" v-if="this.$store.state.cart.cart.length>0">
+               <div class="inline-block"> Total Price  </div>
+               <div class="inline-block ml-6"> {{this.$store.state.cart.total}} </div>
+              
+          
+             
+                <button class="block m-2 p-1 bg-gray-800 rounded text-white" @click="clearCart">
                Clear Cart
              </button>
-             
+             <button class="block m-2 p-1 bg-gray-800 rounded text-white">
+               Checkout
+             </button>
+            
+               </div>
+                 </div>
+               
              </div>
 
-             
-             
-
-                
-            
-          </div>
  </template>
 
  <script>
@@ -40,11 +47,22 @@ export default {
     data(){
         return {
             cartOpen: false,
+            price: null
         }
     },
     methods :{
       clearCart(){
-        this.$store.dispatch('account/clearCart')
+        this.$store.dispatch('cart/clearCart')
+      },
+      totalPrice(){
+        if (this.$store.state.cart.cart){
+          var length = this.$store.cart.account.cart.length()
+          for(let i = 0; i <length; i++){
+           var price = 0
+           price += this.$store.state.cart.cart.product[i].price
+           this.price = price
+          }
+        }
       }
     }
 

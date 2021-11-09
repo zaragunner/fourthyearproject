@@ -26,7 +26,7 @@ export default {
        imageSrc : String,
        imageAlt:  String,
        name:  String,
-       price:  String,
+       price:  Number,
        description : String,
        product: Object
     }
