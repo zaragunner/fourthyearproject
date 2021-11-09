@@ -11,7 +11,7 @@
               {{ product.description }}
               </p>
           <p class="mt-1 text-lg font-medium text-gray-900">
-            {{ product.price }}
+            €{{ product.price }}
           </p>
           <button class="bg-gray-800 rounded text-white pr-2 pl-2 pt-1 pb-1" @click="addToCart">
             Add to cart

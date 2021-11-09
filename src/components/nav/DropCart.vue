@@ -14,13 +14,13 @@
                   <div class="bg-gray-100 mt-2 p-2 ">
                     <span class="text-md font-semibold"> {{product.name}} </span>
                 
-                  <span class="ml-4">{{product.price}} </span>
+                  <span class="ml-4">€{{product.price}} </span>
                 </div>
                 </div>
                </div>
                <div class="" v-if="this.$store.state.cart.cart.length>0">
                <div class="inline-block"> Total Price  </div>
-               <div class="inline-block ml-6"> {{this.$store.state.cart.total}} </div>
+               <div class="inline-block ml-6"> €{{this.$store.state.cart.total}} </div>
               
           
              
@@ -43,6 +43,15 @@
 export default {
     components:{
 
+    },
+    created() {
+    try {
+      this.$store.dispatch('cart/checkLocalStorage')
+    }
+    catch{
+      console.log("empty")
+    }
+      
     },
     data(){
         return {

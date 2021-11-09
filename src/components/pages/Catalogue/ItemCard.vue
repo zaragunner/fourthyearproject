@@ -10,7 +10,7 @@
               {{ description }}
               </p>
           <p class="mt-1 text-lg font-medium text-gray-900">
-            {{ price }}
+            €{{ price }}
           </p>
         </router-link>
        

@@ -101,13 +101,18 @@ const store = new Vuex.Store({
         mutations :{
             addToCart(state, product){
                 state.cart.push(product)
+                // var cart = JSON.stringify(state.cart)
+                // localStorage.setItem("Cart" , cart)
             },
             clearCart(state){
                 state.cart = [];
+                // localStorage.removeItem("Cart")
+                state.total = 0
             },
             addTotal(state , price){
                 state.total += price
                 console.log(state.total)
+                // localStorage.setItem("Total" , state.total)
             }
         },
         actions: {
@@ -116,11 +121,14 @@ const store = new Vuex.Store({
                 var price = product.price
                 commit('addTotal', price )
                 
+                
             },
 
             async clearCart({commit}){
                 commit('clearCart')
-            }
+            },
+
+            
 
 
             
