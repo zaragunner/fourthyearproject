@@ -72,9 +72,13 @@ const store = new Vuex.Store({
                     await Auth.signOut()
                     commit('authStatus', false)
                     localStorage.removeItem('JWT')
+                    localStorage.removeItem('Cart')
+                    localStorage.removeItem('Total')
+                    // this.store.dispatch('cart/clearCart')
                     commit('user', null)
                     commit('loginStatus' , null)
                     router.push('/login')
+                    
                     return true;
                 
                 },

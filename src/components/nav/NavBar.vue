@@ -27,8 +27,10 @@
           <!-- cart dropdown -->
        <DropCart class="mr-2"/>
           <!-- Profile dropdown -->
-         <UserMenu/>
-        
+         <UserMenu v-if="this.$store.state.account.user"/>
+         <button class="text-white" v-if="!this.$store.state.account.user" @click="this.$router.push('/login')">
+                 Sign In / Register
+                </button>
         </div>
       </div>
     </div>

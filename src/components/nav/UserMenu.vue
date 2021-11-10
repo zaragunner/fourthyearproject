@@ -21,9 +21,7 @@
                 </button>
                 
              
-                <button  v-if="!this.$store.state.account.user" @click="this.$router.push('/login')">
-                 Sign In / Register
-                </button>
+               
                 
               </MenuItems>
             </transition>
