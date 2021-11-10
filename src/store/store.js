@@ -101,18 +101,19 @@ const store = new Vuex.Store({
         mutations :{
             addToCart(state, product){
                 state.cart.push(product)
-                // var cart = JSON.stringify(state.cart)
-                // localStorage.setItem("Cart" , cart)
+               var cartItems = JSON.stringify(state.cart)
+                localStorage.setItem('Cart', cartItems)
             },
             clearCart(state){
                 state.cart = [];
-                // localStorage.removeItem("Cart")
                 state.total = 0
+                localStorage.removeItem('Cart')
+                localStorage.removeItem('Total')
             },
             addTotal(state , price){
                 state.total += price
                 console.log(state.total)
-                // localStorage.setItem("Total" , state.total)
+                localStorage.setItem('Total' , state.total)
             }
         },
         actions: {
@@ -127,6 +128,27 @@ const store = new Vuex.Store({
             async clearCart({commit}){
                 commit('clearCart')
             },
+
+            async checkLocalStorage ({state}){
+                try{
+                   var total = JSON.parse(localStorage.getItem('Total'))
+                   if(total!= null){
+                    state.total = total
+                   }
+                   else state.toal = 0
+                  
+                   var cart = JSON.parse(localStorage.getItem('Cart'))
+                   if(cart != null){
+                    state.cart = cart
+                   }
+                   
+                }
+                catch
+                {
+                    console.log("ls empty")
+
+                }
+            }
 
             
 
