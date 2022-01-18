@@ -3,6 +3,7 @@
     <div>
         <span>
      DASHBOARD CAROUSEL AND PROMOS
+      
         </span>
     </div>
 
@@ -10,10 +11,16 @@
 
 <script> 
 
+
 export default {
  
     components :{
-   
+           
+    },
+    data() {
+        return {
+        
+        } 
     }
 }
 </script>

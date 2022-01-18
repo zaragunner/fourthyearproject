@@ -1,0 +1,74 @@
+{
+    "title": "Order",
+    "description": "An order placed by a customer",
+    "type": "object",
+    "properties": {
+      "sitePK": {
+        "description": "The unique identifier for the hosted-site which this order was placed on",
+        "type": "integer"
+      },
+      "orderID" : {
+          "description" : "The unique identifier for this order.",
+          "type" : "integer"
+      },
+      "products" : {
+          "description" : "The list of products in the order.",
+          "type" : "object",
+            "properties": {
+              "productId": {
+                "type": "integer"
+              },
+              "productName" : {
+                  "type" : "string"
+              },
+              "quantity" : {
+                  "type" : "string"
+              }
+            }
+        },
+        "delivery_address" :{
+            "description" : "The delivery address for the order",
+            "type" : "object",
+            "properties" : {
+                "line1" :{
+                    "type" : "string"
+                },
+                "line2" :{
+                    "type" : "string"
+                },
+                "line3" :{
+                    "type" : "string"
+                },
+                "postcode":{
+                    "type" : "string"
+                }
+
+            }
+        },
+        "dName" : {
+            "description" : "The name of the recipient of the order",
+            "type" : "string"
+        },
+        "deliveryContactNo" : {
+            "description": "The contact number of the recipient",
+            "type": "string"
+        },
+        "deliveryEmailAddress" : {
+            "description" : "The email adddress of the recipient.",
+            "type": "string"
+
+        },
+        "paymentTotal" : {
+            "description" : "The total amounr payable by the customer",
+            "type" : "string"
+        },
+        "orderStatus" : {
+            "description" : "The status of the customers order ",
+            "type" : "string",
+            "enum": ["processing", "packing", "dispatched", "cancelled", "completed"] 
+
+        }
+
+      }
+     
+}

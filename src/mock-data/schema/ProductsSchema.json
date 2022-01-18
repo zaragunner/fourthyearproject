@@ -1,0 +1,74 @@
+{
+    "title": "Product",
+    "description": "A product in a companies catalogue",
+    "type": "object",
+    "properties": {
+      "sitePK": {
+        "description": "The unique identifier for the hosted-site which this order was placed on",
+        "type": "integer"
+      },
+      "productID" : {
+          "description" : "The unique identifier for this product.",
+          "type" : "integer"
+      },
+      "productName" : {
+          "description" : "The unique name for the product",
+          "type" : "string"
+      },
+      "productDescription" : {
+          "description" : "The description of the product.",
+          "type" : "string"
+      },
+      "price" : {
+          "description" : "The price of the product",
+          "type" : "array",
+          "properties" : {
+            "rrp" : {
+                "description" : "the standard price for the product excluding VAT",
+                "type": "number"
+            },
+            "discountPrice" : {
+                "description" : "The discounted price for the product",
+                "type": "null / number"
+            },
+            "vat" : {
+                "description" : "The value of the rate at which VAT is to be charged for this product",
+                "type" : "number"
+            }
+
+          }
+      },
+      "images" : {
+        "description" : "The images the product",
+        "type" : "array",
+        "properties" : {
+            "thumbnailImage" :{
+                "description" : "The primary image for the product",
+                "type" : "string"
+            },
+            "displayImages" : {
+                "description" : "Array of display images for the product",
+                "type" : "array",
+                "properties":{
+                    "image" : {
+                        "description" : "Individual display image for product.",
+                        "type" : "string"
+                    }
+                }
+            }
+
+        }
+      },
+      "options" : {
+          "description" : "The different sizing / options available for the product",
+          "type" : "array",
+          "properties" : {
+              "option1" :{
+                  "description" : "first size / option available for this product",
+                  "type" : "string"
+              }
+          }
+      }
+
+    }
+}

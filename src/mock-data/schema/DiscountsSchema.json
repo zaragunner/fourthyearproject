@@ -1,0 +1,37 @@
+{
+    "title": "Discount",
+    "description": "A discount to be applied in a store",
+    "type": "object",
+    "properties": {
+      "sitePK": {
+        "description": "The unique identifier for the hosted-site which this discount is to be applied",
+        "type": "integer"
+      },
+      "discountID" : {
+          "description" : "The unique identifier for this discount.",
+          "type" : "integer"
+      },
+      "discountAmount" : {
+          "discription" : "The percentage of the original RRP which the new value will equal",
+          "type" : "number"
+      } ,
+      "products" : {
+          "description" : "The products which the discount will be applied to",
+          "type" : "array" ,
+          "properties" : {
+                "product" : {
+                    "discription" : "The individual product object",
+                    "tyoe" : "object"
+                }
+          }
+      },
+      "validFrom" : {
+          "description" : "Time and Date the discount is valid from",
+          "type" : "string"
+      },
+      "validTo" : {
+        "description" : "Time and Date the discount expires",
+        "type" : "string"
+      }
+    }
+}
