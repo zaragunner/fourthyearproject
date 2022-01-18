@@ -3,7 +3,10 @@ import Vuex from 'vuex'
 import App from './App.vue'
 import router from './router/routes.js'
 import store from './store/store.js'
-
+import PrimeVue from 'primevue/config';
+import 'primevue/resources/primevue.min.css'                //core css
+import 'primeicons/primeicons.css'                           //icons
+import 'primevue/resources/themes/tailwind-light/theme.css'  //tailwind theme
 import './index.css'
 
 // https://www.npmjs.com/package/@fortawesome/vue-fontawesome
@@ -36,6 +39,7 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(router);
 app.use(store);
 app.use(Vuex);
+app.use(PrimeVue)
 
 // add more functionality to myV3App
 

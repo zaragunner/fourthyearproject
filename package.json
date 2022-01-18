@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
-   },
+  },
   "dependencies": {
     "@aws-amplify/ui-components": "^1.9.0",
     "@aws-amplify/ui-vue": "^1.1.14",
@@ -16,6 +16,8 @@
     "@headlessui/vue": "^1.4.1",
     "aws-amplify": "^4.3.2",
     "core-js": "^3.6.5",
+    "primeicons": "^5.0.0",
+    "primevue": "^3.11.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
