@@ -10,7 +10,7 @@
               {{ description }}
               </p>
           <p class="mt-1 text-lg font-medium text-gray-900">
-            {{ price }}
+            €{{ price }}
           </p>
         </router-link>
        
@@ -26,7 +26,7 @@ export default {
        imageSrc : String,
        imageAlt:  String,
        name:  String,
-       price:  String,
+       price:  Number,
        description : String,
        product: Object
     }

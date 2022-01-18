@@ -28,12 +28,7 @@ const store = new Vuex.Store({
                 groups(state, groups){
                     state.groups = groups
                 },
-                addToCart(state, product){
-                    state.cart.push(product)
-                },
-                clearCart(state){
-                    state.cart = [];
-                }
+               
 
             },
             actions: {
@@ -77,9 +72,13 @@ const store = new Vuex.Store({
                     await Auth.signOut()
                     commit('authStatus', false)
                     localStorage.removeItem('JWT')
+                    localStorage.removeItem('Cart')
+                    localStorage.removeItem('Total')
+                    // this.store.dispatch('cart/clearCart')
                     commit('user', null)
                     commit('loginStatus' , null)
                     router.push('/login')
+                    
                     return true;
                 
                 },
@@ -92,18 +91,77 @@ const store = new Vuex.Store({
                     commit('groups', groups)
                 },
                 
-                async addToCart({commit, state}, product ){
-                    commit('addToCart' , product)
-                    console.log("State.cart " + JSON.stringify(state.cart))
-                },
-
-                async clearCart({commit}){
-                    commit('clearCart')
-                }
-                
-
+               
             },
+        },
+
+        cart : {
+            namespaced: true,
+            state: {
+                cart : [],
+                total: 0
+
+        },
+        mutations :{
+            addToCart(state, product){
+                state.cart.push(product)
+               var cartItems = JSON.stringify(state.cart)
+                localStorage.setItem('Cart', cartItems)
+            },
+            clearCart(state){
+                state.cart = [];
+                state.total = 0
+                localStorage.removeItem('Cart')
+                localStorage.removeItem('Total')
+            },
+            addTotal(state , price){
+                state.total += price
+                console.log(state.total)
+                localStorage.setItem('Total' , state.total)
+            }
+        },
+        actions: {
+            async addToCart({commit}, product ){
+                commit('addToCart' , product)
+                var price = product.price
+                commit('addTotal', price )
+                
+                
+            },
+
+            async clearCart({commit}){
+                commit('clearCart')
+            },
+
+            async checkLocalStorage ({state}){
+                try{
+                   var total = JSON.parse(localStorage.getItem('Total'))
+                   if(total!= null){
+                    state.total = total
+                   }
+                   else state.toal = 0
+                  
+                   var cart = JSON.parse(localStorage.getItem('Cart'))
+                   if(cart != null){
+                    state.cart = cart
+                   }
+                   
+                }
+                catch
+                {
+                    console.log("ls empty")
+
+                }
+            }
+
+            
+
+
+            
+            
+
         }
+    }
     }
 });
 
