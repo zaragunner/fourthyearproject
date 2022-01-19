@@ -38,5 +38,15 @@
     "imageSrc": "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg"
     },
     "imageAlt" : "Black machined steel mechanical pencil with brass tip and top."
+  },
+  {
+    "id":"5",
+    "name": "Wrist strap",
+    "href": "#",
+    "price": 15,
+    "images" : {
+    "imageSrc": "https://img.joomcdn.net/d11a737959f4c6afd4df9d51be3ff39d07be00ac_original.jpeg"
+    },
+    "imageAlt": "Fitbit watch straps."
   }
 ]

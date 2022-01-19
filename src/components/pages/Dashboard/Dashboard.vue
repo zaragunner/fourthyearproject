@@ -1,19 +1,67 @@
 <template>
-  
-    <div>
-        <span>
-     DASHBOARD CAROUSEL AND PROMOS
-        </span>
-    </div>
+  <div class="">
+      <div class="p-2 m-2 bg gray-300 text-center">
+          <h3> Todays special offers! </h3>
+          <p> 10% off X range </p>
+      </div>
+  <div class="card w-2/3 mx-auto rounded bg-gray-50 p-4 m-2 ">
+            <Carousel :value="products" :numVisible="2" :numScroll="1" :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" :autoplayInterval="3000">
+                <template #item="slotProps">
+                    <div class="product-item">
+                        <div class=" border-solid bg-white border-2 border-gray-200 rounded m-2 text-center p-4">
+                            <router-link :to="'/'  + slotProps.data.id" :product="product">
+                            <div class="mb-3">
+                                <img :src="slotProps.data.images.imageSrc" :alt="slotProps.data.name" class="product-image" />
+                            </div>
+                            <div>
+                                <h4 class="mb-1">{{slotProps.data.name}}</h4>
+                                <h6 class="mt-0 mb-3">${{slotProps.data.price}}</h6>
+                                <!-- <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span> -->
+                                <div class="car-buttons mt-5">
+                                    <Button icon="pi pi-search" class="p-button p-button-rounded mr-2" />
+                                    <Button icon="pi pi-star-fill" class="p-button-success p-button-rounded mr-2" />
+                                    <Button icon="pi pi-cog" class="p-button-help p-button-rounded" />
+                                </div>
+                            </div>
+                            </router-link>
+                        </div>
+                    </div>
+                </template>
+            </Carousel>
+        </div>
+  </div>
+
 
 </template>
 
 <script> 
+import Carousel from 'primevue/carousel';
+import Button from 'primevue/button'
+ import mockdata from '@/mock-data/Products.json'
 
 export default {
  
     components :{
-   
+            Carousel,
+            Button
+    },
+    data (){
+        return {
+            products: mockdata,
+            responsiveOptions: [
+			
+				{
+					breakpoint: '600px',
+					numVisible: 2,
+					numScroll: 2
+				},
+				{
+					breakpoint: '480px',
+					numVisible: 1,
+					numScroll: 1
+				}
+			]
+        }
     }
 }
 </script>
