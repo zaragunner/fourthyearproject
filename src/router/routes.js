@@ -3,6 +3,7 @@ import Login from '@/components/pages/Auth/Login.vue'
 import Dashboard from '@/components/pages/Dashboard/Dashboard.vue'
 import Catalogue from '@/components/pages/Catalogue/Catalogue.vue'
 import Item from '@/components/pages/Item/Item.vue'
+import Checkout from '@/components/pages/Checkout/Checkout.vue'
 import Main from '@/components/pages/Main.vue'
 import store from '../store/store'
 
@@ -14,6 +15,7 @@ const routes = [
         children: [
             { component: Dashboard,     name: 'Dashboard',        path: '/',            meta: { auth: true } },
              {component : Catalogue,    name: 'Catalogue',        path: '/catalogue'                          },
+            {component: Checkout,       name: 'Checkout',         path: '/checkout'},
             { component: Login,         name: 'Login',            path: '/login',       meta: { auth: false } },
             {component: Item ,          name: 'Item',             path: '/:id'}
       

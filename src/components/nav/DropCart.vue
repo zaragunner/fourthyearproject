@@ -28,9 +28,11 @@
                 <button class="block m-2 p-1 bg-gray-800 rounded text-white" @click="clearCart">
                Clear Cart
              </button>
+             <router-link to='/checkout'>
              <button class="block m-2 p-1 bg-gray-800 rounded text-white">
                Checkout
              </button>
+             </router-link>
             
                </div>
                  </div>
