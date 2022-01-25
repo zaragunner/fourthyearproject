@@ -13,11 +13,11 @@
     },
     "categories": {
       "auth": {
-        "fyp25029d85": {
-          "userPoolId": "eu-west-1_AQN8a34Cs",
-          "userPoolName": "FYP-Dev-Pool",
-          "webClientId": "6psb312vf6m4767lus6a2a2ch1",
-          "nativeClientId": "6psb312vf6m4767lus6a2a2ch1"
+        "fyp4e160f4d": {
+          "userPoolId": "eu-west-1_twdZU9I91",
+          "userPoolName": "FYP-DevPool2",
+          "webClientId": "docod33mci38b9c14ingucvl3",
+          "nativeClientId": "docod33mci38b9c14ingucvl3"
         }
       }
     }

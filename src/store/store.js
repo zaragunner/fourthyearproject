@@ -8,6 +8,7 @@ const store = new Vuex.Store({
         account: {
             namespaced: true,
             state: {
+                tempUser : null,
                 user: null,
                 loginStatus:null,
                authStatus: false,
@@ -17,6 +18,9 @@ const store = new Vuex.Store({
             mutations: {
                 user(state, user) {
                     state.user = user;
+                },
+                tempUser(state, user) {
+                    state.tempUser = user;
                 },
                 loginStatus(state, error){
                     state.loginStatus = error;
@@ -33,6 +37,7 @@ const store = new Vuex.Store({
             },
             actions: {
                 async login({commit}, { email, password }) {
+                    console.log(email , password)
                     commit('loginStatus' , null)
                     try {
                         const user = await Auth.signIn(email, password)
@@ -81,6 +86,38 @@ const store = new Vuex.Store({
                     
                     return true;
                 
+                },
+
+                async register( {username, email, password, name, given_name, family_name, phone_number, address}) {
+                    try {
+                        console.log(username)
+                        console.log( given_name)
+                     const user = await Auth.signUp({
+                           username,
+                            password,
+                            attributes: {
+                                name,
+                                given_name,
+                                family_name,
+                                email,          // optional
+                                phone_number,   // optional - E.164 number convention
+                                address
+                            }
+                        });
+                          console.log(user);
+                    } catch (error) {
+                        console.log('error signing up:', error);
+                    }
+                },
+
+                async verify({commit} , {username, code}) {
+    
+                    try {
+                      const user = await Auth.confirmSignUp(username, code);
+                      commit('tempUser' , user)
+                    } catch (error) {
+                        console.log('error confirming sign up', error);
+                    }
                 },
 
                 async getGroups({commit}){

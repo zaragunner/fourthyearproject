@@ -1,6 +1,6 @@
 {
   "auth": {
-    "fyp25029d85": {
+    "fyp4e160f4d": {
       "service": "Cognito",
       "serviceType": "imported",
       "providerPlugin": "awscloudformation",

@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '@/components/pages/Auth/Login.vue'
+import Register from '@/components/pages/Auth/Register.vue'
+import Verify from '@/components/pages/Auth/Verify.vue'
 import Dashboard from '@/components/pages/Dashboard/Dashboard.vue'
 import Catalogue from '@/components/pages/Catalogue/Catalogue.vue'
 import Item from '@/components/pages/Item/Item.vue'
@@ -15,6 +17,8 @@ const routes = [
             { component: Dashboard,     name: 'Dashboard',        path: '/',            meta: { auth: true } },
              {component : Catalogue,    name: 'Catalogue',        path: '/catalogue'                          },
             { component: Login,         name: 'Login',            path: '/login',       meta: { auth: false } },
+            { component: Register,         name: 'Register',            path: '/register',       meta: { auth: false } },
+            { component: Verify,         name: 'Verify',            path: '/verify',       meta: { auth: false } },
             {component: Item ,          name: 'Item',             path: '/:id'}
       
         ]
