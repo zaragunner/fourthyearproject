@@ -12,7 +12,8 @@
         </div>
         <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
           <div class=" text-white flex-shrink-0 flex items-center">
-            Company Logo
+          <img class="h-8 w-8 " src="@\assets\WIT.jpg"/>
+          
              </div>
           <div class="hidden sm:block sm:ml-6">
             <div class="flex space-x-4">
