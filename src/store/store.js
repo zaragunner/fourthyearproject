@@ -42,11 +42,12 @@ const store = new Vuex.Store({
                     try {
                         const user = await Auth.signIn(email, password)
                             commit('user', user);
+                            console.log(user)
                             commit('authStatus', true)
                             await store.dispatch('account/fetchUser')
                             return true;
                     } catch (err) {
-                        console.log(`Login Error [${err}]`)
+                        console.log(`Error in login func Login Error [${err}]`)
                     return false;
                     }
                 },
@@ -88,7 +89,7 @@ const store = new Vuex.Store({
                 
                 },
 
-                async register( {username, email, password, name, given_name, family_name, phone_number, address}) {
+                async register({commit} ,{username, email, password, name, given_name, family_name, phone_number, address}) {
                     try {
                         console.log(username)
                         console.log( given_name)
@@ -104,6 +105,7 @@ const store = new Vuex.Store({
                                 address
                             }
                         });
+                        commit('tempUser' , user)
                           console.log(user);
                     } catch (error) {
                         console.log('error signing up:', error);
