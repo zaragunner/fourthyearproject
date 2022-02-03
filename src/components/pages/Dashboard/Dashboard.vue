@@ -13,23 +13,31 @@
                             <div class="mb-3">
                                 <img :src="slotProps.data.images.imageSrc" :alt="slotProps.data.name" class="product-image" />
                             </div>
-                            <div>
+                           
+                         </router-link>
+                         <div>
                                 <h4 class="mb-1">{{slotProps.data.name}}</h4>
-                                <h6 class="mt-0 mb-3">${{slotProps.data.price}}</h6>
+                              
+                                <h6 class="mt-0 mb-3">€{{slotProps.data.price}}</h6>
                                 <!-- <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span> -->
                                 <div class="car-buttons mt-5">
-                                    <Button icon="pi pi-search" class="p-button p-button-rounded mr-2" />
+                                    <Button icon="pi pi-shopping-cart"  @click="addToCart(slotProps.data)" class="p-button p-button-rounded mr-2" />
                                     <Button icon="pi pi-star-fill" class="p-button-success p-button-rounded mr-2" />
                                     <Button icon="pi pi-cog" class="p-button-help p-button-rounded" />
                                 </div>
                             </div>
-                            </router-link>
                         </div>
-                    </div>
+                        </div>
+                   
                 </template>
             </Carousel>
         </div>
+  
   </div>
+
+
+
+  
 
 
 </template>
@@ -51,10 +59,16 @@ export default {
             responsiveOptions: [
 			
 				{
-					breakpoint: '600px',
-					numVisible: 2,
-					numScroll: 2
+					breakpoint: '1020px',
+					numVisible: 3,
+					numScroll: 1
 				},
+                {
+					breakpoint: '1280px',
+					numVisible: 3,
+					numScroll: 1
+				},
+
 				{
 					breakpoint: '480px',
 					numVisible: 1,
@@ -62,6 +76,12 @@ export default {
 				}
 			]
         }
-    }
+    },
+     methods : {
+   addToCart(product){
+     this.$store.dispatch('cart/addToCart',product)
+     console.log("this . prpoduct == " + JSON.stringify(product))
+   }
+ }
 }
 </script>

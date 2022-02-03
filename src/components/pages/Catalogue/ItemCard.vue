@@ -12,12 +12,13 @@
           <p class="mt-1 text-lg font-medium text-gray-900">
             €{{ price }}
           </p>
+
+          
         </router-link>
        
 </template>
 
 <script>
-
 export default {
 
     props: {
@@ -29,6 +30,7 @@ export default {
        price:  Number,
        description : String,
        product: Object
-    }
+    },
+    
 }
  </script>

@@ -36,9 +36,22 @@
             </a>
           </div>
         </div>
+<div class=" justify-items-center  ">
 
-        <div>
-          <button @click="signIn()" type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+    <div class="inline-block w-1/2  "> 
+    <router-link to="/register">    
+          <button class=" mx-auto group relative w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+              
+            </span>
+             Register
+   
+          </button>
+          </router-link>
+          </div>
+
+        <div class="inline-block w-1/2  ">
+          <button @click="signIn()" type="submit" class="mx-auto group relative w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               
             </span>
@@ -46,14 +59,16 @@
           </button>
         
         </div>
-      </form>
 
+       
+        
+        
+          </div>
+      </form>
+  
     </div>
-    Register here! 
-    <router-link to="/register">
-      Register
-    </router-link>
-  ]
+
+  
     
      <!-- <amplify-authenticator>
       <div v-if="authState === 'signedin' && user">
@@ -82,9 +97,12 @@
     },
     methods: {
       async signIn(){
+        
        await this.$store.dispatch('account/login', {email: this.email , password: this.password})
        .then(this.$router.push('/'))
+       
       }
+      
     }
  }
  </script>

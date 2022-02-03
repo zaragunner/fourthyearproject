@@ -8,7 +8,7 @@
             </div>
           
              <!-- <CartItem/> -->
-             <div class="origin-top-right absolute right-0 mt-2 w-72 rounded-md shadow-lg py-1 pr-2 pl-2 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" v-if="cartOpen">
+             <div class="origin-top-right absolute right-0 mt-2 w-72 rounded-md shadow-lg py-1 pr-2 pl-2 z-10 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" v-if="cartOpen">
                <div>
                 <div v-for="product in this.$store.state.cart.cart" :key="product.id">
                   <div class="bg-gray-100 mt-2 p-2 ">
@@ -28,7 +28,7 @@
                 <button class="block m-2 p-1 bg-gray-800 rounded text-white" @click="clearCart">
                Clear Cart
              </button>
-             <router-link to='/checkout'>
+             <router-link :to="this.$store.state.account.user ? '/checkout' : '/login' ">
              <button class="block m-2 p-1 bg-gray-800 rounded text-white">
                Checkout
              </button>

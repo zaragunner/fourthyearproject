@@ -13,6 +13,8 @@
           <p class="mt-1 text-lg font-medium text-gray-900">
             €{{ product.price }}
           </p>
+
+           <SelectButton v-model="value" class="mb-2 mt-2" :options="product.options ? product.options : []" optionLabel="name" single />
           <button class="bg-gray-800 rounded text-white pr-2 pl-2 pt-1 pb-1" @click="addToCart">
             Add to cart
           </button>
@@ -20,13 +22,21 @@
     </div>
     
 </template>
+
+
+
 <script>
 
+import SelectButton from 'primevue/selectbutton'
  import mockdata from '@/mock-data/Products.json'
 export default {
+  components : {
+      SelectButton
+    },
    data () {
        return{
-        product: null
+        product: null,
+        value : null,
        }
    },
  async created(){
@@ -46,6 +56,8 @@ export default {
    catch (error){
      console.log(error)
    }
+
+    
  },
  methods : {
    addToCart(){
