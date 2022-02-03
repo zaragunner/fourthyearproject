@@ -9,6 +9,7 @@ import Checkout from '@/components/pages/Checkout/Checkout.vue'
 import ContentMangement from '@/components/pages/Admin/ContentManagement.vue'
 import Main from '@/components/pages/Main.vue'
 import store from '../store/store'
+import EditItem from '@/components/pages/Admin/EditItem.vue'
 
 const routes = [
     {
@@ -23,7 +24,8 @@ const routes = [
             { component: Register,         name: 'Register',            path: '/register',       meta: { auth: false } },
             { component: Verify,         name: 'Verify',            path: '/verify',       meta: { auth: false } },
             {component: Item ,          name: 'Item',             path: '/:id'},
-            {component: ContentMangement, name:'Content Management' , path:'/contentmanagement' }
+            {component: ContentMangement, name:'Content Management' , path:'/contentmanagement' },
+            {component: EditItem ,          name: 'EditItem',             path: '/edititem/:id'},
       
         ]
     }

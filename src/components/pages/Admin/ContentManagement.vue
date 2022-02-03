@@ -1,8 +1,6 @@
 <template>
     <div class="bg-gray-200 w-11/12 mx-auto p-4 m-2 ">
-    <button class="p-2 m-2 bg-gray-700 text-white rounded" > Edit Items </button>
-    <button class="p-2 m-2 bg-gray-700 text-white rounded" > Delete Items </button>
-    <button class="p-2 m-2 bg-gray-700 text-white rounded" > Apply Discount </button>
+
 
       <DataTable 
       class="p-datatable-sm"
@@ -24,9 +22,34 @@
      :sortField="sortField"
       >
 
-      <div class="col-6" style="text-align: left">
+ <template #header>
+                   <h5 class="m-1">Catologue Management </h5>
+                    <Toolbar>
+    <template #start>
+         
+        <span class="m-2 block p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText v-model="filters['global'].value"  placeholder="Keyword Search" />
+                    </span>
+
+                     <div class="m-2 block col-6" style="text-align: left">
                         <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By Category" @change="onSortChange($event)"/>
                     </div>
+    </template>
+
+    <template #end>
+         
+            <button class="p-2 m-2 bg-gray-700 text-white rounded" > Delete Items </button>
+            <button class="p-2 m-2 bg-gray-700 text-white rounded" > Apply Discount </button>
+            <button class="p-2 m-2 bg-gray-700 text-white rounded" > Add New Items </button>
+    </template>
+</Toolbar>
+               
+                    
+                    
+                
+            </template>
+     
 
         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
     
@@ -56,18 +79,24 @@
                 </template>
             </Column>
 
-             <Column field="price" header="Price" sortable style="min-width: 14rem">
+             <Column  style="min-width:8rem" field="price" header="Price" sortable >
                 <template #body="{data}">
                   €{{data.price}}
                 </template>
             </Column>
 
-             <Column field="image" header="" style="min-width: 14rem">
+             <Column field="image" header="" style="min-width: 8rem">
                 <template #body="{data}">
                    <img class="w-24 h-24" :src="data.images.imageSrc"/>
                 </template>
              </Column>
 
+  <Column style="min-width:5rem">
+                <template #body="{data}">
+                  <router-link  :to="`/edititem/${data.id}`" > <button class="p-2 m-2 bg-gray-700 text-white rounded" > Edit </button> </router-link>
+                </template>
+             </Column>
+  
              
       </DataTable>
 	</div>
@@ -75,16 +104,20 @@
 
 <script>
 import DataTable from 'primevue/datatable'
-
+import InputText from 'primevue/inputtext'
 import Column from 'primevue/column'
  import mockdata from '@/mock-data/Products.json'
  import Dropdown from 'primevue/dropdown'
+ import {FilterMatchMode} from 'primevue/api';
+import Toolbar from 'primevue/toolbar';
 
 export default {
     components: {
         DataTable,
         Column,
-        Dropdown
+        Dropdown,
+        InputText,
+        Toolbar
     },
     data() {
         return {
@@ -97,7 +130,10 @@ export default {
             sortOptions: [
                 {label: 'Price High to Low', value: '!price'},
                 {label: 'Price Low to High', value: 'price'},
-            ]
+            ],
+              filters: {
+                'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
+              }
         }
     },
     methods: {

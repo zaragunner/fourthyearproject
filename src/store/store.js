@@ -85,6 +85,7 @@ const store = new Vuex.Store({
                     // this.store.dispatch('cart/clearCart')
                     commit('user', null)
                     commit('loginStatus' , null)
+                    commit('groups', null)
                     router.push('/login')
                     
                     return true;
