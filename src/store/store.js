@@ -45,6 +45,7 @@ const store = new Vuex.Store({
                             console.log(user)
                             commit('authStatus', true)
                             await store.dispatch('account/fetchUser')
+                            .then(await store.dispatch('account/getGroups'))
                             return true;
                     } catch (err) {
                         console.log(`Error in login func Login Error [${err}]`)
@@ -80,6 +81,7 @@ const store = new Vuex.Store({
                     localStorage.removeItem('JWT')
                     localStorage.removeItem('Cart')
                     localStorage.removeItem('Total')
+                    await store.dispatch('cart/clearCart')
                     // this.store.dispatch('cart/clearCart')
                     commit('user', null)
                     commit('loginStatus' , null)

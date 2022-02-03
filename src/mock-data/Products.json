@@ -4,6 +4,7 @@
     "name": "Earthen Bottle",
     "href": "#",
     "price": 48,
+    "options" :[{"name" : "Large"} , {"name" : "Small"}],
     "images" : {
     "imageSrc": "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg"
     },

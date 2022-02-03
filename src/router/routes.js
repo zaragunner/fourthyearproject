@@ -6,6 +6,7 @@ import Dashboard from '@/components/pages/Dashboard/Dashboard.vue'
 import Catalogue from '@/components/pages/Catalogue/Catalogue.vue'
 import Item from '@/components/pages/Item/Item.vue'
 import Checkout from '@/components/pages/Checkout/Checkout.vue'
+import ContentMangement from '@/components/pages/Admin/ContentManagement.vue'
 import Main from '@/components/pages/Main.vue'
 import store from '../store/store'
 
@@ -21,7 +22,8 @@ const routes = [
             { component: Login,         name: 'Login',            path: '/login',       meta: { auth: false } },
             { component: Register,         name: 'Register',            path: '/register',       meta: { auth: false } },
             { component: Verify,         name: 'Verify',            path: '/verify',       meta: { auth: false } },
-            {component: Item ,          name: 'Item',             path: '/:id'}
+            {component: Item ,          name: 'Item',             path: '/:id'},
+            {component: ContentMangement, name:'Content Management' , path:'/contentmanagement' }
       
         ]
     }
