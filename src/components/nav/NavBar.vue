@@ -35,12 +35,14 @@
         </div>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
           <!-- cart dropdown -->
-       <DropCart class="mr-2"/>
+      
           <!-- Profile dropdown -->
          <UserMenu v-if="this.$store.state.account.user"/>
-         <button class="text-white" v-if="!this.$store.state.account.user" @click="this.$router.push('/login')">
-                 Sign In / Register
+         <button class="text-gray-200" v-if="!this.$store.state.account.user" @click="this.$router.push('/login')">
+                <i class="pi pi-user" style="font-size: 1.5rem"></i>
                 </button>
+
+                 <DropCart class="mr-2"/>
         </div>
       </div>
     </div>
@@ -51,6 +53,7 @@
       </div>
     </DisclosurePanel>
   </Disclosure>
+  <div class="w-full bg-red-400 font-bold text-center" v-if="this.$store.state.account.groups == 'Admin' ">Please note you are in admin mode </div>
 </template>
 
 <script>
