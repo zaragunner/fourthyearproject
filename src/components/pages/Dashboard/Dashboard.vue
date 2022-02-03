@@ -4,12 +4,12 @@
           <h3> Todays special offers! </h3>
           <p> 10% off X range </p>
       </div>
-  <div class="card w-2/3 mx-auto rounded bg-gray-50 p-4 m-2 ">
+  <div class="card  w-2/3 mx-auto rounded bg-gray-50 p-4 m-2 ">
             <Carousel :value="products" :numVisible="2" :numScroll="1" :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" :autoplayInterval="3000">
                 <template #item="slotProps">
-                    <div class="product-item">
-                        <div class=" border-solid bg-white border-2 border-gray-200 rounded m-2 text-center p-4">
-                            <router-link :to="'/'  + slotProps.data.id" :product="product">
+                    <div class=" product-item">
+                        <div class=" h-96 border-solid bg-white border-2 border-gray-200 rounded m-2 text-center p-4">
+                            <router-link :to="'/'  + slotProps.data.id" >
                             <div class="mb-3">
                                 <img :src="slotProps.data.images.imageSrc" :alt="slotProps.data.name" class="product-image" />
                             </div>
@@ -21,9 +21,8 @@
                                 <h6 class="mt-0 mb-3">€{{slotProps.data.price}}</h6>
                                 <!-- <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span> -->
                                 <div class="car-buttons mt-5">
-                                    <Button icon="pi pi-shopping-cart"  @click="addToCart(slotProps.data)" class="p-button p-button-rounded mr-2" />
-                                    <Button icon="pi pi-star-fill" class="p-button-success p-button-rounded mr-2" />
-                                    <Button icon="pi pi-cog" class="p-button-help p-button-rounded" />
+                                    <Button icon="pi pi-shopping-cart"  @click="addToCart(slotProps.data)" class="p-button h-8 w-8 p-button-rounded mr-2" />
+                        
                                 </div>
                             </div>
                         </div>
@@ -44,14 +43,14 @@
 
 <script> 
 import Carousel from 'primevue/carousel';
-import Button from 'primevue/button'
+// import Button from 'primevue/button'
  import mockdata from '@/mock-data/Products.json'
 
 export default {
  
     components :{
             Carousel,
-            Button
+            // Button
     },
     data (){
         return {

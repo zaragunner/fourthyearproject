@@ -1,4 +1,5 @@
 <template>
+<Toast/>
     <div class="flex space-x-4">
   <div class="flex-1 w-2/3 aspect-w-1 aspect-h-1  bg-red-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
             <img :src="product.images.imageSrc" :alt="product.imageAlt" class="w-full h-full object-center object-cover group-hover:opacity-75" />
@@ -26,12 +27,13 @@
 
 
 <script>
-
+import Toast from 'primevue/toast';
 import SelectButton from 'primevue/selectbutton'
  import mockdata from '@/mock-data/Products.json'
 export default {
   components : {
-      SelectButton
+      SelectButton,
+      Toast
     },
    data () {
        return{
@@ -63,6 +65,8 @@ export default {
    addToCart(){
      this.$store.dispatch('cart/addToCart', this.product)
      console.log("this . prpoduct == " + JSON.stringify(this.product))
+     this.$toast.add({severity:'success', summary: 'Item added to cart', life: 1500});
+     
    }
  }
 }
