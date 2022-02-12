@@ -38,19 +38,11 @@
         </div>
 <div class=" justify-items-center  ">
 
-    <div class="inline-block w-1/2  "> 
-    <router-link to="/register">    
-          <button class=" mx-auto group relative w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-              
-            </span>
-             Register
-   
-          </button>
-          </router-link>
-          </div>
 
-        <div class="inline-block w-1/2  ">
+    
+          
+
+        <div class="inline-block w-full  ">
           <button @click="signIn()" type="submit" class="mx-auto group relative w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               

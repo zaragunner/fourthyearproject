@@ -14,8 +14,9 @@
           <p class="mt-1 text-lg font-medium text-gray-900">
             €{{ product.price }}
           </p>
-
-           <SelectButton v-model="value" class="mb-2 mt-2" :options="product.options ? product.options : []" optionLabel="name" single />
+  
+          <Dropdown v-model="value" :options="this.options? this.options : ['One Size']"  :optionLabel="this.options ? this.options.name : 'One Size'" optionValue="name"  placeholder="Select a Size" />
+           <!-- <SelectButton v-model="value" class="mb-2 mt-2" :options="product.options ? product.options : []" optionLabel="name" single /> -->
           <button class="bg-gray-800 rounded text-white pr-2 pl-2 pt-1 pb-1" @click="addToCart">
             Add to cart
           </button>
@@ -28,17 +29,20 @@
 
 <script>
 import Toast from 'primevue/toast';
-import SelectButton from 'primevue/selectbutton'
+// import SelectButton from 'primevue/selectbutton'
+import Dropdown from 'primevue/dropdown'
  import mockdata from '@/mock-data/Products.json'
 export default {
   components : {
-      SelectButton,
-      Toast
+      // SelectButton,
+      Toast,
+      Dropdown
     },
    data () {
        return{
         product: null,
         value : null,
+        options : []
        }
    },
  async created(){
@@ -55,9 +59,12 @@ export default {
       }
      }
    }
-   catch (error){
+    catch (error){
      console.log(error)
    }
+
+    this.options = this.product.options;
+  
 
     
  },

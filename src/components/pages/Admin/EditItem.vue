@@ -9,9 +9,15 @@
               <span class="inline-block mr-4 mt-2 w-32  "> Name </span>
              <InputText  class="inline-block p-inputtext-sm" type="text" v-model="name" />
               </div>
-             <div class=" mt-2 ">
+             <div class=" inline-block bg-red-500 mt-2 ">
               <span class="inline-block mr-4 mt-2 w-32  "> Description </span>
+             </div>
+             <div class="inline-block bg-blue-600">
               <TextArea v-model="description" :autoResize="true" rows="5" cols="30" />
+              </div>
+                <div class=" mt-2 ">
+              <span class="inline-block mr-4 mt-2 w-32  "> Category </span>
+             <InputText  class="inline-block p-inputtext-sm" type="text" v-model="category" />
               </div>
               <div class=" mt-2 ">
              <span class="inline-block mr-4 w-32 "> Price </span>
@@ -53,6 +59,7 @@ export default {
         value : null,
         name : String,
         description : String,
+        category : String,
         price : String,
         options: [ ]
 
@@ -69,6 +76,7 @@ export default {
         this.name = product.name
         this.description = product.imageAlt
         this.price = product.price
+        this.category = 'TODO'
         const options = product.options
         var opt = []
         options.forEach(option => {

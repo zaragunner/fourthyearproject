@@ -10,6 +10,7 @@ import ContentMangement from '@/components/pages/Admin/ContentManagement.vue'
 import Main from '@/components/pages/Main.vue'
 import store from '../store/store'
 import EditItem from '@/components/pages/Admin/EditItem.vue'
+import AddItem from '@/components/pages/Admin/AddItem.vue'
 
 const routes = [
     {
@@ -26,6 +27,7 @@ const routes = [
             {component: Item ,          name: 'Item',             path: '/:id'},
             {component: ContentMangement, name:'Content Management' , path:'/contentmanagement' },
             {component: EditItem ,          name: 'EditItem',             path: '/edititem/:id'},
+            {component: AddItem ,          name: 'AddItem',             path: '/addItem'},
       
         ]
     }

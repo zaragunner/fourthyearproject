@@ -19,11 +19,11 @@
             <div class="flex space-x-4">
 
              <router-link to="/"> 
-                <NavItem  name="Dashboard" :current='active' /> 
+                <NavItem  name="Dashboard" v-if="this.$store.state.account.groups =='Public'" :current='active' /> 
              </router-link>
 
-             <router-link to="catalogue" >
-                <NavItem  name="Catalogue" :current='active'/>  
+             <router-link to="/catalogue" >
+                <NavItem v-if="this.$store.state.account.groups =='Public'"  name="Catalogue" :current='active'/>  
                </router-link>
 
             <router-link to="/contentmanagement" >
@@ -38,29 +38,25 @@
       
           <!-- Profile dropdown -->
          <UserMenu v-if="this.$store.state.account.user"/>
-         <button class="text-gray-200" v-if="!this.$store.state.account.user" @click="this.$router.push('/login')">
-                <i class="pi pi-user" style="font-size: 1.5rem"></i>
-                </button>
+        <SigninMenu v-if="!this.$store.state.account.user" />
+        
+              
 
-                 <DropCart class="mr-2"/>
+                 <DropCart v-if="this.$store.state.account.groups =='Public' " class="mr-2"/>
         </div>
       </div>
     </div>
 
-    <DisclosurePanel class="sm:hidden">
-      <div class="px-2 pt-2 pb-3 space-y-1">
-        <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block px-3 py-2 rounded-md text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</a>
-      </div>
-    </DisclosurePanel>
   </Disclosure>
   <div class="w-full bg-red-400 font-bold text-center" v-if="this.$store.state.account.groups == 'Admin' ">Please note you are in admin mode </div>
 </template>
 
 <script>
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
+import { Disclosure, DisclosureButton } from '@headlessui/vue'
 import UserMenu from '@/components/nav/UserMenu.vue'
 import DropCart from '@/components/nav/DropCart.vue'
 import NavItem from '@/components/nav/NavItem.vue'
+import SigninMenu from '@/components/nav/SigninMenu.vue'
  
 
 
@@ -69,10 +65,11 @@ export default {
   components: {
     Disclosure,
     DisclosureButton,
-    DisclosurePanel,
+    // DisclosurePanel,
     UserMenu,
     DropCart,
-    NavItem
+    NavItem,
+    SigninMenu
    },
    props : {
      active: Boolean

@@ -38,10 +38,11 @@
     </template>
 
     <template #end>
-         
-            <button class="p-2 m-2 bg-gray-700 text-white rounded" > Delete Items </button>
+          
+               
+            <button class="p-2 m-2 bg-gray-700 text-white rounded" @click="deleteItems()" > Delete Items </button>
             <button class="p-2 m-2 bg-gray-700 text-white rounded" > Apply Discount </button>
-            <button class="p-2 m-2 bg-gray-700 text-white rounded" > Add New Items </button>
+              <router-link  :to="`/addItem`" ><button class="p-2 m-2 bg-gray-700 text-white rounded" > Add New Items </button></router-link>
     </template>
 </Toolbar>
                
@@ -93,7 +94,7 @@
 
   <Column style="min-width:5rem">
                 <template #body="{data}">
-                  <router-link  :to="`/edititem/${data.id}`" > <button class="p-2 m-2 bg-gray-700 text-white rounded" > Edit </button> </router-link>
+                  <router-link  :to="`/edititem/${data.id}`" ><i class="pi pi-pencil text-white rounded p-2 hover:bg-gray-500 bg-gray-300" style="font-size: 1rem"></i> </router-link>
                 </template>
              </Column>
   
@@ -151,6 +152,9 @@ export default {
                 this.sortField = value;
                 this.sortKey = sortValue;
             }
+        },
+        delteItems(){
+
         }
     }
 }
