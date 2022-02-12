@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "nodemon --exec babel-node index.js"
   },
   "dependencies": {
     "@aws-amplify/ui-components": "^1.9.0",
@@ -15,7 +16,12 @@
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "@headlessui/vue": "^1.4.1",
     "aws-amplify": "^4.3.2",
+    "body-parser": "^1.19.1",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "morgan": "^1.10.0",
     "primeicons": "^5.0.0",
     "primevue": "^3.11.0",
     "vue": "^3.0.0",
@@ -28,9 +34,12 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "autoprefixer": "^9.8.8",
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^10.1.0",
+    "babel-preset-env": "^1.7.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
+    "nodemon": "^2.0.15",
     "postcss": "^7.0.39",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16"
   },
