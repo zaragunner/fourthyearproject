@@ -32,9 +32,8 @@
 </template>
 
 <script>
-
- import mockdata from '@/mock-data/Products.json'
  import Item from './ItemCard.vue'
+ import { getProducts } from "../../../../api/products/products-api.js";
 
 export default {
     components: {
@@ -45,11 +44,15 @@ export default {
     },
     data (){
     return{
-        products: mockdata
+      products: null
     }
     },
-    created(){
-        
+    async created(){
+
+     getProducts().then(result => {
+      this.products = result;
+      
+    })
     }
 
 }

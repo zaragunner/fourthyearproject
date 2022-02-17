@@ -1,5 +1,6 @@
 
 import express from 'express';
+import uniqid from 'uniqid'
 import { products , productDetails } from './productsData';
 
 const router = express.Router(); 
@@ -18,5 +19,16 @@ router.get('/:id', (req, res) => {
         });
     }
 })
+
+//Post a movie review
+router.post('/addNew', (req, res) => {
+        req.body.created_at = new Date();
+        req.body.updated_at = new Date();
+        req.body.id = uniqid();
+        products.push(req.body); //push the new review onto the list
+        res.status(201).json(req.body);
+        });
+
+
 
 export default router;
