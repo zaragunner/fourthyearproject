@@ -86,6 +86,23 @@ export default {
             this.$toast.add({severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000});
         },
         addItem(){
+          {
+  		"product_id": this.product_id,
+		"site_id": this.site_id,
+        "description": this.description,
+        "category_id": this.category_id,
+        "sub_category_id": this.sub_category_id,
+        "price" : {
+      "netprice" : this.netprice,
+      "vat_id" : vat_id,
+      "discount_price" : this.discount
+        },
+        "images"  :{
+      "thumbnail" :this.thumbnail
+  },
+        "options" : this.options
+        
+}
             
         }
     }

@@ -3,15 +3,15 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
-  product_id: { type: Int, unique: true, required: true},
-  site_id: { type: Int, required: true},
+  product_id: { type: Number, unique: true, required: true},
+  site_id: { type: Number, required: true},
   description: {type: String, required: true },
-  category_id: { type: Int, required: true},
-  sub_category_id: { type: Int, required: true},
+  category_id: { type: Number, required: true},
+  sub_category_id: { type: Number, required: true},
   price : {
-      netprice : {type: Int, required: true},
-      vat_id : {type: Int , required:true},
-      discount_price : { type: Int}
+      netprice : {type: Number, required: true},
+      vat_id : {type: Number , required:true},
+      discount_price : { type: Number}
   },
   images :{
       thumbnail : { type:String , required: true},
