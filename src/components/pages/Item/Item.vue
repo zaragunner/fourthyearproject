@@ -2,7 +2,7 @@
 <Toast/>
     <div class="flex space-x-4">
   <div class="flex-1 w-2/3 aspect-w-1 aspect-h-1  bg-red-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
-            <img :src="product.images.imageSrc" :alt="product.imageAlt" class="w-full h-full object-center object-cover group-hover:opacity-75" />
+            <!-- <img :src="product.images.thumbnail" :alt="product.description" class="w-full h-full object-center object-cover group-hover:opacity-75" /> -->
           </div>
           <div class="flex-1 w-1/4">
           <h3 class="mt-4 mx-auto text-sm text-gray-700">
@@ -12,7 +12,7 @@
               {{ product.description }}
               </p>
           <p class="mt-1 text-lg font-medium text-gray-900">
-            €{{ product.price }}
+            €{{ product.price.netprice }}
           </p>
   
           <Dropdown v-model="value" :options="this.options? this.options : ['One Size']"  :optionLabel="this.options ? this.options.name : 'One Size'" optionValue="name"  placeholder="Select a Size" />
@@ -31,7 +31,8 @@
 import Toast from 'primevue/toast';
 // import SelectButton from 'primevue/selectbutton'
 import Dropdown from 'primevue/dropdown'
- import mockdata from '@/mock-data/Products.json'
+
+ import { getProducts } from "../../../../api/products/products-api.js";
 export default {
   components : {
       // SelectButton,
@@ -46,24 +47,25 @@ export default {
        }
    },
  async created(){
-   try {
-     const json = mockdata
+  //  try {
+  //    const json = mockdata
   
-     for (const product of json){  
-       if(product.id === this.$route.params.id)
-      {
-        this.product = product;
+  //    for (const product of json){  
+  //      if(product.id === this.$route.params.id)
+  //     {
+  //       this.product = product;
         
-        break;
+  //       break;
       
-      }
-     }
-   }
-    catch (error){
-     console.log(error)
-   }
+  //     }
+  //    }
+  //  }
+  //   catch (error){
+  //    console.log(error)
+  //  }
 
-    this.options = this.product.options;
+  //   this.options = this.product.options;
+  
   
 
     

@@ -24,7 +24,7 @@
 
       <div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         <div v-for="product in products" :key="product.id">
-          <Item :product="product" :id="product.id" :name="product.name" :href="product.href" :price="product.price" :imageSrc="product.images.imageSrc" :description="product.imageAlt" />
+          <Item :product="product" :id="product.product_id" :name="product.name" :href="product.href" :price="product.price.netprice" :imageSrc="product.images.thumbnail" :description="product.description" />
         </div>
       </div>
     </div>

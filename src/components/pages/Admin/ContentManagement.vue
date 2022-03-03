@@ -53,7 +53,11 @@
      
 
         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-    
+           <Column field="image" header="" style="min-width: 8rem">
+                <template #body="{data}">
+                   <img class="w-24 h-24" :src="data.images.thumbnail"/>
+                </template>
+             </Column>
         <Column field="name" header="Name" sortable style="min-width: 14rem">
                 <template #body="{data}">
                     {{data.name}}
@@ -65,8 +69,8 @@
 
 
             <Column field="category" header="Category" sortable style="min-width: 14rem">
-                <template #body="{}">
-                  category
+                <template #body="{data}">
+                  {{data.category_id}}
                 </template>
                 <template #filter="{filterModel}">
                     <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by category"/>
@@ -76,25 +80,21 @@
             
             <Column field="description" header="Description"  style="min-width: 14rem">
                 <template #body="{data}">
-                  {{data.imageAlt}}
+                  {{data.description}}
                 </template>
             </Column>
 
              <Column  style="min-width:8rem" field="price" header="Price" sortable >
                 <template #body="{data}">
-                  €{{data.price}}
+                  €{{data.price.netprice}}
                 </template>
             </Column>
 
-             <Column field="image" header="" style="min-width: 8rem">
-                <template #body="{data}">
-                   <img class="w-24 h-24" :src="data.images.imageSrc"/>
-                </template>
-             </Column>
+      
 
   <Column style="min-width:5rem">
                 <template #body="{data}">
-                  <router-link  :to="`/edititem/${data.id}`" ><i class="pi pi-pencil text-white rounded p-2 hover:bg-gray-500 bg-gray-300" style="font-size: 1rem"></i> </router-link>
+                  <router-link  :to="`/edititem/${data.product_id}`" ><i class="pi pi-pencil text-white rounded p-2 hover:bg-gray-500 bg-gray-300" style="font-size: 1rem"></i> </router-link>
                 </template>
              </Column>
   
@@ -108,6 +108,7 @@ import DataTable from 'primevue/datatable'
 import InputText from 'primevue/inputtext'
 import Column from 'primevue/column'
  import mockdata from '@/mock-data/Products.json'
+ import { getProducts } from "../../../../api/products/products-api.js";
  import Dropdown from 'primevue/dropdown'
  import {FilterMatchMode} from 'primevue/api';
 import Toolbar from 'primevue/toolbar';
@@ -122,7 +123,7 @@ export default {
     },
     data() {
         return {
-            products: mockdata,
+            products: null,
             selectedProducts: null,
             layout: 'grid',
             sortKey: null,
@@ -136,6 +137,13 @@ export default {
                 'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
               }
         }
+    },
+    async created(){
+
+     getProducts().then(result => {
+      this.products = result;
+      
+    })
     },
     methods: {
         onSortChange(event){
