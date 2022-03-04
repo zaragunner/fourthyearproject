@@ -16,15 +16,7 @@
           v-model="product_id"
         />
       </div>
-       <div class="mt-2">
-        <span class="inline-block mr-4 mt-2 w-32"> Site ID </span>
-        <InputText
-          class="inline-block p-inputtext-sm"
-          type="text"
-          placeholder="Site ID"
-          v-model="site_id"
-        />
-      </div>
+       
       <div class="mt-2">
         <span class="inline-block mr-4 mt-2 w-32"> Name </span>
         <InputText
@@ -56,7 +48,7 @@
         />
       </div>
        <div class="mt-2">
-        <span class="inline-block mr-4 mt-2 w-32"> Category </span>
+        <span class="inline-block mr-4 mt-2 w-32"> Sub Category </span>
         <InputText
           class="inline-block p-inputtext-sm"
           type="text"
@@ -101,7 +93,7 @@
             class="inline-block"
             name="demo[]"
             url="./upload.php"
-            @upload="onUpload"
+         
             :multiple="false"
             accept="image/*"
             :maxFileSize="1000000"
@@ -132,6 +124,7 @@ import TextArea from "primevue/textarea";
 import FileUpload from "primevue/fileupload";
 import { addProduct } from "../../../../api/products/products-api.js";
 
+
 export default {
   components: {
     //   SelectButton,
@@ -142,8 +135,8 @@ export default {
   },
   data() {
     return {
+      site_id: process.env.VUE_APP_SITEID,
       product_id: null,
-      site_id: null,
       name: null,
       description: null,
       category_id: null,
@@ -154,7 +147,9 @@ export default {
       options: null,
     };
   },
-  async created() {},
+  async created() {
+  console.log(this.site_id)
+  },
   methods: {
     // onUpload(file) {
     //   this.$toast.add({
@@ -172,7 +167,7 @@ export default {
  
       const result = await addProduct({
         product_id: parseInt(this.product_id),
-        site_id: parseInt(this.site_id),
+        site_id: this.site_id,
         name: this.name,
         description: this.description,
         category_id: parseInt(this.category_id),
