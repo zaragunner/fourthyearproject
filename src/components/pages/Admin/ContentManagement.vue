@@ -1,4 +1,5 @@
 <template>
+<Toast/>
     <div class="bg-gray-200 w-11/12 mx-auto p-4 m-2 ">
 
 
@@ -7,9 +8,9 @@
       :value="products" 
       :paginator="true" 
       :rows="10"
-      dataKey="id" 
+      dataKey="product_id" 
       :rowHover="true" 
-      v-model:selection="selectedProducts" 
+      v-model:selection="selectedProduct" 
       v-model:filters="filters" 
       filterDisplay="menu" 
       :loading="loading"
@@ -20,10 +21,11 @@
       responsiveLayout="scroll"
       :sortOrder="sortOrder"
      :sortField="sortField"
+     @rowSelect="onRowSelect"
       >
 
  <template #header>
-                   <h5 class="m-1">Catologue Management </h5>
+                   <h5 class="m-1">Catalogue Management </h5>
                     <Toolbar>
     <template #start>
          
@@ -52,7 +54,7 @@
             </template>
      
 
-        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+        <Column selectionMode="single" headerStyle="width: 3rem"></Column>
            <Column field="image" header="" style="min-width: 8rem">
                 <template #body="{data}">
                    <img class="w-24 h-24" :src="data.images.thumbnail"/>
@@ -107,8 +109,9 @@
 import DataTable from 'primevue/datatable'
 import InputText from 'primevue/inputtext'
 import Column from 'primevue/column'
+import Toast from 'primevue/toast';
  import mockdata from '@/mock-data/Products.json'
- import { getProducts } from "../../../../api/products/products-api.js";
+ import { getProducts,  deleteProduct } from "../../../../api/products/products-api.js";
  import Dropdown from 'primevue/dropdown'
  import {FilterMatchMode} from 'primevue/api';
 import Toolbar from 'primevue/toolbar';
@@ -119,12 +122,13 @@ export default {
         Column,
         Dropdown,
         InputText,
-        Toolbar
+        Toolbar,
+        Toast
     },
     data() {
         return {
             products: null,
-            selectedProducts: null,
+            selectedProduct: null,
             layout: 'grid',
             sortKey: null,
             sortOrder: null,
@@ -161,8 +165,22 @@ export default {
                 this.sortKey = sortValue;
             }
         },
-        delteItems(){
-
+        onRowSelect(){
+            console.log(this.selectedProduct)
+        },
+       async deleteItems(){
+                await deleteProduct(this.selectedProduct.product_id).then(result =>  {
+                    if(result)
+                    {
+                    this.$toast.add({severity:'success', summary: 'Item deleted', life: 1500});
+                      getProducts().then(result => {
+                        this.products = result;
+                      })
+                    
+      
+    }
+      
+    })
         }
     }
 }

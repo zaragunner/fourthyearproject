@@ -2,7 +2,7 @@
 <Toast/>
     <div class="flex space-x-4">
   <div class="flex-1 w-2/3 aspect-w-1 aspect-h-1  bg-red-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
-            <!-- <img :src="product.images.thumbnail" :alt="product.description" class="w-full h-full object-center object-cover group-hover:opacity-75" /> -->
+            <img :src="product.images.thumbnail" :alt="product.description" class="w-full h-full object-center object-cover group-hover:opacity-75" />
           </div>
           <div class="flex-1 w-1/4">
           <h3 class="mt-4 mx-auto text-sm text-gray-700">
@@ -15,7 +15,7 @@
             €{{ product.price.netprice }}
           </p>
   
-          <Dropdown v-model="value" :options="this.options? this.options : ['One Size']"  :optionLabel="this.options ? this.options.name : 'One Size'" optionValue="name"  placeholder="Select a Size" />
+          <!-- <Dropdown v-model="value" :options="this.options? this.options : ['One Size']"  :optionLabel="this.options ? this.options.name : 'One Size'" optionValue="name"  placeholder="Select a Size" /> -->
            <!-- <SelectButton v-model="value" class="mb-2 mt-2" :options="product.options ? product.options : []" optionLabel="name" single /> -->
           <button class="bg-gray-800 rounded text-white pr-2 pl-2 pt-1 pb-1" @click="addToCart">
             Add to cart
@@ -32,7 +32,8 @@ import Toast from 'primevue/toast';
 // import SelectButton from 'primevue/selectbutton'
 import Dropdown from 'primevue/dropdown'
 
- import { getProducts } from "../../../../api/products/products-api.js";
+ import { getProduct } from "../../../../api/products/products-api.js";
+import { onMounted } from '@vue/runtime-core';
 export default {
   components : {
       // SelectButton,
@@ -43,28 +44,21 @@ export default {
        return{
         product: null,
         value : null,
-        options : []
+  
        }
    },
- async created(){
-  //  try {
-  //    const json = mockdata
-  
-  //    for (const product of json){  
-  //      if(product.id === this.$route.params.id)
-  //     {
-  //       this.product = product;
-        
-  //       break;
-      
-  //     }
-  //    }
-  //  }
-  //   catch (error){
-  //    console.log(error)
-  //  }
+   beforeCreate(){
+   try {
+      getProduct(this.$route.params.id).then(result => {
+      this.product = result;
+      console.log("THIS>PROF~uct" ,this.product)
+    })  
+     
+   }
+    catch (error){
+     console.log(error)
+   }
 
-  //   this.options = this.product.options;
   
   
 

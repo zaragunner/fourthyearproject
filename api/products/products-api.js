@@ -7,6 +7,15 @@ export const getProducts = async() => {
     }).then(res => res.json())
 };
 
+export const getProduct = async(product_id) => {
+    return fetch(`/api/products/${product_id}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'get'
+    }).then(res => res.json())
+};
+
 export const addProduct = async({product_id, site_id,name, description, category_id, sub_category_id, price, images, options}) => {
     return fetch('/api/products?action=create',{
         headers: {
@@ -22,5 +31,14 @@ export const addProduct = async({product_id, site_id,name, description, category
                                 price : price,
                                  images : images,
                                   options: options })
+    }).then(res => res.json())
+};
+
+export const deleteProduct = async(product_id) => {
+    return fetch(`/api/products/${product_id}?action=delete`, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'delete'
     }).then(res => res.json())
 };

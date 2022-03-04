@@ -37,8 +37,10 @@
           <!-- cart dropdown -->
       
           <!-- Profile dropdown -->
+          <span class="w-1/2 inline bg-red-400 font-semi-bold rounded-lg text-center" v-if="this.$store.state.account.groups == 'Admin' ">Admin Mode Active </span>
          <UserMenu v-if="this.$store.state.account.user"/>
         <SigninMenu v-if="!this.$store.state.account.user" />
+         
         
               
 
@@ -48,8 +50,7 @@
     </div>
 
   </Disclosure>
-  <div class="w-full bg-red-400 font-bold text-center" v-if="this.$store.state.account.groups == 'Admin' ">Please note you are in admin mode </div>
-</template>
+  </template>
 
 <script>
 import { Disclosure, DisclosureButton } from '@headlessui/vue'
