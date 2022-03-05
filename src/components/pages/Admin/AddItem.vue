@@ -1,4 +1,5 @@
 <template>
+<Toast/>
   <div class="m-4 flex space-x-4">
     <div class="flex rounded-lg overflow-hidden">
       <img
@@ -11,7 +12,7 @@
         <span class="inline-block mr-4 mt-2 w-32">Product ID </span>
         <InputText
           class="inline-block p-inputtext-sm"
-          type="text"
+          type="number"
           placeholder="Product ID"
           v-model="product_id"
         />
@@ -42,7 +43,7 @@
         <span class="inline-block mr-4 mt-2 w-32"> Category </span>
         <InputText
           class="inline-block p-inputtext-sm"
-          type="text"
+          type="number"
           placeholder="Category"
           v-model="category_id"
         />
@@ -51,7 +52,7 @@
         <span class="inline-block mr-4 mt-2 w-32"> Sub Category </span>
         <InputText
           class="inline-block p-inputtext-sm"
-          type="text"
+          type="number"
           placeholder="Category"
           v-model="sub_category_id"
         />
@@ -60,7 +61,7 @@
         <span class="inline-block mr-4 w-32"> Price </span>
         <InputText
           class="p-inputtext-sm"
-          type="text"
+          type="number"
           placeholder="Price"
           v-model="netprice"
         />
@@ -69,7 +70,7 @@
         <span class="inline-block mr-4 w-32"> VAT Category </span>
         <InputText
           class="p-inputtext-sm"
-          type="text"
+          type="number"
           placeholder="VAT Category"
           v-model="vat_id"
         />
@@ -107,10 +108,25 @@
 
       <button
         class="bg-gray-800 rounded text-white pr-2 pl-2 pt-1 pb-1"
-        @click="addItem"
+        @click="submit"
       >
         Add Item
       </button>
+
+      <AddItemModal 
+      :name="name"
+      :site_id ="site_id"
+     :product_id="product_id"
+     :description="description"
+     :category_id="category_id"
+     :sub_category_id="sub_category_id"
+     :netprice="netprice"
+     :vat_id="vat_id"
+     :thumbnail="thumbnail"
+     :options="options"
+     :visible="visible"
+     @closeModal="closeModal"
+     />
     </div>
   </div>
 </template>
@@ -122,8 +138,9 @@ import Chips from "primevue/chips";
 import InputText from "primevue/inputtext";
 import TextArea from "primevue/textarea";
 import FileUpload from "primevue/fileupload";
-import { addProduct } from "../../../../api/products/products-api.js";
 
+import AddItemModal from "./AddItemModal.vue"
+import Toast from 'primevue/toast';
 
 export default {
   components: {
@@ -132,6 +149,8 @@ export default {
     TextArea,
     Chips,
     FileUpload,
+    AddItemModal,
+    Toast
   },
   data() {
     return {
@@ -145,12 +164,35 @@ export default {
       vat_id: null,
       thumbnail: null,
       options: null,
+      visible: false
     };
   },
   async created() {
   console.log(this.site_id)
   },
   methods: {
+    submit(){
+      this.visible = true
+
+    },
+    closeModal(){
+      this.visible = false;
+      this.clearInputs()
+       this.$toast.add({severity:'success', summary: 'Item added', life: 1500});
+
+    },
+    clearInputs(){
+      this.product_id=null
+      this.name='',
+      this.description= '',
+      this.category_id= null,
+      this.sub_category_id= null,
+      this.netprice= null,
+      this.vat_id=null,
+      this.thumbnail='',
+      this.options=[]
+
+    },
     // onUpload(file) {
     //   this.$toast.add({
     //     severity: "info",
@@ -165,22 +207,7 @@ export default {
     // },
     async addItem() {
  
-      const result = await addProduct({
-        product_id: parseInt(this.product_id),
-        site_id: this.site_id,
-        name: this.name,
-        description: this.description,
-        category_id: parseInt(this.category_id),
-        sub_category_id: parseInt(this.sub_category_id),
-        price: {
-          netprice: parseInt(this.netprice),
-          vat_id: parseInt(this.vat_id)
-        },
-        images: {
-          thumbnail: this.thumbnail,
-        },
-        options: this.options
-      });
+     
 
       console.log(result.code);
     },
