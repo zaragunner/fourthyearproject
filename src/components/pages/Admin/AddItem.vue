@@ -41,20 +41,25 @@
       </div>
       <div class="mt-2">
         <span class="inline-block mr-4 mt-2 w-32"> Category </span>
-        <InputText
-          class="inline-block p-inputtext-sm"
-          type="number"
-          placeholder="Category"
-          v-model="category_id"
+        <Dropdown v-model="category_id" 
+        :options="categories"  
+        placeholder="Select a Category" 
+        optionLabel="name" 
+        optionValue="category_id"
+         :filter="categories.length > 5 ? true : false"
+         :showClear="true"
         />
       </div>
        <div class="mt-2">
         <span class="inline-block mr-4 mt-2 w-32"> Sub Category </span>
-        <InputText
-          class="inline-block p-inputtext-sm"
-          type="number"
-          placeholder="Category"
-          v-model="sub_category_id"
+         <Dropdown 
+         v-model="sub_category_id" 
+        :options="subCategories"  
+        placeholder="Select a sub-category" 
+        optionLabel="name" 
+        optionValue="sub_category_id"
+         :filter="subCategories.length > 5 ? true : false"
+         :showClear="true"
         />
       </div>
       <div class="mt-2">
@@ -68,11 +73,12 @@
       </div>
         <div class="mt-2">
         <span class="inline-block mr-4 w-32"> VAT Category </span>
-        <InputText
-          class="p-inputtext-sm"
-          type="number"
-          placeholder="VAT Category"
-          v-model="vat_id"
+          <Dropdown 
+         v-model="vat_id" 
+        :options="vatRates"  
+        placeholder="Select a vat rate" 
+        optionLabel="name" 
+        optionValue="vat_id"
         />
       </div>
 
@@ -138,9 +144,13 @@ import Chips from "primevue/chips";
 import InputText from "primevue/inputtext";
 import TextArea from "primevue/textarea";
 import FileUpload from "primevue/fileupload";
+import Dropdown from 'primevue/dropdown';
 
 import AddItemModal from "./AddItemModal.vue"
 import Toast from 'primevue/toast';
+import {getCategories} from '../../../../api/categories/categories-api'
+import {getSubCategories} from '../../../../api/sub-categories/sub-categories-api'
+import {getVatRates} from '../../../../api/vat/vat-api'
 
 export default {
   components: {
@@ -150,10 +160,14 @@ export default {
     Chips,
     FileUpload,
     AddItemModal,
-    Toast
+    Toast,
+    Dropdown
   },
   data() {
     return {
+      categories: [],
+      subCategories: [],
+      vatRates:[],
       site_id: process.env.VUE_APP_SITEID,
       product_id: null,
       name: null,
@@ -168,7 +182,15 @@ export default {
     };
   },
   async created() {
-  console.log(this.site_id)
+    await getCategories().then(result => {
+     this.categories = result;  
+    })
+    await getSubCategories().then(res => {
+      this.subCategories = res;
+    })
+    await getVatRates().then(res => {
+      this.vatRates = res
+    })
   },
   methods: {
     submit(){
