@@ -42,3 +42,7 @@ export const deleteProduct = async(product_id) => {
         method: 'delete'
     }).then(res => res.json())
 };
+
+
+
+

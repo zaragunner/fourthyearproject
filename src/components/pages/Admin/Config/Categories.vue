@@ -20,7 +20,23 @@
       >
 
  <template #header>
-                   <h5 class="m-1">Category Management </h5>   
+     <div class="grid grid-cols-2 gap-4">
+  <div>
+  <h5 class="m-1">Category Management </h5>   
+  </div>
+     <div class="relative"> 
+ <button
+        class="absolute top-0 right-0 bg-gray-800 rounded  text-white pr-2 pl-2 pt-1 pb-1"
+        @click="openNewCategory"
+      >
+        Add Category
+      </button>
+         </div>
+     
+  
+</div>
+                   
+                   
             </template>
      
 
@@ -36,41 +52,112 @@
                 </template>
              </Column>
                <Column  header="Actions" style="min-width: 8rem">
-                <template #body="" >
+                <template #body="{data}" >
                     <i class="m-1 pi pi-pencil cursor-pointer text-gray-400 hover:text-gray-800" style="font-size: 1.25rem" ></i>
-                    <i class=" m-1 pi pi-trash cursor-pointer text-red-500 hover:text-red-700" style="font-size: 1.25rem"  ></i>
+                    <i @click="openConfirmModal(data)" class=" m-1 pi pi-trash cursor-pointer text-red-500 hover:text-red-700" style="font-size: 1.25rem"  ></i>
 
                 </template>
              </Column>
              <Column :rowEditor="true" style="width:10%; min-width:8rem" bodyStyle="text-align:center"></Column>
     </DataTable>
+
+     <Dialog :modal="true" header="Are you sure you wish to delete this category?" :visible="confirmModalOpen" :style="{width: '50vw'}">
+      <div class="m-2"> 
+           <p class="inline-block"> Category Name  : </p> 
+             <p> {{category? category.name : ''}} </p>
+     </div>
+                 <template #footer>
+                <Button label="Cancel" icon="pi pi-times" @click="cancelConfirmModal" class="p-button-text"/>
+                <Button label="Submit" icon="pi pi-check" @click="closeConfirmModal" autofocus />
+            </template>
+        </Dialog>
+
+        <NewCategoryModal 
+     :visible="newCategoryVisible"
+     @closeCategoryModal="closeCategoryModal"
+     @cancelCategoryModal="cancelCategoryModal"
+     />
+    
 </div>
 </template>
 
 <script>
-import {getCategories} from '../../../../../api/categories/categories-api'
+import {getCategories , deleteCategory} from '../../../../../api/categories/categories-api'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import Dialog from 'primevue/dialog';
+import Button from 'primevue/button';
+
+import NewCategoryModal from "../../Admin/AddItem/NewCategoryModal.vue"
+
 // import InputText from 'primevue/inputtext'
 export default {
     
     components: {
         DataTable,
         Column,
+        Dialog,
+        Button,
+        NewCategoryModal
         // InputText
     },
     data() {
         return {
+            category: null,
+            confirmModalOpen: false,
             categories: null,
             selectedCategory: null,
             editingRows: [],
+            newCategoryVisible: false,
         }
     },
      async created(){
-     await getCategories().then(result => {
+     this.getCategories();
+},
+methods:{
+    async deleteCategory(category_id){
+        await deleteCategory(category_id).then(res => {
+            if(res){
+                console.log("success")
+                this.getCategories()
+            }  
+            else{
+                console.log("fail")
+            }      })
+    },
+    
+        openNewCategory(){
+      this.newCategoryVisible = true
+    },
+    closeCategoryModal(){
+      this.newCategoryVisible = false;
+       this.$toast.add({severity:'success', summary: 'Cateogry added', life: 1500});
+       this.getCategories();
+
+    },
+    cancelCategoryModal(){
+      this.newCategoryVisible = false;
+    },
+
+    async getCategories(){
+        await getCategories().then(result => {
       this.categories = result;
     })
-},
+    },
+    openConfirmModal(data){
+        console.log("opening modal" , data)
+        this.confirmModalOpen = true;
+        this.category = data
+    },
+    async closeConfirmModal(){
+        await deleteCategory(this.category.category_id)
+        this.getCategories();
+        this.confirmModalOpen = false;
+    },
+    cancelConfirmModal(){
+        this.confirmModalOpen = false;this
+    }
+}
 
 }
 </script>

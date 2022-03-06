@@ -20,7 +20,30 @@
       >
 
  <template #header>
-                   <h5 class="m-1">Category Management </h5>   
+                    <div class="grid grid-cols-2 gap-4">
+          <div>
+            <h5 class="m-1">Vat Rate Management</h5>
+          </div>
+          <div class="relative">
+            <button
+              class="
+                absolute
+                top-0
+                right-0
+                bg-gray-800
+                rounded
+                text-white
+                pr-2
+                pl-2
+                pt-1
+                pb-1
+              "
+              @click="openNewVatRate"
+            >
+              Add Vat Rate
+            </button>
+          </div>
+        </div> 
             </template>
      
 
@@ -44,6 +67,13 @@
              </Column>
              <Column :rowEditor="true" style="width:10%; min-width:8rem" bodyStyle="text-align:center"></Column>
     </DataTable>
+
+     <NewVatRateModal 
+     :visible="newVatRateVisible"
+     @closeVatModal="closeVatModal"
+     @cancelVatModal="cancelVatModal"
+     />
+    
 </div>
 </template>
 
@@ -51,12 +81,14 @@
 import {getVatRates} from '../../../../../api/vat/vat-api'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import NewVatRateModal from '../AddItem/NewVatRateModal.vue'
 // import InputText from 'primevue/inputtext'
 export default {
     
     components: {
         DataTable,
         Column,
+        NewVatRateModal
         // InputText
     },
     data() {
@@ -64,13 +96,32 @@ export default {
             vatrates: null,
             selectedVatRate: null,
             editingRows: [],
+            newVatRateVisible: false
         }
     },
      async created(){
-     await getVatRates().then(result => {
+    this.getVatRates();
+},
+methods:{ 
+
+    async getVatRates(){
+         await getVatRates().then(result => {
       this.vatrates = result;
     })
-},
+    },
+      openNewVatRate(){
+      this.newVatRateVisible = true
+    },
+    closeVatModal(){
+      this.newVatRateVisible = false;
+       this.$toast.add({severity:'success', summary: 'VAT rate added', life: 1500});
+       this.getVatRates();
+
+    },
+    cancelVatModal(){
+      this.newVatRateVisible = false;
+    },
+}
 
 }
 </script>

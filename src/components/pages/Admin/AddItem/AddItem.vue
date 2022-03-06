@@ -63,8 +63,8 @@
          :filter="subCategories.length > 5 ? true : false"
          :showClear="subCategories.length > 5 ? true : false"
         />
-        <i @click="openNewSubCategory" class="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer inline-block pi pi-plus-circle"></i>
-     
+       
+      <i @click="openNewSubCategory" class="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer inline-block pi pi-plus-circle"></i>
        </div>
       <div class="mt-2">
         <span class="inline-block mr-4 w-32"> Price </span>
@@ -148,6 +148,11 @@
      @closeSubCategoryModal="closeSubCategoryModal"
      @cancelSubCategoryModal="cancelSubCategoryModal"
      />
+      <NewVatRateModal 
+     :visible="newVatRateVisible"
+     @closeSubCategoryModal="closeVatRateModal"
+     @cancelSubCategoryModal="cancelVatRateModal"
+     />
     </div>
     </div>
   </div>
@@ -165,6 +170,7 @@ import Dropdown from 'primevue/dropdown';
 import AddItemModal from "./AddItemModal.vue"
 import NewCategoryModal from "./NewCategoryModal.vue"
 import NewSubCategoryModal from "./NewSubCategoryModal.vue"
+import NewVatRateModal from "./NewVatRateModal.vue"
 import Toast from 'primevue/toast';
 import {getCategories} from '../../../../../api/categories/categories-api'
 import {getSubCategories} from '../../../../../api/sub-categories/sub-categories-api'

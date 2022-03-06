@@ -7,12 +7,12 @@ export const getVatRates = async() => {
     }).then(res => res.json())
 };
 
-export const addVatRate = async( site_id, name, rate, vat_id) => {
+export const addVatRate = async({site_id, name, rate, vat_id}) => {
     return fetch('/api/vat?action=create',{
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'post',
-        body: { site_id : site_id, name : name, rate: rate , vat_id : vat_id}
+        body: JSON.stringify({ site_id : site_id, name : name, rate: rate , vat_id : vat_id})
     }).then(res => res.json())
 };

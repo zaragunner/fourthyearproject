@@ -1,76 +1,201 @@
 <template>
-<div class=" mx-auto bg-gray-100 p-2 w-2/3">
-    <DataTable 
+  <div class="mx-auto bg-gray-100 p-2 w-2/3">
+    <DataTable
       class="p-datatable-sm"
-      :value="subcategories" 
-      :paginator="true" 
+      :value="subcategories"
+      :paginator="true"
       :rows="10"
-      dataKey="category_id" 
-      :rowHover="true" 
-      v-model:selection="selectedCategory" 
-      v-model:filters="filters" 
-      filterDisplay="menu" 
-      paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
-      :rowsPerPageOptions="[10,25,50]"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+      dataKey="sub_category_id"
+      :rowHover="true"
+      v-model:selection="selectedCategory"
+      v-model:filters="filters"
+      filterDisplay="menu"
+      paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+      :rowsPerPageOptions="[10, 25, 50]"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       responsiveLayout="scroll"
-      :sortOrder="sortOrder"
-     :sortField="sortField"
-     @rowSelect="onRowSelect"
+    >
+      <template #header>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <h5 class="m-1">SubCategory Management</h5>
+          </div>
+          <div class="relative">
+            <button
+              class="
+                absolute
+                top-0
+                right-0
+                bg-gray-800
+                rounded
+                text-white
+                pr-2
+                pl-2
+                pt-1
+                pb-1
+              "
+              @click="openNewSubCategory"
+            >
+              Add Sub-Category
+            </button>
+          </div>
+        </div>
+      </template>
+
+      <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+      <Column
+        field="name"
+        sortable="true"
+        header="Name"
+        style="min-width: 8rem"
       >
-
- <template #header>
-                   <h5 class="m-1">Category Management </h5>   
-            </template>
-     
-
-        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-           <Column field="name" sortable="true" header="Name" style="min-width: 8rem">
-                    <template #body="{data}">
-                   {{data.name}}
-                </template>
-             </Column>
-               <Column field="description" header="Description" style="min-width: 8rem">
-                <template #body="{data}">
-                   {{data.description}}
-                </template>
-             </Column>
-               <Column  header="Actions" style="min-width: 8rem">
-                <template #body="" >
-                    <i class="m-1 pi pi-pencil cursor-pointer text-gray-400 hover:text-gray-800" style="font-size: 1.25rem" ></i>
-                    <i class=" m-1 pi pi-trash cursor-pointer text-red-500 hover:text-red-700" style="font-size: 1.25rem"  ></i>
-
-                </template>
-             </Column>
-             <Column :rowEditor="true" style="width:10%; min-width:8rem" bodyStyle="text-align:center"></Column>
+        <template #body="{ data }">
+          {{ data.name }}
+        </template>
+      </Column>
+      <Column field="description" header="Description" style="min-width: 8rem">
+        <template #body="{ data }">
+          {{ data.description }}
+        </template>
+      </Column>
+      <Column header="Actions" style="min-width: 8rem">
+        <template #body="{ data }">
+          <i
+            class="
+              m-1
+              pi pi-pencil
+              cursor-pointer
+              text-gray-400
+              hover:text-gray-800
+            "
+            style="font-size: 1.25rem"
+          ></i>
+          <i
+            @click="openConfirmModal(data)"
+            class="
+              m-1
+              pi pi-trash
+              cursor-pointer
+              text-red-500
+              hover:text-red-700
+            "
+            style="font-size: 1.25rem"
+          ></i>
+        </template>
+      </Column>
+      <Column
+        :rowEditor="true"
+        style="width: 10%; min-width: 8rem"
+        bodyStyle="text-align:center"
+      ></Column>
     </DataTable>
-</div>
+  </div>
+
+  <Dialog
+    :modal="true"
+    header="Are you sure you wish to delete this category?"
+    :visible="confirmModalOpen"
+    :style="{ width: '50vw' }"
+  >
+    <div class="m-2">
+      <p class="inline-block">Category Name :</p>
+      <p>{{ subcategory ? subcategory.name : "" }}</p>
+    </div>
+    <template #footer>
+      <Button
+        label="Cancel"
+        icon="pi pi-times"
+        @click="cancelConfirmModal"
+        class="p-button-text"
+      />
+      <Button label="Submit" icon="pi pi-check" @click="submitConfirmModal" />
+    </template>
+  </Dialog>
+
+  <NewSubCategoryModal
+    :visible="newSubCategoryVisible"
+    @closeSubCategoryModal="closeSubCategoryModal"
+    @cancelSubCategoryModal="cancelSubCategoryModal"
+  />
 </template>
 
 <script>
-import {getSubCategories} from '../../../../../api/sub-categories/sub-categories-api'
-import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
+import {
+  getSubCategories,
+  deleteSubCategory,
+} from "../../../../../api/sub-categories/sub-categories-api";
+import DataTable from "primevue/datatable";
+import Column from "primevue/column";
+import Dialog from "primevue/dialog";
+import Button from "primevue/button";
+
+import NewSubCategoryModal from "../../Admin/AddItem/NewSubCategoryModal.vue";
+
 // import InputText from 'primevue/inputtext'
 export default {
-    
-    components: {
-        DataTable,
-        Column,
-        // InputText
+  components: {
+    DataTable,
+    Column,
+    Dialog,
+    Button,
+    NewSubCategoryModal,
+    // InputText
+  },
+  data() {
+    return {
+      confirmModalOpen: false,
+      subcategory: null,
+      subcategories: null,
+      selectedCategory: null,
+      editingRows: [],
+      newSubCategoryVisible: false,
+    };
+  },
+  async created() {
+    this.getSubCategories();
+  },
+  methods: {
+    async getSubCategories() {
+      await getSubCategories().then((result) => {
+        this.subcategories = result;
+      });
     },
-    data() {
-        return {
-            subcategories: null,
-            selectedCategory: null,
-            editingRows: [],
-        }
+    openConfirmModal(data) {
+      this.confirmModalOpen = true;
+      this.subcategory = data;
     },
-     async created(){
-     await getSubCategories().then(result => {
-      this.subcategories = result;
-    })
-},
 
-}
+    async submitConfirmModal() {
+      console.log(this.subcategory);
+      await deleteSubCategory(this.subcategory.sub_category_id).then((res) => {
+        if (res) {
+          this.getSubCategories();
+          this.confirmModalOpen = false;
+        } else {
+          console.log("fail");
+        }
+      });
+    },
+    closeSubCategoryModal() {
+      this.newSubCategoryVisible = false;
+      this.$toast.add({
+        severity: "success",
+        summary: "Sub Cateogry added",
+        life: 1500,
+      });
+      this.getSubCategories();
+    },
+    openNewSubCategory() {
+      this.newSubCategoryVisible = true;
+    },
+    cancelSubCategoryModal() {
+      this.newSubCategoryVisible = false;
+    },
+
+    cancelConfirmModal() {
+      this.confirmModalOpen = false;
+      this;
+    },
+  },
+};
 </script>
