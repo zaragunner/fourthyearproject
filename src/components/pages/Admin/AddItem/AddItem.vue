@@ -47,8 +47,10 @@
         optionLabel="name" 
         optionValue="category_id"
          :filter="categories.length > 5 ? true : false"
-         :showClear="true"
+         :showClear="subCategories.length > 5 ? true : false"
         />
+          <i @click="openNewCategory" class="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer inline-block pi pi-plus-circle"></i>
+     
       </div>
        <div class="mt-2">
         <span class="inline-block mr-4 mt-2 w-32"> Sub Category </span>
@@ -59,9 +61,11 @@
         optionLabel="name" 
         optionValue="sub_category_id"
          :filter="subCategories.length > 5 ? true : false"
-         :showClear="true"
+         :showClear="subCategories.length > 5 ? true : false"
         />
-      </div>
+        <i @click="openNewSubCategory" class="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer inline-block pi pi-plus-circle"></i>
+     
+       </div>
       <div class="mt-2">
         <span class="inline-block mr-4 w-32"> Price </span>
         <InputText
@@ -96,7 +100,7 @@
           placeholder="Thumbnail"
           v-model="thumbnail"
         />
-          <FileUpload
+          <!-- <FileUpload
             class="inline-block"
             name="demo[]"
             url="./upload.php"
@@ -109,7 +113,7 @@
               <p>Drag and drop files to here to upload.</p>
             </template>
           </FileUpload>
-        </div>
+        </div> -->
       </div>
 
       <button
@@ -133,6 +137,18 @@
      :visible="visible"
      @closeModal="closeModal"
      />
+
+     <NewCategoryModal 
+     :visible="newCategoryVisible"
+     @closeCategoryModal="closeCategoryModal"
+     @cancelCategoryModal="cancelCategoryModal"
+     />
+       <NewSubCategoryModal 
+     :visible="newSubCategoryVisible"
+     @closeSubCategoryModal="closeSubCategoryModal"
+     @cancelSubCategoryModal="cancelSubCategoryModal"
+     />
+    </div>
     </div>
   </div>
 </template>
@@ -143,14 +159,16 @@
 import Chips from "primevue/chips";
 import InputText from "primevue/inputtext";
 import TextArea from "primevue/textarea";
-import FileUpload from "primevue/fileupload";
+// import FileUpload from "primevue/fileupload";
 import Dropdown from 'primevue/dropdown';
 
 import AddItemModal from "./AddItemModal.vue"
+import NewCategoryModal from "./NewCategoryModal.vue"
+import NewSubCategoryModal from "./NewSubCategoryModal.vue"
 import Toast from 'primevue/toast';
-import {getCategories} from '../../../../api/categories/categories-api'
-import {getSubCategories} from '../../../../api/sub-categories/sub-categories-api'
-import {getVatRates} from '../../../../api/vat/vat-api'
+import {getCategories} from '../../../../../api/categories/categories-api'
+import {getSubCategories} from '../../../../../api/sub-categories/sub-categories-api'
+import {getVatRates} from '../../../../../api/vat/vat-api'
 
 export default {
   components: {
@@ -158,10 +176,12 @@ export default {
     InputText,
     TextArea,
     Chips,
-    FileUpload,
+    // FileUpload,
     AddItemModal,
     Toast,
-    Dropdown
+    Dropdown,
+    NewCategoryModal,
+    NewSubCategoryModal
   },
   data() {
     return {
@@ -178,21 +198,35 @@ export default {
       vat_id: null,
       thumbnail: null,
       options: null,
-      visible: false
+      visible: false,
+      newCategoryVisible: false,
+      newSubCategoryVisible: false
     };
   },
   async created() {
-    await getCategories().then(result => {
+   this.getCategories();
+   this.getSubCategories();
+   this.getVatRates();
+  },
+  methods: {
+async getCategories(){
+ await getCategories().then(result => {
      this.categories = result;  
     })
+},
+async getSubCategories(){
     await getSubCategories().then(res => {
       this.subCategories = res;
     })
+},
+async getVatRates(){
     await getVatRates().then(res => {
       this.vatRates = res
     })
-  },
-  methods: {
+},
+
+
+
     submit(){
       this.visible = true
 
@@ -202,6 +236,31 @@ export default {
       this.clearInputs()
        this.$toast.add({severity:'success', summary: 'Item added', life: 1500});
 
+    },
+        openNewCategory(){
+      this.newCategoryVisible = true
+    },
+    closeCategoryModal(){
+      this.newCategoryVisible = false;
+       this.$toast.add({severity:'success', summary: 'Cateogry added', life: 1500});
+       this.getCategories();
+
+    },
+    cancelCategoryModal(){
+      this.newCategoryVisible = false;
+    },
+
+      closeSubCategoryModal(){
+      this.newSubCategoryVisible = false;
+       this.$toast.add({severity:'success', summary: 'Sub Cateogry added', life: 1500});
+       this.getSubCategories();
+
+    },
+       openNewSubCategory(){
+      this.newSubCategoryVisible = true
+    },
+    cancelSubCategoryModal(){
+      this.newSubCategoryVisible = false;
     },
     clearInputs(){
       this.product_id=null
@@ -215,6 +274,7 @@ export default {
       this.options=[]
 
     },
+
     // onUpload(file) {
     //   this.$toast.add({
     //     severity: "info",

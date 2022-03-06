@@ -20,7 +20,7 @@
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 
-import { addProduct } from "../../../../api/products/products-api.js";
+import { addProduct } from "../../../../../api/products/products-api.js";
 
 
 export default {

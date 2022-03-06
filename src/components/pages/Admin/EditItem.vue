@@ -7,26 +7,26 @@
           <div class="flex-1  ">
             <div class=" mt-2 ">
               <span class="inline-block mr-4 mt-2 w-32  "> Name </span>
-             <InputText  class="inline-block p-inputtext-sm" type="text" v-model="name" />
+             <InputText  class="inline-block p-inputtext-sm" type="text" v-model="product.name" />
               </div>
              <div class=" inline-block bg-red-500 mt-2 ">
               <span class="inline-block mr-4 mt-2 w-32  "> Description </span>
              </div>
              <div class="inline-block bg-blue-600">
-              <TextArea v-model="description" :autoResize="true" rows="5" cols="30" />
+              <TextArea v-model="product.description" :autoResize="true" rows="5" cols="30" />
               </div>
                 <div class=" mt-2 ">
               <span class="inline-block mr-4 mt-2 w-32  "> Category </span>
-             <InputText  class="inline-block p-inputtext-sm" type="text" v-model="category" />
+             <InputText  class="inline-block p-inputtext-sm" type="text" v-model="product.category_id" />
               </div>
               <div class=" mt-2 ">
              <span class="inline-block mr-4 w-32 "> Price </span>
-             <InputText  class="p-inputtext-sm" type="text" v-model="price" />
+             <InputText  class="p-inputtext-sm" type="text" v-model="product.price.netprice" />
               </div>
          
             <div class=" mt-4 ">
              <span class="inline-block mr-4 w-32 "> Options </span>
-                    <Chips v-model="options"/>
+                    <Chips v-model="product.options"/>
                     
               </div>
 
@@ -43,7 +43,8 @@
 <script>
 
 import Chips from 'primevue/chips'
- import mockdata from '@/mock-data/Products.json'
+
+import { getProduct } from "../../../../api/products/products-api.js";
 import InputText from 'primevue/inputtext';
 import TextArea from 'primevue/textarea'
 export default {
@@ -65,39 +66,20 @@ export default {
 
        }
    },
- async created(){
-   try {
-     const json = mockdata
-  
-     for (const product of json){  
-       if(product.id === this.$route.params.id)
-      {
-        this.product = product;
-        this.name = product.name
-        this.description = product.imageAlt
-        this.price = product.price
-        this.category = 'TODO'
-        const options = product.options
-        var opt = []
-        options.forEach(option => {
-             opt.push(option.name)
-        })
-        console.log(opt)
-        this.options = opt
-        
-        
-        
-        break;
-      
-      }
-     }
+   async beforeCreate(){
+     try {
+      getProduct(this.$route.params.id).then(result => {
+      this.product = result;
+      console.log("THIS>PROF~uct" ,this.product)
+    })  
+     
    }
-   catch (error){
+    catch (error){
      console.log(error)
    }
 
-    
- },
+   },
+
  methods : {
 
  }

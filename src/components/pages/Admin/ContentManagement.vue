@@ -1,4 +1,13 @@
 <template>
+<div>
+    <div class="w-full bg-blue-300 ">
+        <p> Edit Configurations </p>
+    </div>
+
+  <router-link to="/categories"> <button class="p-2 m-2 bg-gray-700 text-white rounded"  > Categories </button> </router-link>
+    <router-link to="/subcategories"> <button class="p-2 m-2 bg-gray-700 text-white rounded"  > SubCategories </button>    </router-link>  
+    <router-link to="/vatrates"><button class="p-2 m-2 bg-gray-700 text-white rounded"  > Vat Rates </button></router-link>
+</div>
 <Toast/>
     <div class="bg-gray-200 w-11/12 mx-auto p-4 m-2 ">
 
@@ -13,7 +22,6 @@
       v-model:selection="selectedProduct" 
       v-model:filters="filters" 
       filterDisplay="menu" 
-      :loading="loading"
       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
       :rowsPerPageOptions="[10,25,50]"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
