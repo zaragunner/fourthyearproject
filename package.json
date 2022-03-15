@@ -5,33 +5,43 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "nodemon --exec babel-node index.js"
   },
   "dependencies": {
     "@aws-amplify/ui-components": "^1.9.0",
     "@aws-amplify/ui-vue": "^1.1.14",
+    "@babel/preset-env": "^7.16.11",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "@headlessui/vue": "^1.4.1",
     "aws-amplify": "^4.3.2",
-    "core-js": "^3.6.5",
+    "body-parser": "^1.19.1",
+    "core-js": "^3.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.2.1",
+    "morgan": "^1.10.0",
+    "primeflex": "^2.0.0",
     "primeicons": "^5.0.0",
     "primevue": "^3.11.0",
+    "uniqid": "^5.4.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-service": "^5.0.1",
     "@vue/compiler-sfc": "^3.0.0",
-    "autoprefixer": "^9.8.8",
+    "autoprefixer": "^10.4.2",
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0",
-    "postcss": "^7.0.39",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^8.10.0",
+    "nodemon": "^2.0.15",
+    "postcss": "^8.4.6",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16"
   },
   "eslintConfig": {
@@ -52,5 +62,6 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "proxy": "http://localhost:4000"
 }

@@ -7,21 +7,22 @@
   <div class="card  w-2/3 mx-auto rounded bg-gray-50 p-4 m-2 ">
             <Carousel :value="products" :numVisible="4" :numScroll="1" :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" :autoplayInterval="3000">
                 <template #item="slotProps">
+                 
                     <div class=" product-item">
                         <div class=" h-96 border-solid bg-white border-2 border-gray-200 rounded m-2 text-center p-4">
-                            <router-link :to="'/'  + slotProps.data.id" >
+                            <router-link :to="'/'  + slotProps.data.product_id" >
                             <div class="mb-3">
-                                <img :src="slotProps.data.images.imageSrc" :alt="slotProps.data.name" class="product-image" />
+                                <!-- <img :src="slotProps.data.images.thumbnail" :alt="slotProps.data.name" class="product-image" /> -->
                             </div>
                            
                          </router-link>
                          <div>
-                                <h4 class="mb-1">{{slotProps.data.name}}</h4>
+                                <h4 class="mb-1">{{slotProps.data.description }}</h4>
                               
-                                <h6 class="mt-0 mb-3">€{{slotProps.data.price}}</h6>
+                                <h6 class="mt-0 mb-3">€{{slotProps.data.price.netprice}}</h6>
                                 <!-- <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span> -->
                                 <div class=" mt-5">
-                                    <Button icon="pi pi-shopping-cart"  @click="addToCart(slotProps.data)" class="p-button h-8 w-8 p-button-rounded mr-2" />
+                                    <Button icon="pi pi-shopping-cart"  @click="addToCart(slotProps.data)" class="p-button h-6 w-4 p-button-rounded mr-2" />
                         
                                 </div>
                             </div>
@@ -43,18 +44,18 @@
 
 <script> 
 import Carousel from 'primevue/carousel';
-// import Button from 'primevue/button'
- import mockdata from '@/mock-data/Products.json'
+import Button from 'primevue/button'
+ import { getProducts } from "../../../../api/products/products-api.js";
 
 export default {
  
     components :{
             Carousel,
-            // Button
+            Button
     },
     data (){
         return {
-            products: mockdata,
+            products: null,
             responsiveOptions: [
 			
 				{
@@ -81,6 +82,12 @@ export default {
      this.$store.dispatch('cart/addToCart',product)
      console.log("this . prpoduct == " + JSON.stringify(product))
    }
+ },
+ mounted(){
+       getProducts().then(result => {
+      this.products = result;
+      console.log(this.products)
+    })
  }
 }
 </script>

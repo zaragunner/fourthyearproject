@@ -13,12 +13,12 @@
                <div v-if="this.$store.state.cart.cart.length == 0 ">
                     There are no items in your cart yet
                </div>
-                <div v-for="product in this.$store.state.cart.cart" :key="product.id">
+                <div v-for="product in this.$store.state.cart.cart" :key="product.product_id">
                   <div class="bg-gray-100 mt-2 p-2 ">
-                     <img :src="product.images.imageSrc" :alt="product.imageAlt" class="inline w-12 h-12 mr-2 object-center object-cover group-hover:opacity-75" />
+                     <img :src="product.images.imageSrc"  class="inline w-12 h-12 mr-2 object-center object-cover group-hover:opacity-75" />
                     <span class="text-md font-semibold"> {{product.name}} </span>
                 
-                  <span class="ml-4">€{{product.price}} </span>
+                  <span class="ml-4">€{{product.price.netprice}} </span>
                 </div>
                 </div>
                </div>

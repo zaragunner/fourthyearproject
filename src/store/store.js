@@ -165,7 +165,7 @@ const store = new Vuex.Store({
         actions: {
             async addToCart({commit}, product ){
                 commit('addToCart' , product)
-                var price = product.price
+                var price = product.price.netprice
                 commit('addTotal', price )
                 
                 
@@ -196,15 +196,36 @@ const store = new Vuex.Store({
                 }
             }
 
-            
+        }
+    },
+    site : {
+        namespaced: true,
+        state: {
+            site : null,
+            theme : null
+    },
+    mutations :{
+        site(state, site) {
+            state.site = Object.assign({}, site)
+        },
 
-
+        theme(state, theme){
+            state.theme = Object.assign({}, theme)
+        }
+   
+    },
+    actions : {
+        async setSite({commit}, site ){
+            commit('site' , site) 
             
-            
+        },
 
+        async setTheme({commit}, theme){
+            commit('theme', theme)
         }
     }
-    }
+}
+}
 });
 
 export default store;

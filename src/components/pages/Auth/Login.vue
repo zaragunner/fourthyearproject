@@ -3,7 +3,7 @@
   <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <div class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-       <h1> //Company Name </h1>
+       <h1 v-if="this.$store.state.site.site">{{this.$store.state.site.site.name}}</h1>
         <h2 class="mt-6 text-center text-3xl font-bold text-gray-500">
           Sign in to your account
         </h2>
@@ -74,6 +74,7 @@
 
 
 <script>
+import { onMounted } from '@vue/runtime-core'
  export default {
  
     name: 'Login',
@@ -81,12 +82,20 @@
       return {
          email: '',
       password: '',
+      siteName:''
       }
      
     },
     components: {
       
     },
+    async onMounted(){
+      
+      }
+
+
+      
+  ,
     methods: {
       async signIn(){
         

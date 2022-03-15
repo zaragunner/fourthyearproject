@@ -10,8 +10,10 @@ import ContentMangement from '@/components/pages/Admin/ContentManagement.vue'
 import Main from '@/components/pages/Main.vue'
 import store from '../store/store'
 import EditItem from '@/components/pages/Admin/EditItem.vue'
-import AddItem from '@/components/pages/Admin/AddItem.vue'
-
+import AddItem from '@/components/pages/Admin/AddItem/AddItem.vue'
+import Categories from '../components/pages/Admin/Config/Categories.vue'
+import Subcategories from '../components/pages/Admin/Config/Subcategories.vue'
+import VatRates from '../components/pages/Admin/Config/VatRates.vue'
 const routes = [
     {
         component: Main,
@@ -28,7 +30,9 @@ const routes = [
             {component: ContentMangement, name:'Content Management' , path:'/contentmanagement' },
             {component: EditItem ,          name: 'EditItem',             path: '/edititem/:id'},
             {component: AddItem ,          name: 'AddItem',             path: '/addItem'},
-      
+            {component: Categories, name:'Categories' , path:'/categories'},
+            {component: Subcategories, name:'SubCategories' , path:'/subcategories'},
+            {component: VatRates, name:'VatRates' , path:'/vatrates'}
         ]
     }
 ];

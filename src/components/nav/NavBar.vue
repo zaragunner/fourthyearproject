@@ -1,5 +1,5 @@
 <template>
-  <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
+  <Disclosure as="nav" :style="`background-color : ${this.$store.state.site.theme.colours.primary}`" v-slot="{ open }">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -37,8 +37,10 @@
           <!-- cart dropdown -->
       
           <!-- Profile dropdown -->
+          <span class="w-1/2 inline bg-red-400 font-semi-bold rounded-lg text-center" v-if="this.$store.state.account.groups == 'Admin' ">Admin Mode Active </span>
          <UserMenu v-if="this.$store.state.account.user"/>
         <SigninMenu v-if="!this.$store.state.account.user" />
+         
         
               
 
@@ -48,8 +50,7 @@
     </div>
 
   </Disclosure>
-  <div class="w-full bg-red-400 font-bold text-center" v-if="this.$store.state.account.groups == 'Admin' ">Please note you are in admin mode </div>
-</template>
+  </template>
 
 <script>
 import { Disclosure, DisclosureButton } from '@headlessui/vue'
