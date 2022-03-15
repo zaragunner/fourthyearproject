@@ -1,7 +1,7 @@
  <template>
  <Menu as="div" class="ml-3 relative">
             <div>
-              <MenuButton class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+              <MenuButton :style="`background-color : ${this.$store.state.site.theme.colours.primary}`" class=" flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                 <span class="sr-only">Open user menu</span>
                   <font-awesome-icon class=" m-2.5 text-gray-300 " icon="user" />
                   </MenuButton>

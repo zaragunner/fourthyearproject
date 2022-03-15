@@ -1,7 +1,7 @@
  <template>
  <div class="ml-3  relative">
             <div>
-              <button @click="cartOpen = !cartOpen" class="bg-gray-800 text-gray-300 mr-3 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+              <button :style="`background-color : ${this.$store.state.site.theme.colours.primary} `" @click="cartOpen = !cartOpen" class="text-gray-300 mr-3 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                 <span class="sr-only">Open user menu</span>
                 <i v-if="this.$store.state.cart.cart.length > 0" class="pi pi-shopping-cart" style="font-size: 1.5rem"  v-badge="this.$store.state.cart.cart.length"></i>
               </button>
