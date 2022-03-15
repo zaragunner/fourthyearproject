@@ -24,6 +24,7 @@
     "express": "^4.17.2",
     "mongoose": "^6.2.1",
     "morgan": "^1.10.0",
+    "primeflex": "^2.0.0",
     "primeicons": "^5.0.0",
     "primevue": "^3.11.0",
     "uniqid": "^5.4.0",

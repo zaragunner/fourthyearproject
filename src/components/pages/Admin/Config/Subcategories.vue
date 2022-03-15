@@ -14,11 +14,16 @@
       :rowsPerPageOptions="[10, 25, 50]"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       responsiveLayout="scroll"
+       :globalFilterFields="['name', 'description']"
     >
       <template #header>
         <div class="grid grid-cols-2 gap-4">
           <div>
             <h5 class="m-1">SubCategory Management</h5>
+             <span class="p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText class="p-inputtext-sm" v-model="filters['global'].value" placeholder="Keyword Search" />
+                    </span> 
           </div>
           <div class="relative">
             <button
@@ -131,7 +136,8 @@ import Button from "primevue/button";
 
 import NewSubCategoryModal from "../../Admin/AddItem/NewSubCategoryModal.vue";
 
-// import InputText from 'primevue/inputtext'
+import InputText from 'primevue/inputtext'
+import {FilterMatchMode,FilterOperator} from 'primevue/api';
 export default {
   components: {
     DataTable,
@@ -139,7 +145,7 @@ export default {
     Dialog,
     Button,
     NewSubCategoryModal,
-    // InputText
+    InputText
   },
   data() {
     return {
@@ -149,6 +155,9 @@ export default {
       selectedCategory: null,
       editingRows: [],
       newSubCategoryVisible: false,
+       filters: {
+                'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
+            },
     };
   },
   async created() {

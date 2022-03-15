@@ -22,7 +22,7 @@
                                 <h6 class="mt-0 mb-3">€{{slotProps.data.price.netprice}}</h6>
                                 <!-- <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span> -->
                                 <div class=" mt-5">
-                                    <Button icon="pi pi-shopping-cart"  @click="addToCart(slotProps.data)" class="p-button h-8 w-8 p-button-rounded mr-2" />
+                                    <Button icon="pi pi-shopping-cart"  @click="addToCart(slotProps.data)" class="p-button h-6 w-4 p-button-rounded mr-2" />
                         
                                 </div>
                             </div>
@@ -44,14 +44,14 @@
 
 <script> 
 import Carousel from 'primevue/carousel';
-// import Button from 'primevue/button'
+import Button from 'primevue/button'
  import { getProducts } from "../../../../api/products/products-api.js";
 
 export default {
  
     components :{
             Carousel,
-            // Button
+            Button
     },
     data (){
         return {

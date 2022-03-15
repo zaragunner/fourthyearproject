@@ -196,15 +196,36 @@ const store = new Vuex.Store({
                 }
             }
 
-            
+        }
+    },
+    site : {
+        namespaced: true,
+        state: {
+            site : null,
+            theme : null
+    },
+    mutations :{
+        site(state, site) {
+            state.site = Object.assign({}, site)
+        },
 
-
+        theme(state, theme){
+            state.theme = Object.assign({}, theme)
+        }
+   
+    },
+    actions : {
+        async setSite({commit}, site ){
+            commit('site' , site) 
             
-            
+        },
 
+        async setTheme({commit}, theme){
+            commit('theme', theme)
         }
     }
-    }
+}
+}
 });
 
 export default store;

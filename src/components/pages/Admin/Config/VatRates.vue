@@ -17,12 +17,17 @@
       :sortOrder="sortOrder"
      :sortField="sortField"
      @rowSelect="onRowSelect"
+      :globalFilterFields="['name']"
       >
 
  <template #header>
                     <div class="grid grid-cols-2 gap-4">
           <div>
             <h5 class="m-1">Vat Rate Management</h5>
+             <span class="p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText class="p-inputtext-sm" v-model="filters['global'].value" placeholder="Keyword Search" />
+                    </span> 
           </div>
           <div class="relative">
             <button
@@ -53,9 +58,9 @@
                    {{data.name}}
                 </template>
              </Column>
-               <Column field="description" header="Description" style="min-width: 8rem">
+               <Column field="rate" header="Rate" style="min-width: 8rem">
                 <template #body="{data}">
-                   {{data.description}}
+                   {{data.rate}}
                 </template>
              </Column>
                <Column  header="Actions" style="min-width: 8rem">
@@ -82,21 +87,25 @@ import {getVatRates} from '../../../../../api/vat/vat-api'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import NewVatRateModal from '../AddItem/NewVatRateModal.vue'
-// import InputText from 'primevue/inputtext'
+import InputText from 'primevue/inputtext'
+import {FilterMatchMode,FilterOperator} from 'primevue/api';
 export default {
     
     components: {
         DataTable,
         Column,
-        NewVatRateModal
-        // InputText
+        NewVatRateModal,
+        InputText
     },
     data() {
         return {
             vatrates: null,
             selectedVatRate: null,
             editingRows: [],
-            newVatRateVisible: false
+            newVatRateVisible: false,
+             filters: {
+                'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
+            },
         }
     },
      async created(){

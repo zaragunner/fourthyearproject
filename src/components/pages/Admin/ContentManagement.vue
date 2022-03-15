@@ -1,6 +1,7 @@
 <template>
-<div>
-    <div class="w-full bg-blue-300 ">
+<div class="flex">
+<div class="h-full w-1/12 p-2  flex-auto ">
+    <div class="bg-blue-300 ">
         <p> Edit Configurations </p>
     </div>
 
@@ -9,9 +10,7 @@
     <router-link to="/vatrates"><button class="p-2 m-2 bg-gray-700 text-white rounded"  > Vat Rates </button></router-link>
 </div>
 <Toast/>
-    <div class="bg-gray-200 w-11/12 mx-auto p-4 m-2 ">
-
-
+    <div class="bg-gray-200 w-6/8 p-2 m-1 ">
       <DataTable 
       class="p-datatable-sm"
       :value="products" 
@@ -25,7 +24,7 @@
       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
       :rowsPerPageOptions="[10,25,50]"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      :globalFilterFields="['name','country.name','representative.name','status']" 
+      :globalFilterFields="['name']" 
       responsiveLayout="scroll"
       :sortOrder="sortOrder"
      :sortField="sortField"
@@ -111,6 +110,7 @@
              
       </DataTable>
 	</div>
+</div>
 </template>
 
 <script>

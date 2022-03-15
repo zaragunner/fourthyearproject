@@ -17,19 +17,24 @@
       :sortOrder="sortOrder"
      :sortField="sortField"
      @rowSelect="onRowSelect"
+     :globalFilterFields="['name', 'description']"
       >
 
  <template #header>
      <div class="grid grid-cols-2 gap-4">
   <div>
-  <h5 class="m-1">Category Management </h5>   
+  <h5 class="m-1">Category Management </h5>  
+   <span class="p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText class="p-inputtext-sm" v-model="filters['global'].value" placeholder="Keyword Search" />
+                    </span> 
   </div>
      <div class="relative"> 
  <button
         class="absolute top-0 right-0 bg-gray-800 rounded  text-white pr-2 pl-2 pt-1 pb-1"
         @click="openNewCategory"
       >
-        Add Category
+        Add
       </button>
          </div>
      
@@ -90,7 +95,9 @@ import Button from 'primevue/button';
 
 import NewCategoryModal from "../../Admin/AddItem/NewCategoryModal.vue"
 
-// import InputText from 'primevue/inputtext'
+import InputText from 'primevue/inputtext'
+import {FilterMatchMode} from 'primevue/api';
+
 export default {
     
     components: {
@@ -98,8 +105,8 @@ export default {
         Column,
         Dialog,
         Button,
-        NewCategoryModal
-        // InputText
+        NewCategoryModal,
+        InputText
     },
     data() {
         return {
@@ -109,6 +116,9 @@ export default {
             selectedCategory: null,
             editingRows: [],
             newCategoryVisible: false,
+            filters: {
+                'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
+            },
         }
     },
      async created(){
