@@ -6,6 +6,7 @@ import store from './store/store.js'
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 import BadgeDirective from 'primevue/badgedirective';
+import amplify from './amplify'
 import 'primevue/resources/primevue.min.css'                //core css
 import 'primeicons/primeicons.css'                           //icons
 import 'primevue/resources/themes/tailwind-light/theme.css'  //tailwind theme
@@ -21,9 +22,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faUser, faShoppingCart)
 
-
-
-
 //Amplify 
 import { 
     applyPolyfills,
@@ -32,7 +30,11 @@ import {
   
   import Amplify from 'aws-amplify';
   import awsconfig from './aws-exports';
-  Amplify.configure(awsconfig);
+  Amplify.configure({
+    aws_cognito_region: amplify.aws_cognito_region ,// (required) - Region where Amazon Cognito project was created
+    aws_user_pools_id: amplify.aws_user_pools_id ,// (optional) -  Amazon Cognito User Pool ID
+    aws_user_pools_web_client_id: amplify.aws_user_pools_web_client_id
+  });
 
   applyPolyfills().then(() => {
     defineCustomElements(window);

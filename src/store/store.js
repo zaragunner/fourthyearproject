@@ -3,6 +3,19 @@ import Vuex from 'vuex'
 import router from '@/router/routes.js'
 //reference
 //https://morioh.com/p/33e60f3dbb90
+
+
+
+Auth.configure({
+    Auth: {
+        UserPoolId: 'eu-west-1_tiPReDPPq',
+        UserPoolName: "FYP-Dev2",
+        AppClientID: "3llbmpmbmd9s8lck1jakf2agkd",
+        AppClientSecret: "atn16afel41p8s8bjde46p0db6i5thblh16lpsrhf7ptiqreib6",
+        AppClientIDWeb: "5pfbmdsjcf7ppp0sm6ivr4i2il"
+      },
+});
+
 const store = new Vuex.Store({
     modules: {
         account: {

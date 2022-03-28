@@ -63,7 +63,7 @@ Toast
                 exp_year: this.expiry_year,
                 cvc: this.cvv}).then(result => {
                   console.log("RESULT" , result)
-              this.payment_method = result.json
+              this.payment_method = result 
                this.paymentInt()
                 })
         
