@@ -84,6 +84,8 @@
         optionLabel="name" 
         optionValue="vat_id"
         />
+         <i @click="openNewVatRate" class="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer inline-block pi pi-plus-circle"></i>
+      
       </div>
 
       <div class="mt-4">
@@ -150,8 +152,9 @@
      />
       <NewVatRateModal 
      :visible="newVatRateVisible"
-     @closeSubCategoryModal="closeVatRateModal"
-     @cancelSubCategoryModal="cancelVatRateModal"
+       @closeVatModal="closeVatRateModal"
+     @cancelVatModal="cancelVatRateModal"
+    
      />
     </div>
     </div>
@@ -187,7 +190,8 @@ export default {
     Toast,
     Dropdown,
     NewCategoryModal,
-    NewSubCategoryModal
+    NewSubCategoryModal,
+    NewVatRateModal
   },
   data() {
     return {
@@ -206,7 +210,8 @@ export default {
       options: null,
       visible: false,
       newCategoryVisible: false,
-      newSubCategoryVisible: false
+      newSubCategoryVisible: false,
+      newVatRateVisible: false
     };
   },
   async created() {
@@ -267,6 +272,18 @@ async getVatRates(){
     },
     cancelSubCategoryModal(){
       this.newSubCategoryVisible = false;
+    },
+     openNewVatRate(){
+      this.newVatRateVisible = true
+    },
+    closeVatRateModal(){
+      this.newVatRateVisible = false;
+       this.$toast.add({severity:'success', summary: 'VAT rate added', life: 1500});
+       this.getVatRates();
+
+    },
+    cancelVatRateModal(){
+      this.newVatRateVisible= false;
     },
     clearInputs(){
       this.product_id=null

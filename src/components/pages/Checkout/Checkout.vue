@@ -28,6 +28,7 @@
 <div class="inline-block font-semibold">
     <p> {{product.name}} </p>
 <p>€{{product.price.netprice}} </p>
+<p> {{product.size}} </p>
 </div>
   </div>
 
@@ -35,6 +36,8 @@
 <div class="" v-if="this.$store.state.cart.cart.length>0">
                <div class="inline-block"> Total Price  </div>
                <div class="inline-block ml-6"> €{{this.$store.state.cart.total}} </div>
+               
+        <button @click="getSession()" type="submit" id="checkout-button">Checkout</button>
 
     </div>
     </div>
@@ -57,10 +60,12 @@ export default {
             line2: '',
             line3: '',
             line4: '',
-            postcode: ''
+            postcode: '',
+            response: null
             
         }
     },
+ 
     mounted(){
           if (this.$store.state.account.user){
           this.Fname = this.$store.state.account.user.attributes.given_name

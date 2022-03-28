@@ -112,6 +112,7 @@ export default {
     },
      methods: {
          addToCart(item){
+         
               this.$store.dispatch('cart/addToCart',item)
      console.log("item == " + JSON.stringify(item))
      this.$toast.add({severity:'success', summary: 'Item added to cart', life: 1500});

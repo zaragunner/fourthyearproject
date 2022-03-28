@@ -14,6 +14,7 @@ import AddItem from '@/components/pages/Admin/AddItem/AddItem.vue'
 import Categories from '../components/pages/Admin/Config/Categories.vue'
 import Subcategories from '../components/pages/Admin/Config/Subcategories.vue'
 import VatRates from '../components/pages/Admin/Config/VatRates.vue'
+import Payment from '../components/pages/Checkout/Payment.vue'
 const routes = [
     {
         component: Main,
@@ -32,7 +33,8 @@ const routes = [
             {component: AddItem ,          name: 'AddItem',             path: '/addItem'},
             {component: Categories, name:'Categories' , path:'/categories'},
             {component: Subcategories, name:'SubCategories' , path:'/subcategories'},
-            {component: VatRates, name:'VatRates' , path:'/vatrates'}
+            {component: VatRates, name:'VatRates' , path:'/vatrates'},
+            {component: Payment , name:'Payment' , path:'/payment'}
         ]
     }
 ];

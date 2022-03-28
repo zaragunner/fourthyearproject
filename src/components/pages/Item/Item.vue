@@ -68,8 +68,10 @@ export default {
  },
  methods : {
    addToCart(){
-     this.$store.dispatch('cart/addToCart', this.product)
-     console.log("this . prpoduct == " + JSON.stringify(this.product))
+     let product = this.product;
+     product.size = this.value;
+     this.$store.dispatch('cart/addToCart', product)
+     console.log("this . prpoduct == " + JSON.stringify(product))
      this.$toast.add({severity:'success', summary: 'Item added to cart', life: 1500});
      
    }

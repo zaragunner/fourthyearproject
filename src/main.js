@@ -38,6 +38,8 @@ import {
     defineCustomElements(window);
   });
 
+
+
   
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)
@@ -46,6 +48,7 @@ app.use(store);
 app.use(Vuex);
 app.use(PrimeVue)
 app.use(ToastService)
+
 app.directive('badge', BadgeDirective);
 // add more functionality to myV3App
 

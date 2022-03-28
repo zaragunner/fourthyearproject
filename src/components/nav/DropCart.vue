@@ -18,7 +18,9 @@
                      <img :src="product.images.imageSrc"  class="inline w-12 h-12 mr-2 object-center object-cover group-hover:opacity-75" />
                     <span class="text-md font-semibold"> {{product.name}} </span>
                 
-                  <span class="ml-4">€{{product.price.netprice}} </span>
+                  <span class="ml-4">€{{product.price.netprice}}  </span>
+                     <p class="ml-4">Size : {{product.size ? product.size : "One Size"}} </p>
+                  
                 </div>
                 </div>
                </div>
@@ -35,6 +37,7 @@
              <button @click="cartOpen = false" class="block m-2 p-1 bg-gray-800 rounded text-white">
                Checkout
              </button>
+             
              </router-link>
             
                </div>
@@ -45,24 +48,30 @@
  </template>
 
  <script>
+import { getVatRates } from '../../../api/vat/vat-api'
 
 export default {
     components:{
 
     },
-    created() {
+    async created() {
     try {
       this.$store.dispatch('cart/checkLocalStorage')
     }
     catch{
       console.log("empty")
     }
-      
+
+    await getVatRates().then(res => {
+      this.vatRates = res
+      console.log(this.vatRates)
+    })
     },
     data(){
         return {
             cartOpen: false,
-            price: null
+            price: null,
+            vatRates: null
         }
     },
     methods :{
@@ -79,7 +88,8 @@ export default {
            this.price = price
           }
         }
-      }
+      },
+    
     }
 
 }
