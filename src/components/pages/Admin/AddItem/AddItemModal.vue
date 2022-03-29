@@ -21,7 +21,7 @@ import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 
 import { addProduct } from "../../../../../api/products/products-api.js";
-
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
     components:{
@@ -44,7 +44,7 @@ export default {
     methods :{
         async submit(){
              const result = await addProduct({
-        product_id: this.product_id,
+        product_id: uuidv4(),
         site_id: parseInt(this.site_id),
         name: this.name,
         description: this.description,
