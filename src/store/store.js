@@ -61,8 +61,8 @@ const store = new Vuex.Store({
                             .then(await store.dispatch('account/getGroups'))
                             return true;
                     } catch (err) {
-                        console.log(`Error in login func Login Error [${err}]`)
-                    return false;
+                        const error = err.message
+                    return error;
                     }
                 },
                 
@@ -236,6 +236,7 @@ const store = new Vuex.Store({
         async setTheme({commit}, theme){
             commit('theme', theme)
         }
+        
     }
 }
 }

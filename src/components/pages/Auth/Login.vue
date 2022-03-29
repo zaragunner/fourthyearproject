@@ -1,6 +1,8 @@
 
 <template>
+
   <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <Toast/>
     <div class="max-w-md w-full space-y-8">
       <div class="mt-6 text-center text-3xl font-extrabold text-gray-900">
        <h1 v-if="this.$store.state.site.site">{{this.$store.state.site.site.name}}</h1>
@@ -31,9 +33,9 @@
           </div>
 
           <div class="text-sm">
-            <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+            <span @click="showToast">
               Forgot your password?
-            </a>
+            </span>
           </div>
         </div>
 <div class=" justify-items-center  ">
@@ -43,12 +45,12 @@
           
 
         <div class="inline-block w-full  ">
-          <button @click="signIn()" type="submit" class="mx-auto group relative w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <span @click="signIn()" type="submit" class="mx-auto group relative w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               
             </span>
             Sign in
-          </button>
+          </span>
         
         </div>
 
@@ -75,9 +77,13 @@
 
 <script>
 import { onMounted } from '@vue/runtime-core'
+import Toast from 'primevue/toast';
  export default {
  
     name: 'Login',
+    components:{
+      Toast
+    },
     data() {
       return {
          email: '',
@@ -86,10 +92,8 @@ import { onMounted } from '@vue/runtime-core'
       }
      
     },
-    components: {
-      
-    },
     async onMounted(){
+     
       
       }
 
@@ -98,12 +102,24 @@ import { onMounted } from '@vue/runtime-core'
   ,
     methods: {
       async signIn(){
-        
-       await this.$store.dispatch('account/login', {email: this.email , password: this.password})
-       .then(this.$router.push('/'))
-       
-      }
+       await this.$store.dispatch('account/login', {email: this.email , password: this.password}).then(result => {
+        if(result == true){
+           console.log("SUCCESSS")
+          this.$router.push('/')
+         }
+         else{
+           console.log("failure" , result)
+           this.$toast.add({severity:'error', summary: result , life: 1500});
+               
+         }
       
+       })
+  
+      
+        
+    },
+
+   
     }
  }
  </script>

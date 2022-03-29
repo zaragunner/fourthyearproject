@@ -6,12 +6,15 @@ import store from './store/store.js'
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 import BadgeDirective from 'primevue/badgedirective';
-import amplify from './amplify'
+// import amplify from './amplify'
 import 'primevue/resources/primevue.min.css'                //core css
 import 'primeicons/primeicons.css'                           //icons
 import 'primevue/resources/themes/tailwind-light/theme.css'  //tailwind theme
 import './index.css'
 import '/node_modules/primeflex/primeflex.css'
+// import { getUserPool } from '../api/aws/aws-api'
+import {getUserPool} from '../api/aws/aws-api'
+import Amplify from 'aws-amplify';
 
 
 
@@ -22,23 +25,41 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faUser, faShoppingCart)
 
-//Amplify 
-import { 
-    applyPolyfills,
-    defineCustomElements
-  } from '@aws-amplify/ui-components/loader';
+// //Amplify 
+// import { 
+//     applyPolyfills,
+//     defineCustomElements
+//   } from '@aws-amplify/ui-components/loader';
   
-  import Amplify from 'aws-amplify';
-  import awsconfig from './aws-exports';
-  Amplify.configure({
-    aws_cognito_region: amplify.aws_cognito_region ,// (required) - Region where Amazon Cognito project was created
-    aws_user_pools_id: amplify.aws_user_pools_id ,// (optional) -  Amazon Cognito User Pool ID
-    aws_user_pools_web_client_id: amplify.aws_user_pools_web_client_id
-  });
 
-  applyPolyfills().then(() => {
-    defineCustomElements(window);
-  });
+  import awsconfig from './aws-exports';
+
+
+
+
+  // applyPolyfills().then(() => {
+  //   defineCustomElements(window);
+  // });
+  let pool;
+
+  const getPool = async() =>{
+    await getUserPool(process.env.VUE_APP_SITEID).then(result => {
+      pool = result;
+      assignPool();
+    })}
+
+  const assignPool = async() => {
+    Amplify.configure({
+      aws_cognito_region:pool[0].aws_cognito_region ,// (required) - Region where Amazon Cognito project was created
+      aws_user_pools_id: pool[0].aws_user_pools_id ,// (optional) -  Amazon Cognito User Pool ID
+      aws_user_pools_web_client_id: pool[0].aws_user_pools_web_client_id
+    })
+
+  }
+
+  getPool();
+
+  
 
 
 
@@ -47,6 +68,7 @@ const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(router);
 app.use(store);
+
 app.use(Vuex);
 app.use(PrimeVue)
 app.use(ToastService)
