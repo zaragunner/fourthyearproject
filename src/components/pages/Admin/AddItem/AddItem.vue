@@ -7,17 +7,7 @@
       />
     </div>
 
-    <div class="flex-1">
-       <div class="mt-2">
-        <span class="inline-block mr-4 mt-2 w-32">Product ID </span>
-        <InputText
-          class="inline-block p-inputtext-sm"
-          type="number"
-          placeholder="Product ID"
-          v-model="product_id"
-        />
-      </div>
-       
+    <div class="flex-1">      
       <div class="mt-2">
         <span class="inline-block mr-4 mt-2 w-32"> Name </span>
         <InputText

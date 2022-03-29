@@ -1,16 +1,5 @@
 <template>
-   <Dialog :modal="true" header="Add new Sub-Category" v-model:visible="newSubCategoryVisible" :style="{width: '50vw'}">
-     <div class="m-2"> 
-              <p class="inline-block"> Sub-Category ID  : </p> 
-             <InputText
-          class="p-inputtext-sm ml-2 inline-block"
-          type="number"
-          placeholder="Category ID"
-          v-model="sub_category_id"
-        />
-</div>
-     
-     
+   <Dialog :modal="true" header="Add new Sub-Category" v-model:visible="newSubCategoryVisible" :style="{width: '50vw'}">     
      
       <div class="m-2"> 
            <p class="inline-block">Sub-Category Name  : </p> 
@@ -49,7 +38,7 @@ import InputText from "primevue/inputtext";
 
 import { addSubCategory } from "../../../../../api/sub-categories/sub-categories-api"
 
-
+import { v4 as uuidv4 } from 'uuid';
 export default {
     components:{
         Dialog,
@@ -75,7 +64,7 @@ export default {
          site_id: process.env.VUE_APP_SITEID ,
          name :this.subcategoryName, 
          description : this.subcategoryDescription,
-         sub_category_id : this.sub_category_id
+         sub_category_id : uuidv4()
       }).then(res => {
           if(res){
               console.log('response is true')

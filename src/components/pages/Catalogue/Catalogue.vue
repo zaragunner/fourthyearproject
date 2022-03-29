@@ -43,7 +43,7 @@
 							</div>
 						</div>
 						<div class="product-grid-item-content">
-              <router-link :to="`/${parseInt(slotProps.data.product_id)}`">
+              <router-link :to="`/${slotProps.data.product_id}`">
 							<img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="slotProps.data.name"/>
 							
               <div class="product-name">{{slotProps.data.name}}</div>

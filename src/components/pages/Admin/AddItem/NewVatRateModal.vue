@@ -1,19 +1,6 @@
 <template>
    <Dialog :modal="true" header="Add new Category" v-model:visible="newVatRateVisible" :style="{width: '50vw'}">
      <div class="m-2"> 
-              <p class="inline-block"> VAT ID  : </p> 
-             <InputText
-             
-          class="p-inputtext-sm ml-2 inline-block"
-          type="number"
-          placeholder="Category ID"
-          v-model="vat_id"
-        />
-</div>
-     
-     
-     
-      <div class="m-2"> 
            <p class="inline-block"> VAT Rate Title  : </p> 
              <InputText
           class="p-inputtext-sm ml-2 inline-block"
@@ -51,7 +38,7 @@ import InputText from "primevue/inputtext";
 import InputNumber from "primevue/inputnumber"
 
 import { addVatRate } from "../../../../../api/vat/vat-api.js";
-
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
     components:{
@@ -79,7 +66,7 @@ export default {
          site_id: process.env.VUE_APP_SITEID ,
          name :this.vatTitle, 
         rate: this.vatRate,
-         vat_id: this.vat_id
+         vat_id: uuidv4()
       }).then(res => {
           if(res){
               console.log('response is true')

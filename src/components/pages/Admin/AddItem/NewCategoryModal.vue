@@ -1,16 +1,5 @@
 <template>
-   <Dialog :modal="true" header="Add new Category" v-model:visible="newCategoryVisible" :style="{width: '50vw'}">
-     <div class="m-2"> 
-              <p class="inline-block"> Category ID  : </p> 
-             <InputText
-          class="p-inputtext-sm ml-2 inline-block"
-          type="number"
-          placeholder="Category ID"
-          v-model="category_id"
-        />
-</div>
-     
-     
+   <Dialog :modal="true" header="Add new Category" v-model:visible="newCategoryVisible" :style="{width: '50vw'}">     
      
       <div class="m-2"> 
            <p class="inline-block"> Category Name  : </p> 
@@ -48,7 +37,7 @@ import Button from 'primevue/button';
 import InputText from "primevue/inputtext";
 
 import { addCategory } from "../../../../../api/categories/categories-api.js";
-
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
     components:{
@@ -75,7 +64,7 @@ export default {
          site_id: process.env.VUE_APP_SITEID ,
          name :this.categoryName, 
          description : this.categoryDescription,
-         category_id : this.category_id
+         category_id : uuidv4()
       }).then(res => {
           if(res){
               console.log('response is true')
