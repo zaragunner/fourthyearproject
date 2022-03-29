@@ -35,7 +35,10 @@
 <div class="" v-if="this.$store.state.cart.cart.length>0">
                <div class="inline-block"> Total Price  </div>
                <div class="inline-block ml-6"> €{{this.$store.state.cart.total}} </div>
-
+        
+        <router-link to="/payment">
+        <button id="checkout-button">Checkout</button>
+        </router-link>
     </div>
     </div>
         </div>
