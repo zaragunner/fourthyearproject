@@ -48,7 +48,7 @@
         
               
 
-                 <DropCart v-if="this.$store.state.account.groups =='Public' " class="mr-2"/>
+                 <DropCart v-if="this.$store.state.account.groups =='Public' || this.$store.state.account.groups == null" class="mr-2"/>
         </div>
       </div>
     </div>

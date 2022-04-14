@@ -34,7 +34,7 @@
 
           <div class="text-sm">
             <span @click="showToast">
-              Forgot your password?
+             Don't have an account? <router-link to='/register'> <p class="text-blue-600">Register now!</p></router-link>
             </span>
           </div>
         </div>
