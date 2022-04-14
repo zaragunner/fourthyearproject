@@ -32,7 +32,7 @@ library.add(faUser, faShoppingCart)
 //   } from '@aws-amplify/ui-components/loader';
   
 
-  import awsconfig from './aws-exports';
+
 
 
 
