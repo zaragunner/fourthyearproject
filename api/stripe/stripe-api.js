@@ -13,7 +13,7 @@ export const createPaymentIntent = async ({payment_method, amount}) => {
     }).then(res => res.json())
 };
 
-export const confirmPayment = async ({payment_intent , payment_method})=> {
+export const confirmPayment = async ({payment_intent , payment_method, order , customer})=> {
     return fetch('/api/stripe/confirm-payment', {
         headers: {
             'Content-Type': 'application/json'
@@ -21,7 +21,9 @@ export const confirmPayment = async ({payment_intent , payment_method})=> {
         method: 'post',
         body: JSON.stringify({
             payment_intent: payment_intent,
-            payment_method: payment_method
+            payment_method: payment_method,
+            order : order,
+            customer : customer
         })
     }).then(res => res.json())
 };

@@ -54,16 +54,12 @@ library.add(faUser, faShoppingCart)
       aws_user_pools_id: pool[0].aws_user_pools_id ,// (optional) -  Amazon Cognito User Pool ID
       aws_user_pools_web_client_id: pool[0].aws_user_pools_web_client_id
     })
+    console.log("9")
 
   }
-
-  getPool();
-
-  
-
-
-
-  
+setTimeout(() => {
+    console.log("inside timer")
+     
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(router);
@@ -78,3 +74,14 @@ app.directive('badge', BadgeDirective);
 
 // now we're ready to mount
 app.mount('#app');
+
+}, 3000)
+
+  console.log("1")
+  getPool();
+  console.log("2")
+  
+
+
+
+ 

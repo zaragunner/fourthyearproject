@@ -1,4 +1,5 @@
 <template>
+<Toast/>
     <div class="w-2/3 mx-auto mt-3">
         <div>
       <p class="text-xl font-bold "> Checkout </p>
@@ -28,7 +29,8 @@
 <div class="inline-block font-semibold">
     <p> {{product.name}} </p>
 <p>€{{product.price.netprice}} </p>
-<p> {{product.size}} </p>
+<p> {{product.size ? product.size : 'One-Size'}} </p>
+
 </div>
   </div>
 
@@ -36,10 +38,10 @@
 <div class="" v-if="this.$store.state.cart.cart.length>0">
                <div class="inline-block"> Total Price  </div>
                <div class="inline-block ml-6"> €{{this.$store.state.cart.total}} </div>
-        
-        <router-link to="/payment">
-        <button id="checkout-button">Checkout</button>
-        </router-link>
+                
+       
+        <button class="rounded-lg font-semibold text-white bg-red-400 p-2 ml-36" @click="setUser">Checkout</button>
+   
     </div>
     </div>
         </div>
@@ -48,20 +50,23 @@
 
 <script>
 import InputText from 'primevue/inputtext'
+import Toast from 'primevue/toast';
 export default {
     components : {
-        InputText
+        InputText,
+        Toast
     },
     data(){
         return{
-            Fname : '',
-            Lname : '',
+            Fname : null,
+            Lname : null,
             phone: null,
-            line1: '',
-            line2: '',
-            line3: '',
+            email: null,
+            line1: null,
+            line2: null,
+            line3: null,
             line4: '',
-            postcode: '',
+            postcode: null,
             response: null
             
         }
@@ -77,6 +82,19 @@ export default {
         else {
           this.username= '';
   
+        }
+    },
+    methods: {
+        setUser(){
+            if(this.Fname == null || this.Lname ==null || this.phone == null || this.email == null || this.line1 ==null || this.line2 == null || this.line3 == null || this.postcode == null){
+                this.$toast.add({severity:'error', summary: 'Please ensure all required fields are filled in.', life: 1500});
+            }
+            else {
+            const name = this.Fname + " " + this.Lname
+            const address = this.line1 + " " + this.line2 + " " + this.line3 + " " + this.line4 + "" + this.postcode
+            this.$store.dispatch('cart/setUser', {name : name , phone : this.phone , email : this.email , address: address} )
+            this.$router.push('/payment')
+            }
         }
     }
 }

@@ -154,7 +154,9 @@ const store = new Vuex.Store({
             namespaced: true,
             state: {
                 cart : [],
-                total: 0
+                total: 0,
+                order: null,
+                customer: null
 
         },
         mutations :{
@@ -173,7 +175,16 @@ const store = new Vuex.Store({
                 state.total += price
                 console.log(state.total)
                 localStorage.setItem('Total' , state.total)
+            },
+            createOrder(state){
+                state.order = {
+                    "order" : state.cart,
+                    "customer" : state.customer
             }
+          },
+          setUser(state, user){
+              state.customer = user
+          }
         },
         actions: {
             async addToCart({commit}, product ){
@@ -207,9 +218,22 @@ const store = new Vuex.Store({
                     console.log("ls empty")
 
                 }
-            }
+            },
+            async createOrder({commit}){
+                commit('createOrder')
+            },
+
+            async setUser({commit} ,{ email, name, phone_number, address}) {
+                const user = {
+                    "name" : name,
+                    "email" : email,
+                    "phone" : phone_number,
+                    "address" : address
+                }
+                commit('setUser' , user)
 
         }
+    }
     },
     site : {
         namespaced: true,

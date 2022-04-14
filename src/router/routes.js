@@ -15,6 +15,9 @@ import Categories from '../components/pages/Admin/Config/Categories.vue'
 import Subcategories from '../components/pages/Admin/Config/Subcategories.vue'
 import VatRates from '../components/pages/Admin/Config/VatRates.vue'
 import Payment from '../components/pages/Checkout/Payment.vue'
+import PaymentSuccess from '../components/pages/Checkout/PaymentSuccess.vue'
+import Orders from '../components/pages/Admin/Orders.vue'
+import EditOrder from '../components/pages/Admin/EditOrder.vue'
 const routes = [
     {
         component: Main,
@@ -34,7 +37,10 @@ const routes = [
             {component: Categories, name:'Categories' , path:'/categories'},
             {component: Subcategories, name:'SubCategories' , path:'/subcategories'},
             {component: VatRates, name:'VatRates' , path:'/vatrates'},
-            {component: Payment , name:'Payment' , path:'/payment'}
+            {component: Payment , name:'Payment' , path:'/payment'},
+            {component: PaymentSuccess, name: 'PaymentSuccess', path:'/paymentsuccess'},
+            {component: Orders , name : 'Orders' , path:'/orders'},
+            {component: EditOrder ,          name: 'EditOrder',             path: '/editorder/:id'},
         ]
     }
 ];

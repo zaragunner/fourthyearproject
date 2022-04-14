@@ -19,15 +19,19 @@
             <div class="flex space-x-4">
 
              <router-link to="/"> 
-                <NavItem  name="Dashboard" v-if="this.$store.state.account.groups =='Public'" :current='active' /> 
+                <NavItem  name="Dashboard" v-if="this.$store.state.account.groups =='Public' || this.$store.state.account.groups ==''  || this.$store.state.account.groups == null" :current='active' /> 
              </router-link>
 
              <router-link to="/catalogue" >
-                <NavItem v-if="this.$store.state.account.groups =='Public'"  name="Catalogue" :current='active'/>  
+                <NavItem v-if="this.$store.state.account.groups =='Public' || this.$store.state.account.groups ==''  || this.$store.state.account.groups == null"  name="Catalogue" :current='active'/>  
                </router-link>
 
             <router-link to="/contentmanagement" >
              <NavItem v-if="this.$store.state.account.groups =='Admin'" name="Content Management" :current='false' />
+             </router-link>
+
+              <router-link to="/orders" >
+             <NavItem v-if="this.$store.state.account.groups =='Admin'" name="Orders" :current='false' />
              </router-link>
 
             </div>

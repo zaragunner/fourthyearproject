@@ -125,11 +125,13 @@
           />
         </div>
         <button
+        :disabled="disabled"
           class="bg-green-400 p-2 rounded-md font-semibold m-1"
           @click="submit"
         >
           Pay now
         </button>
+        <span> 4242424242424242</span>
       </div>
     </div>
   </div>
@@ -159,6 +161,7 @@ export default {
       payment_method: null,
       payment_intent: null,
       clientSecret: null,
+      disabled: false
     };
   },
   methods: {
@@ -175,16 +178,27 @@ export default {
           life: 1500,
         });
       } else {
-        //create payment intent and confirm payment on client
+        //create payment method and then pass to payment intent
         await createPaymentMethod({
           number: this.cardnumber,
           exp_month: this.expiry_month,
           exp_year: this.expiry_year,
           cvc: this.cvv,
-        }).then((result) => {
-          console.log("RESULT", result);
+        }).then(result => {
+          console.log("RESULT from create payment method",result);
+          if(result.status != 200){
+            this.$toast.add({
+          severity: "error",
+          summary: result.error,
+          life: 1500,
+        });
+          }
+          else{
+            console.log("Success")
           this.payment_method = result;
           this.paymentInt();
+          }
+         
         });
       }
     },
@@ -194,10 +208,25 @@ export default {
         payment_method: this.payment_method,
         amount: this.$store.state.cart.total * 100,
       }).then((result) => {
+         if(result.status != 200){
+            this.$toast.add({
+          severity: "error",
+          summary: "Payment Failed",
+          life: 1500,
+        });
+          }
+          else{
+             this.$toast.add({
+          severity: "success",
+          summary: "Payment Complete",
+          life: 1500,
+        });
         this.clientSecret = result.clientSecret;
         this.payment_intent = result.id;
+         this.confirmPay();
+          }
       });
-      this.confirmPay();
+     
     },
 
     async confirmPay() {
@@ -206,8 +235,26 @@ export default {
       await confirmPayment({
         payment_method: this.payment_method,
         payment_intent: this.payment_intent,
+        order: this.$store.state.cart.cart,
+        customer : this.$store.state.cart.customer
       }).then((result) => {
-        console.log(result);
+         if(result.status != 200){
+         
+            this.$toast.add({
+          severity: "error",
+          summary: "Payment failed",
+          life: 1500,
+        });
+          }
+          else{
+              console.log("RESULT FROM CONFIRMATION" , result)
+          this.$toast.add({
+          severity: "success",
+          summary: "payment complete",
+          life: 1500,
+        });
+        this.$router.push('/paymentsuccess')
+          }
       });
     },
   },
