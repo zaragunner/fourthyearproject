@@ -64,7 +64,7 @@
         <Column selectionMode="single" headerStyle="width: 3rem"></Column>
            <Column field="image" header="" style="min-width: 8rem">
                 <template #body="{data}">
-                   <img class="w-24 h-24" :src="data.images.thumbnail"/>
+                   <img class="w-24 h-24" :src="`http://localhost:4001/${data.thumbnail.fileName}`"/>
                 </template>
              </Column>
         <Column field="name" header="Name" sortable style="min-width: 14rem">

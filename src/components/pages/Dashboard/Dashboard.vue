@@ -5,21 +5,23 @@
           <p> 10% off X range </p>
       </div>
   <div class="card  w-2/3 mx-auto rounded bg-gray-50 p-4 m-2 ">
-            <Carousel :value="products" :numVisible="4" :numScroll="1" :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" :autoplayInterval="3000">
+            <Carousel v-if="this.vatRates" :value="products" :numVisible="4" :numScroll="1" :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" :autoplayInterval="3000">
                 <template #item="slotProps">
                  
                     <div class=" product-item">
                         <div class=" h-96 border-solid bg-white border-2 border-gray-200 rounded m-2 text-center p-4">
                             <router-link :to="'/'  + slotProps.data.product_id" >
                             <div class="mb-3">
-                                <!-- <img :src="slotProps.data.images.thumbnail" :alt="slotProps.data.name" class="product-image" /> -->
+                                <img :src="`http://localhost:4001/${slotProps.data.thumbnail.fileName}`" :alt="slotProps.data.name" class="h-42 w-36 product-image" />
                             </div>
                            
                          </router-link>
                          <div>
                                 <h4 class="mb-1">{{slotProps.data.description }}</h4>
                               
-                                <h6 class="mt-0 mb-3">€{{slotProps.data.price.netprice}}</h6>
+                                <h6 v-if="this.vatRates" class="mt-0 mb-3"> €{{ 
+                                    getPrice(slotProps.data.price.netprice , slotProps.data.price.vat_id)
+                                }}</h6>
                                 <!-- <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span> -->
                                 <div class=" mt-5">
                                     <Button icon="pi pi-shopping-cart"  @click="addToCart(slotProps.data)" class="p-button h-6 w-4 p-button-rounded mr-2" />
@@ -46,7 +48,8 @@
 import Carousel from 'primevue/carousel';
 import Button from 'primevue/button'
  import { getProducts } from "../../../../api/products/products-api.js";
-
+import { getVatRates } from '../../../../api/vat/vat-api.js'
+import Buffer from 'buffer/';
 export default {
  
     components :{
@@ -74,19 +77,51 @@ export default {
 					numVisible: 1,
 					numScroll: 1
 				}
-			]
+			],
+            vatRates: null
         }
     },
      methods : {
-   addToCart(product){
-     this.$store.dispatch('cart/addToCart',product)
-     console.log("this . prpoduct == " + JSON.stringify(product))
-   }
+         arrayBufferToBase64(buffer) {
+    var binary = '';
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => binary += String.fromCharCode(b));
+    return window.btoa(binary);
+},
+
+getImage(data){
+    const type = "data:" + data.contentType.toString() + ";base64,"
+    const buffer = Buffer.Buffer.from(data.data).toString('base64')
+    return type + buffer
+}
+  ,
+   addToCart(item){
+             const cost = this.getPrice(item.price.netprice, item.price.vat_id)
+                const prod = {
+                    item,
+                    cost: cost 
+                }
+              this.$store.dispatch('cart/addToCart',prod)
+     console.log("item == " + JSON.stringify(item))
+     this.$toast.add({severity:'success', summary: 'Item added to cart', life: 1500});
+     
+         },
+    getPrice(price, vatID){
+      
+             const vrate = this.vatRates.filter(rate =>{
+                    return rate.vat_id == vatID
+             })
+            return price * (1 + vrate[0].rate)
+         }
  },
- mounted(){
-       getProducts().then(result => {
+async created(){
+       await getProducts().then(result => {
       this.products = result;
-      console.log(this.products)
+      console.log("products" , this.products)
+    })
+    await  getVatRates().then(result => {
+        this.vatRates = result;
+        console.log("vat rates" , this.vatRates)
     })
  }
 }

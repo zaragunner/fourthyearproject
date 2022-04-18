@@ -15,16 +15,16 @@
         <div class="w-full relative">
           <div
             v-for="product in this.$store.state.cart.cart"
-            :key="product.product_id"
+            :key="product.item.product_id"
           >
             <div class=" w-full m-2 text-lg text-gray-600">
               <div class="inline-block">
                 <img
-                  :src="product.images.thumbnail"
+                  :src="`http://localhost:4001/${product.item.thumbnail.fileName}`"
                   class="
                     inline
-                    w-20
-                    h-20
+                    w-28
+                    h-32
                     mr-2
                     object-center object-cover
                     group-hover:opacity-75
@@ -32,9 +32,9 @@
                 />
               </div>
               <div class="inline-block font-semibold">
-                <p>{{ product.name }}</p>
-                <p>€{{ product.price.netprice }}</p>
-                <p>{{ product.size }}</p>
+                <p>{{ product.item.name }}</p>
+                <p>€{{ product.cost}}</p>
+                <p>{{ product.item.size }}</p>
               </div>
             </div>
           </div>

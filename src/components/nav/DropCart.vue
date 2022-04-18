@@ -15,11 +15,13 @@
                </div>
                 <div v-for="product in this.$store.state.cart.cart" :key="product.product_id">
                   <div class="bg-gray-100 mt-2 p-2 ">
-                     <img :src="product.images.imageSrc"  class="inline w-12 h-12 mr-2 object-center object-cover group-hover:opacity-75" />
-                    <span class="text-md font-semibold"> {{product.name}} </span>
+                     <img :src="`http://localhost:4001/${product.item.thumbnail.fileName}`"  class="inline w-12 h-16 mr-2 object-center object-cover group-hover:opacity-75" />
+                    <span class="text-md font-semibold"> {{product.item.name}} </span>
                 
-                  <span class="ml-4">€{{product.price.netprice}}  </span>
-                     <p class="ml-4">Size : {{product.size ? product.size : "One Size"}} </p>
+                  <span class="ml-4">€ {{ 
+                                    getPrice(product.item.price.netprice , product.item.price.vat_id)
+                                }}  </span>
+                     <p class="ml-4">Size : {{product.item.size ? product.item.size : "One Size"}} </p>
                   
                 </div>
                 </div>
@@ -48,11 +50,13 @@
  </template>
 
  <script>
-import { getVatRates } from '../../../api/vat/vat-api'
-
-export default {
+import { getVatRates }  from '../../../api/vat/vat-api.js'
+  export default {
     components:{
 
+    },
+    onMounted(){
+      console.log(this.$store.state.cart.cart)
     },
     async created() {
     try {
@@ -63,9 +67,11 @@ export default {
     }
 
     await getVatRates().then(res => {
-      this.vatRates = res
-      console.log(this.vatRates)
+    this.vatRates = res
+   console.log(this.vatRates)
     })
+
+    console.log("STATE CART" , this.$store.state.cart.cart)
     },
     data(){
         return {
@@ -79,12 +85,21 @@ export default {
         this.$store.dispatch('cart/clearCart')
         this.cartOpen = false;
       },
+       getPrice(price, vatID){
+             const vrate = this.vatRates.filter(rate =>{
+                    return rate.vat_id == vatID
+             })
+             console.log(price , vrate[0].rate)
+            return price * (1 + vrate[0].rate)
+         },
+
       totalPrice(){
         if (this.$store.state.cart.cart){
           var length = this.$store.cart.account.cart.length()
+          console.log(this.$store.state.cart.cart)
           for(let i = 0; i <length; i++){
            var price = 0
-           price += this.$store.state.cart.cart.product[i].price
+           price += this.$store.state.cart.cart.product[i].cost
            this.price = price
           }
         }
@@ -93,4 +108,5 @@ export default {
     }
 
 }
+
  </script>

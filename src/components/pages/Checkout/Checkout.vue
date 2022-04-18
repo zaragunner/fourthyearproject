@@ -21,15 +21,15 @@
     <div class=" bg-gray-300 " >
  <p class="text-gray-600 font-semibold"> Order Summary </p>
          
-  <div  v-for="product in this.$store.state.cart.cart" :key="product.product_id">
+  <div  v-for="product in this.$store.state.cart.cart" :key="product.item.product_id">
 <div class=" mx-auto w-5/6 m-2  bg-gray-100 text-lg text-gray-600 ">
 <div class="inline-block">
-<img :src="product.images.thumbnail"  class="inline w-20 h-20 mr-2  object-center object-cover group-hover:opacity-75" />
+<img :src="`http://localhost:4001/${product.item.thumbnail.fileName}`"  class="inline w-28 h-32 mr-2  group-hover:opacity-75" />
 </div>
 <div class="inline-block font-semibold">
-    <p> {{product.name}} </p>
-<p>€{{product.price.netprice}} </p>
-<p> {{product.size ? product.size : 'One-Size'}} </p>
+    <p> {{product.item.name}} </p>
+<p>€{{product.cost}} </p>
+<p> {{product.item.size ? product.item.size : 'One-Size'}} </p>
 
 </div>
   </div>

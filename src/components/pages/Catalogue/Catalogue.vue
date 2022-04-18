@@ -44,14 +44,18 @@
 						</div>
 						<div class="product-grid-item-content">
               <router-link :to="`/${slotProps.data.product_id}`">
-							<img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="slotProps.data.name"/>
+							<img :src="`http://localhost:4001/${slotProps.data.thumbnail.fileName}`" class="h-36 w-36" :alt="slotProps.data.name"/>
 							
               <div class="product-name">{{slotProps.data.name}}</div>
               </router-link>
 							<div class="product-description">{{slotProps.data.description}}</div>
 							</div>
 						<div class="product-grid-item-bottom">
-							<span class="product-price">${{slotProps.data.price.netprice}}</span>
+							<span v-if="this.vatRates" class="product-price">€
+                                {{ 
+                                    getPrice(slotProps.data.price.netprice , slotProps.data.price.vat_id)
+                                }}
+                            </span>
 							<Button @click="addToCart(slotProps.data)" class="ml-8" icon="pi pi-shopping-cart"></Button>
 						</div>
 					</div>
@@ -73,6 +77,8 @@ import Button from 'primevue/button'
  import { getProducts } from "../../../../api/products/products-api.js";
  import {FilterMatchMode} from 'primevue/api';
 
+import { getVatRates } from '../../../../api/vat/vat-api.js'
+import { onBeforeMount } from '@vue/runtime-core';
 export default {
     components: {
         Item,
@@ -99,21 +105,38 @@ export default {
             ],  
       filters: {
                 'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
-              } 
+              } ,
+      vatRates: null
      
     }
     },
     async created(){
 
-     getProducts().then(result => {
+    await  getProducts().then(result => {
       this.products = result;
       
     })
+  
+    await getVatRates().then(result => {
+        this.vatRates = result;
+        console.log(this.vatRates)
+    })
     },
      methods: {
+         getPrice(price, vatID){
+             const vrate = this.vatRates.filter(rate =>{
+                    return rate.vat_id == vatID
+             })
+             console.log(price , vrate[0].rate)
+            return price * (1 + vrate[0].rate)
+         },
          addToCart(item){
-         
-              this.$store.dispatch('cart/addToCart',item)
+             const cost = this.getPrice(item.price.netprice, item.price.vat_id)
+                const prod = {
+                    item,
+                    cost: cost 
+                }
+              this.$store.dispatch('cart/addToCart',prod)
      console.log("item == " + JSON.stringify(item))
      this.$toast.add({severity:'success', summary: 'Item added to cart', life: 1500});
      
