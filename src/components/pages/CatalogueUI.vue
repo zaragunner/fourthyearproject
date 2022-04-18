@@ -1,7 +1,9 @@
 <template>
+<div>
     <NavBar v-if="this.$store.state.site.theme"/>
-    <router-view />
-    <Footer  v-if="this.$store.state.site.site"/>
+    <router-view  />
+    <Footer class="fixed inset-x-0 bottom-0" v-if="this.$store.state.site.site" />
+</div>
 
 </template>
 <script>

@@ -189,10 +189,9 @@ const store = new Vuex.Store({
         actions: {
             async addToCart({commit}, product ){
                 commit('addToCart' , product)
-                var price = product.price.netprice
+                var price = product.cost
                 commit('addTotal', price )
-                
-                
+                               
             },
 
             async clearCart({commit}){
