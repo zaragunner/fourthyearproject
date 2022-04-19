@@ -21,7 +21,7 @@
               </div>
               <div class=" mt-2 ">
              <span class="inline-block mr-4 w-32 "> Price </span>
-             <InputText  class="p-inputtext-sm" type="text" v-model="product.price.netprice" />
+             <InputText  class="p-inputtext-sm" type="text" v-model="product.netprice" />
               </div>
          
             <div class=" mt-4 ">

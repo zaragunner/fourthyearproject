@@ -12,7 +12,7 @@
                         <div class=" h-96 border-solid bg-white border-2 border-gray-200 rounded m-2 text-center p-4">
                             <router-link :to="'/'  + slotProps.data.product_id" >
                             <div class="mb-3">
-                                <img :src="`http://localhost:4001/${slotProps.data.thumbnail.fileName}`" :alt="slotProps.data.name" class="h-42 w-36 product-image" />
+                                <img :src="`http://localhost:4001/${slotProps.data.thumbnail.fileName}`" :alt="slotProps.data.name" class="w-1/4 h-1/4 mx-auto object-fit " />
                             </div>
                            
                          </router-link>
@@ -20,7 +20,7 @@
                                 <h4 class="mb-1">{{slotProps.data.description }}</h4>
                               
                                 <h6 v-if="this.vatRates" class="mt-0 mb-3"> €{{ 
-                                    getPrice(slotProps.data.price.netprice , slotProps.data.price.vat_id)
+                                    getPrice(slotProps.data.netprice , slotProps.data.vat_id)
                                 }}</h6>
                                 <!-- <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span> -->
                                 <div class=" mt-5">
@@ -96,7 +96,7 @@ getImage(data){
 }
   ,
    addToCart(item){
-             const cost = this.getPrice(item.price.netprice, item.price.vat_id)
+             const cost = this.getPrice(item.netprice, item.vat_id)
                 const prod = {
                     item,
                     cost: cost 
@@ -111,7 +111,9 @@ getImage(data){
              const vrate = this.vatRates.filter(rate =>{
                     return rate.vat_id == vatID
              })
-            return price * (1 + vrate[0].rate)
+                const p =  price * (1 + vrate[0].rate)
+             const cost  = Math.round(p * 100) / 100
+            return cost
          }
  },
 async created(){

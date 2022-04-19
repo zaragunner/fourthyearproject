@@ -60,7 +60,7 @@
 
       <div class="w-full">
         <label for="payment" class="block text-sm mb-2">Credit Card</label>
-        <div class="flex">
+        <div class="flex relative">
           <input
             type="text"
             v-model="cardnumber"
@@ -125,12 +125,13 @@
           />
         </div>
         <button
-        :disabled="disabled"
-          class="bg-green-400 p-2 rounded-md font-semibold m-1"
+        id="submitBtn"
+          class="bg-gray-800 text-white absolute mt-2  xl:right-44 md:right-36  p-2 rounded-md font-semibold m-1"
           @click="submit"
         >
           Pay now
         </button>
+         <ProgressSpinner v-if="this.payment" style="width:50px;height:50px" strokeWidth="8" fill="#FFFFFF" animationDuration=".5s"/>
         <span> 4242424242424242</span>
       </div>
     </div>
@@ -139,6 +140,7 @@
 
 <script>
 import Toast from "primevue/toast";
+import ProgressSpinner from 'primevue/progressspinner';
 
 import {
   createPaymentMethod,
@@ -150,6 +152,7 @@ import {
 export default {
   components: {
     Toast,
+    ProgressSpinner
   },
   data() {
     return {
@@ -161,11 +164,12 @@ export default {
       payment_method: null,
       payment_intent: null,
       clientSecret: null,
-      disabled: false
+      payment: false
     };
   },
   methods: {
     async submit() {
+      console.log("SUBMITTING")
       if (
         this.cardnumber == "" ||
         this.cvv == "" ||
@@ -178,6 +182,9 @@ export default {
           life: 1500,
         });
       } else {
+        this.payment = true
+          document.getElementById("submitBtn")
+                .disabled = "true";
         //create payment method and then pass to payment intent
         await createPaymentMethod({
           number: this.cardnumber,
@@ -260,3 +267,20 @@ export default {
   },
 };
 </script>
+<style scoped>
+@keyframes p-progress-spinner-color {
+    100%,
+    0% {
+        stroke: #b3d0ff;
+    }
+    40% {
+        stroke: #3e88ff;
+    }
+    66% {
+        stroke: #0b69ff;
+    }
+    90% {
+        stroke: #003fa5;
+    }
+}
+</style>

@@ -92,6 +92,7 @@ export default {
             else {
             const name = this.Fname + " " + this.Lname
             const address = this.line1 + " " + this.line2 + " " + this.line3 + " " + this.line4 + "" + this.postcode
+            console.log("PHONE NUMBER" , this.phone)
             this.$store.dispatch('cart/setUser', {name : name , phone : this.phone , email : this.email , address: address} )
             this.$router.push('/payment')
             }

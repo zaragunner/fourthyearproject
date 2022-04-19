@@ -19,7 +19,7 @@
                     <span class="text-md font-semibold"> {{product.item.name}} </span>
                 
                   <span class="ml-4">€ {{ 
-                                    getPrice(product.item.price.netprice , product.item.price.vat_id)
+                                    getPrice(product.item.netprice , product.item.vat_id)
                                 }}  </span>
                      <p class="ml-4">Size : {{product.item.size ? product.item.size : "One Size"}} </p>
                   
@@ -89,8 +89,10 @@ import { getVatRates }  from '../../../api/vat/vat-api.js'
              const vrate = this.vatRates.filter(rate =>{
                     return rate.vat_id == vatID
              })
-             console.log(price , vrate[0].rate)
-            return price * (1 + vrate[0].rate)
+
+             const p =  price * (1 + vrate[0].rate)
+             const cost  = Math.round(p * 100) / 100
+            return cost
          },
 
       totalPrice(){

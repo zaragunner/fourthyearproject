@@ -142,7 +142,6 @@ const store = new Vuex.Store({
                     const user =  await Auth.currentAuthenticatedUser();
                     // Returns an array of groups
                     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-                    console.log(groups)
                     commit('groups', groups)
                 },
                 
@@ -222,11 +221,11 @@ const store = new Vuex.Store({
                 commit('createOrder')
             },
 
-            async setUser({commit} ,{ email, name, phone_number, address}) {
+            async setUser({commit} ,{ email, name, phone, address}) {
                 const user = {
                     "name" : name,
                     "email" : email,
-                    "phone" : phone_number,
+                    "phone" : phone,
                     "address" : address
                 }
                 commit('setUser' , user)

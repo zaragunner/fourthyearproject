@@ -12,18 +12,23 @@
         </div>
         <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
           <div class=" text-white flex-shrink-0 flex items-center">
-          <img class="h-8 w-8 " src="@\assets\WIT.jpg"/>
+          <img class="h-8 w-8" src="@\assets\WIT.jpg"/>
+          <p class="ml-2  "> {{this.$store.state.site.site.name}}</p>
           
              </div>
           <div class="hidden sm:block sm:ml-6">
             <div class="flex space-x-4">
 
              <router-link to="/"> 
-                <NavItem  name="Dashboard" v-if="this.$store.state.account.groups =='Public' || this.$store.state.account.groups ==''  || this.$store.state.account.groups == null" :current='active' /> 
+                <NavItem class="mt-4" name="Dashboard" v-if="this.$store.state.account.groups =='Public' || this.$store.state.account.groups ==''  || this.$store.state.account.groups == null" :current='active' /> 
              </router-link>
 
              <router-link to="/catalogue" >
-                <NavItem v-if="this.$store.state.account.groups =='Public' || this.$store.state.account.groups ==''  || this.$store.state.account.groups == null"  name="Catalogue" :current='active'/>  
+                <NavItem v-if="this.$store.state.account.groups =='Public' ||
+                               this.$store.state.account.groups ==''  || 
+                              this.$store.state.account.groups == null"
+                         name="Catalogue" 
+                         :current='active'/>  
                </router-link>
 
             <router-link to="/contentmanagement" >

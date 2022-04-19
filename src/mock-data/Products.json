@@ -1,8 +1,24 @@
  [
+ {"product_id" : "123",
+  "site_id": "01",
+  "name":"Red Dress",
+  "description":"Floor length red dress",
+  "category_id": "01",
+  "sub_category_id": "02",
+  "price" : {
+      "netprice" : "40",
+      "vat_id" : "02",
+      "discount_price" :""
+  }, 
+  "images" :{
+      "thumbnail" : "thumbnail.jpg",
+      "display_images" : []
+  },
+ " options" : ["small" , "medium" , "large"]
+},
      {
     "id":"1",
-    "name": "Earthen Bottle",
-    "href": "#",
+    "name": "Green Dress",
     "price": 48,
     "options" :[{"name" : "Large"} , {"name" : "Small"}],
     "images" : {

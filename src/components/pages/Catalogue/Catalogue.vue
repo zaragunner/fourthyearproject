@@ -26,7 +26,7 @@
 							<div class="product-description">{{slotProps.data.description}}</div>
 							</div>
 						<div class="product-list-action">
-							<span class="product-price">${{slotProps.data.price.netprice}}</span>
+							<span class="product-price">${{slotProps.data.netprice}}</span>
 							<Button class="ml-4" icon="pi pi-shopping-cart" label="Add to Cart" :disabled="slotProps.data.inventoryStatus === 'OUTOFSTOCK'"></Button>
 								</div>
 					</div>
@@ -53,7 +53,7 @@
 						<div class="product-grid-item-bottom">
 							<span v-if="this.vatRates" class="product-price">€
                                 {{ 
-                                    getPrice(slotProps.data.price.netprice , slotProps.data.price.vat_id)
+                                    getPrice(slotProps.data.netprice , slotProps.data.vat_id)
                                 }}
                             </span>
 							<Button @click="addToCart(slotProps.data)" class="ml-8" icon="pi pi-shopping-cart"></Button>
@@ -100,8 +100,8 @@ export default {
       sortOrder: null,
       sortField: null,
       sortOptions: [
-                {label: 'Price High to Low', value: '!price.netprice'},
-                {label: 'Price Low to High', value: 'price.netprice'},
+                {label: 'Price High to Low', value: '!netprice'},
+                {label: 'Price Low to High', value: 'netprice'},
             ],  
       filters: {
                 'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
@@ -127,11 +127,12 @@ export default {
              const vrate = this.vatRates.filter(rate =>{
                     return rate.vat_id == vatID
              })
-             console.log(price , vrate[0].rate)
-            return price * (1 + vrate[0].rate)
+                const p =  price * (1 + vrate[0].rate)
+             const cost  = Math.round(p * 100) / 100
+            return cost
          },
          addToCart(item){
-             const cost = this.getPrice(item.price.netprice, item.price.vat_id)
+             const cost = this.getPrice(item.netprice, item.vat_id)
                 const prod = {
                     item,
                     cost: cost 

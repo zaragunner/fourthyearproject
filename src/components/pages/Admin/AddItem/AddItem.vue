@@ -90,7 +90,7 @@
          
         <input type="file" name="thumbnail"/>
       </div> -->
-      <form id="newItemForm" enctype='multipart/form-data' method="POST" action="/api/products?action=create">
+      <form id="newItemForm" enctype='multipart/form-data' >
   <label class="m-2" for="name">Product Name :</label><br>
   <input class="m-2"  type="text" id="name" name="name" v-model="name"><br>
 
@@ -122,7 +122,7 @@
 
     <label for="thumbnail">Select a file:</label>
   <input type="file" id="thumbnail" name="thumbnail" >
- <button @click="submit"> Submit </button>
+ <button @click="submit($event)"> Submit </button>
 </form>
 
      
@@ -236,28 +236,45 @@ async getVatRates(){
     })
 },
 
-     async submit(){
-       var formElement = document.getElementById("newItemForm");
-       console.log(formElement)
-      //        const result = await addProduct({
-      //   product_id: uuidv4(),
-      //   site_id: parseInt(this.site_id),
-      //   name: this.name,
-      //   description: this.description,
-      //   category_id: this.category_id,
-      //   sub_category_id: this.sub_category_id,
-      //   price: {
-      //     netprice: this.netprice,
-      //     vat_id: this.vat_id
-      //   },
-      // thumbnail: this.newItemForm.thumbnail,
-      //   options: this.options
-      // }).then(res => {
-      //     if(res){
-      //         console.log('response is true')
-      //         this.$emit('closeModal')
-      //     }
-      // });
+     async submit(e){
+       e.preventDefault()
+       var input = document.querySelector('input[type="file"]')
+      console.log(input.files[0])
+      //  var formElement = document.getElementById("newItemForm");
+      //  console.log("FORM EL" , formElement)
+      //  let price = {
+      //    "netprice" : formElement.netprice,
+      //    "vat_id" : formElement.vat_id
+      //  }
+      //  var data = new FormData()
+      //  data.append('file', input.files[0])
+      //  data.append('name', formElement.name),
+      //  data.append('description', formElement.description),
+      //  data.append('category_id', formElement.category_id),
+      //  data.append('sub_category_id', formElement.sub_category_id),
+      //  data.append('price', price),
+      //  data.append('options', formElement.options),
+      // console.log(data.entries())
+
+          const result = await addProduct({
+        product_id: uuidv4(),
+        site_id: parseInt(this.site_id),
+        name: this.name,
+        description: this.description,
+        category_id: this.category_id,
+        sub_category_id: this.sub_category_id,
+        price: {
+          netprice: this.netprice,
+          vat_id: this.vat_id
+        },
+      thumbnail: input.files[0],
+        options: this.options
+      }).then(res => {
+          if(res){
+              console.log('response is true')
+              this.$emit('closeModal')
+          }
+      });
       
         
 

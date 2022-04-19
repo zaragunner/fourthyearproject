@@ -95,7 +95,7 @@
 
              <Column  style="min-width:8rem" field="price" header="Price" sortable >
                 <template #body="{data}">
-                  €{{data.price.netprice}}
+                  €{{data.netprice}}
                 </template>
             </Column>
 
