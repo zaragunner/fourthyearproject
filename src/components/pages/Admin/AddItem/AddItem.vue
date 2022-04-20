@@ -91,7 +91,7 @@
         optionLabel="name" 
         optionValue="option_id"
         />
-         <!-- <i @click="openNewVatRate" class="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer inline-block pi pi-plus-circle"></i> -->
+         <i @click="openNewOption" class="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer inline-block pi pi-plus-circle"></i>
       
       </div>
 
@@ -172,6 +172,12 @@
      @cancelVatModal="cancelVatRateModal"
     
      />
+     <NewOptionModal 
+     :visible="newOptionVisible"
+       @closeOptionsModal="closeOptionsModal"
+     @cancelOptionsModal="cancelOptionsModal"
+    
+     />
    
 </template>
 
@@ -189,6 +195,7 @@ import Listbox from 'primevue/listbox';
 import NewCategoryModal from "./NewCategoryModal.vue"
 import NewSubCategoryModal from "./NewSubCategoryModal.vue"
 import NewVatRateModal from "./NewVatRateModal.vue"
+import NewOptionModal from "./NewOptionModal.vue"
 import Toast from 'primevue/toast';
 import {getCategories} from '../../../../../api/categories/categories-api'
 import {getSubCategories} from '../../../../../api/sub-categories/sub-categories-api'
@@ -210,7 +217,8 @@ export default {
     NewCategoryModal,
     NewSubCategoryModal,
     NewVatRateModal,
-    Listbox
+    Listbox,
+    NewOptionModal
   },
   data() {
     return {
@@ -231,7 +239,8 @@ export default {
       newCategoryVisible: false,
       newSubCategoryVisible: false,
       newVatRateVisible: false,
-      viewOptions: false
+      viewOptions: false,
+      newOptionVisible: false
     };
   },
   async created() {
@@ -346,24 +355,17 @@ async getOptions(){
       this.options=[]
 
     },
+  openNewOption(){
+      this.newOptionVisible = true
+    },
+   closeOptionsModal(){
+      this.newOptionVisible = false;
+       this.$toast.add({severity:'success', summary: 'Cateogry added', life: 1500});
+       this.getOptions();
 
-    // onUpload(file) {
-    //   this.$toast.add({
-    //     severity: "info",
-    //     summary: "Success",
-    //     detail: "File Uploaded",
-    //     life: 3000,
-    //   });
-       
-    //   // Handle files like:
-    //   this.thumbnail = file
-    
-    // },
-    async addItem() {
- 
-     
-
-      console.log(result.code);
+    },
+    cancelOptionsModal(){
+      this.newOptionVisible = false;
     },
   },
 };

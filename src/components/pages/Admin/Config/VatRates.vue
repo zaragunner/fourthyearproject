@@ -117,7 +117,8 @@ export default {
         NewVatRateModal,
         InputText,
         Dialog,
-        Button
+        Button,
+        Toast
     },
     data() {
         return {
