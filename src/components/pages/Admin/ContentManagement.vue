@@ -77,13 +77,14 @@
             </Column>
 
 
-            <Column field="category" header="Category" sortable style="min-width: 14rem">
+            <Column  header="Category" sortable style="min-width: 14rem">
                 <template #body="{data}">
-                  {{data.category_id}}
+                    <div v-if="this.categories">
+                  {{getCategory(data.category_id)}}
+                    </div>
+
                 </template>
-                <template #filter="{filterModel}">
-                    <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by category"/>
-                </template>
+                
             </Column>
 
             
@@ -95,7 +96,9 @@
 
              <Column  style="min-width:8rem" field="price" header="Price" sortable >
                 <template #body="{data}">
-                  €{{data.netprice}}
+                    <div v-if="this.vatRates">
+                  €{{getPrice(data.netprice, data.vat_id)}}
+                    </div>
                 </template>
             </Column>
 
@@ -119,6 +122,8 @@ import InputText from 'primevue/inputtext'
 import Column from 'primevue/column'
 import Toast from 'primevue/toast';
  import mockdata from '@/mock-data/Products.json'
+ import {getVatRates} from "../../../../api/vat/vat-api"
+ import {getCategories} from "../../../../api/categories/categories-api.js"
  import { getProducts,  deleteProduct } from "../../../../api/products/products-api.js";
  import Dropdown from 'primevue/dropdown'
  import {FilterMatchMode} from 'primevue/api';
@@ -147,7 +152,10 @@ export default {
             ],
               filters: {
                 'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
-              }
+              },
+
+            vatRates: null,
+            categories: null
         }
     },
     async created(){
@@ -156,8 +164,35 @@ export default {
       this.products = result;
       
     })
+      await getVatRates().then(res => {
+    this.vatRates = res
+ 
+    })
+     await getCategories().then(res => {
+    this.categories = res
+ 
+    })
     },
     methods: {
+         getPrice(price, vatID){
+             const vrate = this.vatRates.filter(rate =>{
+                    return rate.vat_id == vatID
+             })
+
+             const p =  price * (1 + vrate[0].rate)
+             const cost  = Math.round(p * 100) / 100
+            return cost
+         },
+         getCategory(ID){
+             
+             const cat = this.categories.filter(c =>{
+                    return c.category_id == ID
+             })
+
+             
+            return cat[0].name
+         },
+
         onSortChange(event){
             const value = event.value.value;
             const sortValue = event.value;
