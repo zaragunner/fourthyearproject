@@ -22,7 +22,8 @@
 
 
   
-          <Dropdown  v-if="this.product" v-model="value" :options="product.options? product.options : ['One Size']"     placeholder="Select a Size" />
+          <Dropdown  v-if="this.product" v-model="value" :options="options"  optionLabel="name" 
+        optionValue="option_id"     placeholder="Select a Size" />
        
           </div>
           <button class="bg-gray-800 rounded text-white pr-2 pl-2 pt-1 pb-1" @click="addToCart">
@@ -43,6 +44,7 @@ import Dropdown from 'primevue/dropdown'
  import { getProduct } from "../../../../api/products/products-api.js";
 import { onMounted } from '@vue/runtime-core';
 import { getVatRates }  from '../../../../api/vat/vat-api.js';
+import { getOption} from '../../../../api/options/options-api.js';
 
 export default {
   components : {
@@ -54,27 +56,40 @@ export default {
        return{
         product: null,
         value : null,
-        vatRates: null
+        vatRates: null,
+        options: []
   
        }
    },
-   beforeCreate(){
+  async  beforeCreate(){
    try {
       getProduct(this.$route.params.id).then(result => {
       this.product = result;
-      console.log("THIS>PROF~uct" ,this.product)
+      this.product.options.forEach(option => {
+        console.log("OPTION IN LOOP " , option)
+      getOption(option).then(res =>{
+      this.options.push(res)
+      }
+     )
+      console.log("OPTIONS" , this.options)
+   })
     })  
      
    }
     catch (error){
      console.log(error)
    }
+
+  
    
     getVatRates().then(res => {
     this.vatRates = res
    console.log(this.vatRates)
-    })    
+    })  
+    
+       
  },
+
  methods : {
 
    addToCart(){

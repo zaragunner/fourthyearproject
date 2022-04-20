@@ -1,7 +1,7 @@
 <template>
 <Toast/>
     <div class="w-2/3 mx-auto card">
-        <DataView   :globalFilterFields="['name']"  :value="products" :layout="layout" :sortOrder="sortOrder" :sortField="sortField" :paginator="true" :rows="9" >
+        <DataView   :globalFilterFields="['name']"  :value="products" layout="grid" :sortOrder="sortOrder" :sortField="sortField" :paginator="true" :rows="9" >
 			<template #header>
                 <div class="grid grid-nogutter">
                     <div class="col-6" style="text-align: left">
@@ -11,9 +11,7 @@
                         <i class="pi pi-search" />
                         <InputText v-model="filters['global'].value"  placeholder="Keyword Search" />
                     </span>
-                    <div class="col-6" style="text-align: right">
-                        <DataViewLayoutOptions v-model="layout" />
-                    </div>
+                    
                 </div>
 			</template>
 

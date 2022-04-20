@@ -29,7 +29,7 @@
 <div class="inline-block font-semibold">
     <p> {{product.item.name}} </p>
 <p>€{{product.cost}} </p>
-<p> {{product.item.size ? product.item.size : 'One-Size'}} </p>
+<p>Size :  {{getSize(product.item.size)}} </p>
 
 </div>
   </div>
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { getOptions} from '../../../../api/options/options-api.js'
 import InputText from 'primevue/inputtext'
 import Toast from 'primevue/toast';
 export default {
@@ -67,9 +68,16 @@ export default {
             line3: null,
             line4: '',
             postcode: null,
-            response: null
+            response: null,
+            options: null
             
         }
+    },
+    async created(){
+         await getOptions().then(res=> {
+      this.options = res
+      console.log(this.options)
+    })
     },
  
     mounted(){
@@ -85,6 +93,14 @@ export default {
         }
     },
     methods: {
+        getSize(id){
+       const op = this.options.filter(option =>{
+                    return option.option_id == id
+             })
+         const name = op[0].name
+         console.log(name)
+          return name
+      },
         setUser(){
             if(this.Fname == null || this.Lname ==null || this.phone == null || this.email == null || this.line1 ==null || this.line2 == null || this.line3 == null || this.postcode == null){
                 this.$toast.add({severity:'error', summary: 'Please ensure all required fields are filled in.', life: 1500});

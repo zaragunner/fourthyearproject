@@ -13,7 +13,7 @@
                 <div class="inline-block">
                 <p><span class="font-semibold"> Item  : </span> <span>{{item.item.name}} </span> </p>
                 <p><span class="font-semibold"> Description  : </span> <span>{{item.item.description}} </span> </p>
-                <p><span class="font-semibold"> Size  : </span> <span>{{item.item.size}} </span> </p>
+                <p><span class="font-semibold"> Size  : </span> <span> {{ getSize(item.item.size) }} </span> </p>
                 </div>
               
             </div>
@@ -38,12 +38,19 @@
 </template>
 
 <script>
-
+import { getOptions} from '../../../../api/options/options-api.js'
 export default {
     data(){
         return{
-        order: null
+        order: null,
+        options: null
         }
+    },
+    async created(){
+         await getOptions().then(res=> {
+      this.options = res
+      console.log(this.options)
+    })
     },
     beforeCreate(){
         this.$store.dispatch('cart/createOrder').then(
@@ -56,6 +63,14 @@ export default {
         this.$store.dispatch('cart/clearCart')
     },
     methods :{
+         getSize(id){
+       const op = this.options.filter(option =>{
+                    return option.option_id == id
+             })
+         const name = op[0].name
+         console.log(name)
+          return name
+      },
         getNetTotal(){
             let total = 0;
             this.order.order.forEach(item => {

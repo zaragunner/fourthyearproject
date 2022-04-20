@@ -22,6 +22,8 @@ export const addProduct = async({product_id, site_id, name, description, categor
     const vat_id = price.vat_id;
     const netprice = price.netprice;
     const tnail = thumbnail.name
+    console.log("OPTIONS" ,options)
+  
 
      const formData = new FormData()
      formData.append('product_id' , product_id)
@@ -35,7 +37,9 @@ export const addProduct = async({product_id, site_id, name, description, categor
      formData.append('thumbnail' , thumbnail)
      formData.append('thumbnailName' , tnail)
      formData.append('images' , images)
-     formData.append('options' , options)
+     for (var i = 0; i < options.length; i++) {
+        formData.append('options[]', options[i]);
+      }
      console.log(formData)
     return fetch('/api/products?action=create',{
        

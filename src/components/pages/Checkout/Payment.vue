@@ -34,7 +34,7 @@
               <div class="inline-block font-semibold">
                 <p>{{ product.item.name }}</p>
                 <p>€{{ product.cost}}</p>
-                <p>{{ product.item.size }}</p>
+                <p>Size : {{ getSize(product.item.size) }}</p>
               </div>
             </div>
           </div>
@@ -141,6 +141,7 @@
 <script>
 import Toast from "primevue/toast";
 import ProgressSpinner from 'primevue/progressspinner';
+import { getOptions} from '../../../../api/options/options-api.js'
 
 import {
   createPaymentMethod,
@@ -154,6 +155,12 @@ export default {
     Toast,
     ProgressSpinner
   },
+    async created(){
+         await getOptions().then(res=> {
+      this.options = res
+      console.log(this.options)
+    })
+    },
   data() {
     return {
       cardnumber: "",
@@ -164,10 +171,19 @@ export default {
       payment_method: null,
       payment_intent: null,
       clientSecret: null,
-      payment: false
+      payment: false,
+      options: null
     };
   },
   methods: {
+     getSize(id){
+       const op = this.options.filter(option =>{
+                    return option.option_id == id
+             })
+         const name = op[0].name
+         console.log(name)
+          return name
+      },
     async submit() {
       console.log("SUBMITTING")
       if (

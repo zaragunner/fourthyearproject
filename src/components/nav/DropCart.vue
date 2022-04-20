@@ -21,13 +21,13 @@
                   <span class="ml-4">€ {{ 
                                     getPrice(product.item.netprice , product.item.vat_id)
                                 }}  </span>
-                     <p class="ml-4">Size : {{product.item.size ? product.item.size : "One Size"}} </p>
+                     <p v-if="this.options" class="ml-4"><span class="font-semibold"> Product Size : </span>{{ getSize(product.item.size)}} </p>
                   
                 </div>
                 </div>
                </div>
                <div class="" v-if="this.$store.state.cart.cart.length>0">
-               <div class="inline-block"> Total Price  </div>
+               <div class="inline-block font-semibold"> Total Price  </div>
                <div class="inline-block ml-6"> €{{this.$store.state.cart.total}} </div>
               
           
@@ -50,7 +50,9 @@
  </template>
 
  <script>
+
 import { getVatRates }  from '../../../api/vat/vat-api.js'
+import {getOption, getOptions} from '../../../api/options/options-api.js'
   export default {
     components:{
 
@@ -65,10 +67,13 @@ import { getVatRates }  from '../../../api/vat/vat-api.js'
     catch{
       console.log("empty")
     }
-
+    await getOptions().then(res=> {
+      this.options = res
+      console.log(this.options)
+    })
     await getVatRates().then(res => {
     this.vatRates = res
-   console.log(this.vatRates)
+ 
     })
 
     console.log("STATE CART" , this.$store.state.cart.cart)
@@ -77,13 +82,22 @@ import { getVatRates }  from '../../../api/vat/vat-api.js'
         return {
             cartOpen: false,
             price: null,
-            vatRates: null
+            vatRates: null,
+            options: null
         }
     },
     methods :{
       clearCart(){
         this.$store.dispatch('cart/clearCart')
         this.cartOpen = false;
+      },
+     getSize(id){
+       const op = this.options.filter(option =>{
+                    return option.option_id == id
+             })
+         const name = op[0].name
+         console.log(name)
+          return name
       },
        getPrice(price, vatID){
              const vrate = this.vatRates.filter(rate =>{

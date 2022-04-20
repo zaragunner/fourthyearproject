@@ -1,6 +1,6 @@
 <template>
 <Toast/>
-  <!-- <div class="m-4 flex space-x-4">
+  <div class="m-4 flex space-x-4">
     <div class="flex rounded-lg overflow-hidden">
       <img
         class="h-64 w-64 object-center object-cover group-hover:opacity-75"
@@ -79,18 +79,35 @@
       
       </div>
 
-      <div class="mt-4">
-        <span class="inline-block mr-4 w-32"> Options </span>
-        <Chips v-model="options" />
+      <div class="mt-2">
+        <span class="inline-block mr-4 w-32"> Product Size Options: </span> <button @click="this.viewOptions = true"> View Options </button>
+          <Listbox 
+          v-if="viewOptions"
+         :multiple="true" :filter="true"  listStyle="max-height:250px" style="width:15rem" filterPlaceholder="Search"
+         v-model="options" 
+        :options="allOptions"  
+        placeholder="Select size options" 
+        optionLabel="name" 
+        optionValue="option_id"
+        />
+         <!-- <i @click="openNewVatRate" class="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer inline-block pi pi-plus-circle"></i> -->
+      
       </div>
 
       <div class="mt-4">
         <span class="inline-block mr-4 w-32"> Thumbnail </span>
         <div class="inline-block">
-         
-        <input type="file" name="thumbnail"/>
-      </div> -->
-      <form id="newItemForm" enctype='multipart/form-data' >
+          <form id="newItemForm" enctype='multipart/form-data' >
+       
+    <label for="thumbnail">Select a file:</label>
+  <input type="file" id="thumbnail" name="thumbnail" >
+ <button @click="submit($event)"> Submit </button>
+</form>
+      </div>
+      </div>
+    </div>
+  </div>
+      <!-- <form id="newItemForm" enctype='multipart/form-data' >
   <label class="m-2" for="name">Product Name :</label><br>
   <input class="m-2"  type="text" id="name" name="name" v-model="name"><br>
 
@@ -115,15 +132,11 @@
     <option class="m-2" v-for="rate in this.vatRates" :key="rate.vat_id" :value="rate.vat_id">{{rate.name}}</option>
   </select><br>
 
- <div class="mt-4">
-        <span class="inline-block mr-4 w-32"> Options </span>
-        <Chips v-model="options" />
-      </div>
+ <label class="m-2" for="options">Product Size Options:</label>
+  <select class="m-2" id="options" name="options" v-model="options" multiple>
+    <option class="m-2" v-for="option in this.allOptions" :key="option.option_id" :value="option.option_id">{{option.name}}</option>
+  </select><br> -->
 
-    <label for="thumbnail">Select a file:</label>
-  <input type="file" id="thumbnail" name="thumbnail" >
- <button @click="submit($event)"> Submit </button>
-</form>
 
      
 
@@ -169,6 +182,7 @@ import InputText from "primevue/inputtext";
 import TextArea from "primevue/textarea";
 // import FileUpload from "primevue/fileupload";
 import Dropdown from 'primevue/dropdown';
+import Listbox from 'primevue/listbox';
 
 // import AddItemModal from "./AddItemModal.vue"
 import NewCategoryModal from "./NewCategoryModal.vue"
@@ -180,6 +194,8 @@ import {getSubCategories} from '../../../../../api/sub-categories/sub-categories
 import {getVatRates} from '../../../../../api/vat/vat-api'
 import { addProduct } from "../../../../../api/products/products-api.js";
 import { v4 as uuidv4 } from 'uuid';
+import {getOptions} from "../../../../../api/options/options-api.js";
+
 export default {
   components: {
     //   SelectButton,
@@ -192,7 +208,8 @@ export default {
     Dropdown,
     NewCategoryModal,
     NewSubCategoryModal,
-    NewVatRateModal
+    NewVatRateModal,
+    Listbox
   },
   data() {
     return {
@@ -207,17 +224,20 @@ export default {
       sub_category_id: null,
       netprice: null,
       vat_id: null,
-      options: null,
+      allOptions : null,
+      options: [],
       visible: false,
       newCategoryVisible: false,
       newSubCategoryVisible: false,
-      newVatRateVisible: false
+      newVatRateVisible: false,
+      viewOptions: false
     };
   },
   async created() {
    this.getCategories();
    this.getSubCategories();
    this.getVatRates();
+   this.getOptions();
   },
   methods: {
 async getCategories(){
@@ -236,27 +256,18 @@ async getVatRates(){
     })
 },
 
+async getOptions(){
+  await getOptions().then(res =>{
+    console.log("OPTIONS RES" , res)
+    this.allOptions = res
+  })
+},
+
      async submit(e){
+     console.log(this.options)
        e.preventDefault()
        var input = document.querySelector('input[type="file"]')
-      console.log(input.files[0])
-      //  var formElement = document.getElementById("newItemForm");
-      //  console.log("FORM EL" , formElement)
-      //  let price = {
-      //    "netprice" : formElement.netprice,
-      //    "vat_id" : formElement.vat_id
-      //  }
-      //  var data = new FormData()
-      //  data.append('file', input.files[0])
-      //  data.append('name', formElement.name),
-      //  data.append('description', formElement.description),
-      //  data.append('category_id', formElement.category_id),
-      //  data.append('sub_category_id', formElement.sub_category_id),
-      //  data.append('price', price),
-      //  data.append('options', formElement.options),
-      // console.log(data.entries())
-
-          const result = await addProduct({
+                const result = await addProduct({
         product_id: uuidv4(),
         site_id: parseInt(this.site_id),
         name: this.name,
@@ -271,8 +282,8 @@ async getVatRates(){
         options: this.options
       }).then(res => {
           if(res){
-              console.log('response is true')
-              this.$emit('closeModal')
+               this.clearInputs()
+       this.$toast.add({severity:'success', summary: 'Item added', life: 1500});
           }
       });
       
