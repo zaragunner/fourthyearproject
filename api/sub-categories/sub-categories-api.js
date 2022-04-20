@@ -25,3 +25,14 @@ export const deleteSubCategory = async(sub_category_id) => {
         method: 'delete'
     }).then(res => res.json())
 };
+
+
+export const updateSubCategory = async({sub_category_id, name, description}) => {
+    return fetch(`/api/subcategories/${sub_category_id}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'put',
+        body: JSON.stringify({sub_category_id : sub_category_id, name : name, description : description })
+    }).then(res => res)
+};

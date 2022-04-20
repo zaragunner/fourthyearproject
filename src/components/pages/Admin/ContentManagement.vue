@@ -1,8 +1,8 @@
 <template>
-<div class="flex">
-<div class="h-full w-1/12 p-2  flex-auto ">
-    <div class="bg-blue-300 ">
-        <p> Edit Configurations </p>
+<div class="w-4/5 mx-auto">
+<div class=" w-full p-2 ">
+    <div class="">
+        <p class="font-semibold text-lg "> Edit Configurations </p>
     </div>
 
   <router-link to="/categories"> <button class="p-2 m-2 bg-gray-700 text-white rounded"  > Categories </button> </router-link>

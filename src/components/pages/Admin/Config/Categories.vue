@@ -1,4 +1,5 @@
 <template>
+<Toast/>
 <div class=" mx-auto bg-gray-100 p-2 w-2/3">
     <DataTable 
       class="p-datatable-sm"
@@ -58,7 +59,7 @@
              </Column>
                <Column  header="Actions" style="min-width: 8rem">
                 <template #body="{data}" >
-                    <i class="m-1 pi pi-pencil cursor-pointer text-gray-400 hover:text-gray-800" style="font-size: 1.25rem" ></i>
+                    <i @click="openEditModal(data)" class="m-1 pi pi-pencil cursor-pointer text-gray-400 hover:text-gray-800" style="font-size: 1.25rem" ></i>
                     <i @click="openConfirmModal(data)" class=" m-1 pi pi-trash cursor-pointer text-red-500 hover:text-red-700" style="font-size: 1.25rem"  ></i>
 
                 </template>
@@ -77,6 +78,21 @@
             </template>
         </Dialog>
 
+        <Dialog :modal="true" header="Edit Category" :visible="editModalOpen" :style="{width: '50vw'}">
+      <div class="m-2"> 
+           <p class="inline-block"> Category Name  : </p> 
+            <InputText v-model="editingCat.name"/>
+     </div>
+      <div class="m-2"> 
+           <p class="inline-block"> Category Description  : </p> 
+            <InputText v-model="editingCat.description"/>
+     </div>
+                 <template #footer>
+                <Button label="Cancel" icon="pi pi-times" @click="editModalOpen = false" class="p-button-text"/>
+                <Button label="Submit" icon="pi pi-check" @click="submitEditModal" autofocus />
+            </template>
+        </Dialog>
+
         <NewCategoryModal 
      :visible="newCategoryVisible"
      @closeCategoryModal="closeCategoryModal"
@@ -87,12 +103,12 @@
 </template>
 
 <script>
-import {getCategories , deleteCategory} from '../../../../../api/categories/categories-api'
+import {getCategories , deleteCategory, updateCategory} from '../../../../../api/categories/categories-api'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
-
+import Toast from 'primevue/toast';
 import NewCategoryModal from "../../Admin/AddItem/NewCategoryModal.vue"
 
 import InputText from 'primevue/inputtext'
@@ -106,7 +122,8 @@ export default {
         Dialog,
         Button,
         NewCategoryModal,
-        InputText
+        InputText,
+        Toast
     },
     data() {
         return {
@@ -119,6 +136,8 @@ export default {
             filters: {
                 'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
             },
+            editingCat: null,
+            editModalOpen: false
         }
     },
      async created(){
@@ -135,7 +154,7 @@ methods:{
                 console.log("fail")
             }      })
     },
-    
+   
         openNewCategory(){
       this.newCategoryVisible = true
     },
@@ -166,7 +185,25 @@ methods:{
     },
     cancelConfirmModal(){
         this.confirmModalOpen = false;this
-    }
+    },
+     openEditModal(cat){
+        this.editModalOpen = true
+        this.editingCat = cat;
+     },
+     closeEditModal(){
+         this.editModalOpen = false
+     },
+     async submitEditModal(){
+         const resp = await updateCategory({
+             category_id : this.editingCat.category_id,
+              name : this.editingCat.name,
+               description: this.editingCat.description
+         })
+         if(resp.status == 200){
+              this.$toast.add({severity:'success', summary: 'Category Updated', life: 1500});
+              this.closeEditModal();
+         }
+     }
 }
 
 }

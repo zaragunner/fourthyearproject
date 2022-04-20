@@ -80,8 +80,9 @@
       </div>
 
       <div class="mt-2">
-        <span class="inline-block mr-4 w-32"> Product Size Options: </span> <button @click="this.viewOptions = true"> View Options </button>
+        <span class="inline-block mr-4 w-32"> Product Size Options: </span> <button v-if="this.viewOptions == false" @click="this.viewOptions = true"> View Options </button>
           <Listbox 
+          class="ml-24"
           v-if="viewOptions"
          :multiple="true" :filter="true"  listStyle="max-height:250px" style="width:15rem" filterPlaceholder="Search"
          v-model="options" 

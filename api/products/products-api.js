@@ -40,22 +40,12 @@ export const addProduct = async({product_id, site_id, name, description, categor
      for (var i = 0; i < options.length; i++) {
         formData.append('options[]', options[i]);
       }
-     console.log(formData)
+    
     return fetch('/api/products?action=create',{
        
         method: 'post',
         body: formData
-        // JSON.stringify({  ,
-        //     site_id : site_id ,
-        //     name: name ,
-        //     description : description,
-        //      category_id: category_id,
-        //       sub_category_id : sub_category_id,
-        //        price : price,
-        //        thumbnail: thumbnail,
-        //         images : images,
-        //          options: options })
-        
+     
                                   
     }).then(res =>
          res.json())
@@ -69,6 +59,34 @@ export const deleteProduct = async(product_id) => {
         method: 'delete'
     }).then(res => res.json())
 };
+
+export const updateProduct  = async({product_id, name, description, category_id, sub_category_id, price, images, options})=>{
+    const vat_id = price.vat_id;
+    const netprice = price.netprice;
+   
+
+     const formData = new FormData()
+     formData.append('product_id' , product_id)
+     formData.append('name' , name)
+     formData.append('description' ,description)
+     formData.append('category_id', category_id)
+     formData.append('sub_category_id' , sub_category_id)
+     formData.append('vat_id', vat_id)
+     formData.append('netprice' ,netprice)
+
+     formData.append('images' , images)
+     for (var i = 0; i < options.length; i++) {
+        formData.append('options[]', options[i]);
+      }
+      return fetch(`/api/products/${product_id}?action=update`,{
+       
+        method: 'put',
+        body: formData
+     
+                                  
+    }).then(res =>
+         res.json())
+}
 
 
 

@@ -66,13 +66,8 @@
       <Column header="Actions" style="min-width: 8rem">
         <template #body="{ data }">
           <i
-            class="
-              m-1
-              pi pi-pencil
-              cursor-pointer
-              text-gray-400
-              hover:text-gray-800
-            "
+           @click="openEditModal(data)"
+            class="m-1 pi pi-pencil cursor-pointer text-gray-400 hover:text-gray-800"
             style="font-size: 1.25rem"
           ></i>
           <i
@@ -117,6 +112,21 @@
     </template>
   </Dialog>
 
+  <Dialog :modal="true" header="Edit Sub-Category" :visible="editModalOpen" :style="{width: '50vw'}">
+      <div class="m-2"> 
+           <p class="inline-block">Sub-Category Name  : </p> 
+            <InputText v-model="editingCat.name"/>
+     </div>
+      <div class="m-2"> 
+           <p class="inline-block">Sub-Category Description  : </p> 
+            <InputText v-model="editingCat.description"/>
+     </div>
+                 <template #footer>
+                <Button label="Cancel" icon="pi pi-times" @click="editModalOpen = false" class="p-button-text"/>
+                <Button label="Submit" icon="pi pi-check" @click="submitEditModal" autofocus />
+            </template>
+        </Dialog>
+
   <NewSubCategoryModal
     :visible="newSubCategoryVisible"
     @closeSubCategoryModal="closeSubCategoryModal"
@@ -128,6 +138,7 @@
 import {
   getSubCategories,
   deleteSubCategory,
+  updateSubCategory
 } from "../../../../../api/sub-categories/sub-categories-api";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
@@ -158,6 +169,8 @@ export default {
        filters: {
                 'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
             },
+      editingCat:null,
+       editModalOpen: false
     };
   },
   async created() {
@@ -205,6 +218,28 @@ export default {
       this.confirmModalOpen = false;
       this;
     },
+     openEditModal(cat){
+        this.editModalOpen = true
+        this.editingCat = cat;
+     },
+     closeEditModal(){
+         this.editModalOpen = false
+     },
+     async submitEditModal(){
+       
+         const resp = await updateSubCategory({
+             sub_category_id : this.editingCat.sub_category_id,
+              name : this.editingCat.name,
+               description: this.editingCat.description
+         })
+         if(resp.status == 200){
+              this.$toast.add({severity:'success', summary: 'Sub-Category Updated', life: 1500});
+              this.closeEditModal();
+         }
+         else{
+           alert("failed")
+         }
+     }
   },
 };
 </script>
