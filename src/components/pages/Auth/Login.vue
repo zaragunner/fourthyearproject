@@ -104,8 +104,13 @@ import Toast from 'primevue/toast';
       async signIn(){
        await this.$store.dispatch('account/login', {email: this.email , password: this.password}).then(result => {
         if(result == true){
-           console.log("SUCCESSS")
+          if(this.$store.state.account.groups =='Public' ){
           this.$router.push('/')
+          }
+          else if(this.$store.state.account.groups =='Admin' ){
+              this.$router.push('/contentmanagement')
+          }
+          
          }
          else{
            console.log("failure" , result)

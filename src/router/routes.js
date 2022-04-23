@@ -18,6 +18,8 @@ import Payment from '../components/pages/Checkout/Payment.vue'
 import PaymentSuccess from '../components/pages/Checkout/PaymentSuccess.vue'
 import Orders from '../components/pages/Admin/Orders.vue'
 import EditOrder from '../components/pages/Admin/EditOrder.vue'
+import Options from '../components/pages/Admin/Config/Options.vue';
+import MyOrders from '../components/pages/Orders/MyOrders.vue'
 const routes = [
     {
         component: Main,
@@ -41,6 +43,8 @@ const routes = [
             {component: PaymentSuccess, name: 'PaymentSuccess', path:'/paymentsuccess'},
             {component: Orders , name : 'Orders' , path:'/orders'},
             {component: EditOrder ,          name: 'EditOrder',             path: '/editorder/:id'},
+            {component: Options, name: 'Options' , path:'/options'},
+            {component: MyOrders , name: 'MyOrders' , path:'/myorders'}
         ]
     }
 ];

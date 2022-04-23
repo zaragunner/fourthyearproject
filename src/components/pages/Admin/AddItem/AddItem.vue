@@ -1,14 +1,9 @@
 <template>
 <Toast/>
-  <div class="m-4 flex space-x-4">
-    <div class="flex rounded-lg overflow-hidden">
-      <img
-        class="h-64 w-64 object-center object-cover group-hover:opacity-75"
-      />
-    </div>
-
-    <div class="flex-1"> 
-    
+  <div class="m-4 ml-12 flex space-x-4">
+   
+    <div class="flex-1 w-1/3"> 
+     <h1 class="bg-gray-200 w-1/3 p-2 shadow-sm text-xl font-semibold"> Add New Item </h1>
       <div class="mt-2">
         <span class="inline-block mr-4 mt-2 w-32"> Name </span>
         <InputText
@@ -18,10 +13,10 @@
           v-model="name"
         />
       </div>
-      <div class="inline-block bg-red-500 mt-2">
-        <span class="inline-block mr-4 mt-2 w-32"> Description </span>
+      <div class="inline-block mt-2">
+        <span class="inline-block align-top mr-4 mt-2 w-32"> Description </span>
       </div>
-      <div class="inline-block bg-blue-600 mt-2">
+      <div class="inline-block align-top  mt-2">
         <TextArea
           v-model="description"
           :autoResize="true"
@@ -80,9 +75,15 @@
       </div>
 
       <div class="mt-2">
-        <span class="inline-block mr-4 w-32"> Product Size Options: </span> <button v-if="this.viewOptions == false" @click="this.viewOptions = true"> View Options </button>
+        <span class="inline-block mr-4 w-32"> Product Size Options: </span>
+         <button class="bg-white outline-gray text-gray-500 p-2 rounded-lg text-md  " 
+         @click="this.viewOptions = !this.viewOptions"> 
+         {{this.viewOptions ? 'Close Options' : 'Select Size Options' }} 
+           <i v-if="this.viewOptions == false" class="pi pi-chevron-down"/>  
+           <i v-if="this.viewOptions == true" class="pi pi-chevron-up"/>
+           </button> <i @click="openNewOption" class="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer inline-block pi pi-plus-circle"></i>
           <Listbox 
-          class="ml-24"
+          class="ml-36"
           v-if="viewOptions"
          :multiple="true" :filter="true"  listStyle="max-height:250px" style="width:15rem" filterPlaceholder="Search"
          v-model="options" 
@@ -91,7 +92,7 @@
         optionLabel="name" 
         optionValue="option_id"
         />
-         <i @click="openNewOption" class="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer inline-block pi pi-plus-circle"></i>
+        
       
       </div>
 
@@ -102,59 +103,12 @@
        
     <label for="thumbnail">Select a file:</label>
   <input type="file" id="thumbnail" name="thumbnail" >
- <button @click="submit($event)"> Submit </button>
+ <button class="bg-gray-900 p-3 rounded-lg  text-white outline-none" @click="submit($event)"> Submit </button>
 </form>
       </div>
       </div>
     </div>
   </div>
-      <!-- <form id="newItemForm" enctype='multipart/form-data' >
-  <label class="m-2" for="name">Product Name :</label><br>
-  <input class="m-2"  type="text" id="name" name="name" v-model="name"><br>
-
-  <label class="m-2" for="description">Product Description:</label><br>
-  <input class="m-2" type="text" id="description" name="description" v-model="description"><br>
-
-   <label class="m-2" for="category">Product Category:</label>
-  <select class="m-2" id="category" name="category" v-model="category_id">
-    <option class="m-2" v-for="category in this.categories" :key="category.category_id" :value="category.category_id">{{category.name}}</option>
-  </select><br>
-
-   <label class="m-2" for="sub_category">Product Sub-Category:</label>
-  <select class="m-2" id="sub_category" name="sub_category" v-model="sub_category_id">
-    <option class="m-2" v-for="subcategory in this.subCategories" :key="subcategory.sub_category_id" :value="subcategory.sub_category_id">{{subcategory.name}}</option>
-  </select><br>
-
-  <label class="m-2" for="netprice">Product Net Price:</label>
-  <input class="m-2" type="number" id="price[0][netprice]" name="price[0][netprice]" v-model="netprice"><br>
-
-  <label class="m-2" for="vatrate">Product Vat Rate:</label>
-  <select class="m-2" id="price[0][vat_id]" name="price[0][vat_id]" v-model="vat_id">
-    <option class="m-2" v-for="rate in this.vatRates" :key="rate.vat_id" :value="rate.vat_id">{{rate.name}}</option>
-  </select><br>
-
- <label class="m-2" for="options">Product Size Options:</label>
-  <select class="m-2" id="options" name="options" v-model="options" multiple>
-    <option class="m-2" v-for="option in this.allOptions" :key="option.option_id" :value="option.option_id">{{option.name}}</option>
-  </select><br> -->
-
-
-     
-
-      <!-- <AddItemModal 
-      :name="name"
-      :site_id ="site_id"
-     :product_id="product_id"
-     :description="description"
-     :category_id="category_id"
-     :sub_category_id="sub_category_id"
-     :netprice="netprice"
-     :vat_id="vat_id"
-     :thumbnail=""
-     :options="options"
-     :visible="visible"
-     @closeModal="closeModal"
-     /> -->
 
      <NewCategoryModal 
      :visible="newCategoryVisible"
@@ -191,6 +145,7 @@ import TextArea from "primevue/textarea";
 import Dropdown from 'primevue/dropdown';
 import Listbox from 'primevue/listbox';
 
+
 // import AddItemModal from "./AddItemModal.vue"
 import NewCategoryModal from "./NewCategoryModal.vue"
 import NewSubCategoryModal from "./NewSubCategoryModal.vue"
@@ -218,7 +173,7 @@ export default {
     NewSubCategoryModal,
     NewVatRateModal,
     Listbox,
-    NewOptionModal
+    NewOptionModal,
   },
   data() {
     return {

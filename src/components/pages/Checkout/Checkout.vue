@@ -1,6 +1,6 @@
 <template>
 <Toast/>
-    <div class="w-2/3 mx-auto mt-3">
+    <div class="w-2/3 mx-auto mb-4  mt-3">
         <div>
       <p class="text-xl font-bold "> Checkout </p>
         </div>

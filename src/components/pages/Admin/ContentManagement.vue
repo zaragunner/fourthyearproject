@@ -8,6 +8,7 @@
   <router-link to="/categories"> <button class="p-2 m-2 bg-gray-700 text-white rounded"  > Categories </button> </router-link>
     <router-link to="/subcategories"> <button class="p-2 m-2 bg-gray-700 text-white rounded"  > SubCategories </button>    </router-link>  
     <router-link to="/vatrates"><button class="p-2 m-2 bg-gray-700 text-white rounded"  > Vat Rates </button></router-link>
+    <router-link to="/options"><button class="p-2 m-2 bg-gray-700 text-white rounded"  > Size Options </button></router-link>
 </div>
 <Toast/>
     <div class="bg-gray-200 w-6/8 p-2 m-1 ">
@@ -159,7 +160,11 @@ export default {
         }
     },
     async created(){
-
+   await getCategories().then(res => {
+    this.categories = res
+ 
+    })
+    
      getProducts().then(result => {
       this.products = result;
       
@@ -168,10 +173,7 @@ export default {
     this.vatRates = res
  
     })
-     await getCategories().then(res => {
-    this.categories = res
- 
-    })
+  
     },
     methods: {
          getPrice(price, vatID){

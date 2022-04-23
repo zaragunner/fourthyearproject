@@ -15,46 +15,27 @@
                 </div>
 			</template>
 
-			<template #list="slotProps">
-				<div class="col-12">
-					<div class="product-list-item">
-						<img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="slotProps.data.name"/>
-						<div class="product-list-detail">
-							<div field="name" class="product-name">{{slotProps.data.name}}</div>
-							<div class="product-description">{{slotProps.data.description}}</div>
-							</div>
-						<div class="product-list-action">
-							<span class="product-price">${{slotProps.data.netprice}}</span>
-							<Button class="ml-4" icon="pi pi-shopping-cart" label="Add to Cart" :disabled="slotProps.data.inventoryStatus === 'OUTOFSTOCK'"></Button>
-								</div>
-					</div>
-				</div>
-			</template>
-
 			<template #grid="slotProps">
-				<div class="col-12 md:col-4">
-					<div class="product-grid-item ml-4 w-64 card">
-						<div class="product-grid-item-top">
-							<div>
-							
-								<span class="product-category">{{slotProps.data.category}}</span>
-							</div>
-						</div>
-						<div class="product-grid-item-content">
+				<div class="col-12 md:col-4 mt-2 m-2 p-2  border-4 border-gray-100 ">
+					<div class="product-grid-item   w-64 card">
+						
+						<div class="product-grid-item-content  mx-auto">
               <router-link :to="`/${slotProps.data.product_id}`">
-							<img :src="`http://localhost:4001/${slotProps.data.thumbnail.fileName}`" class="h-36 w-36" :alt="slotProps.data.name"/>
+							<img :src="`http://localhost:4001/${slotProps.data.thumbnail.fileName}`" class="h-36 w-36 mx-auto bg-red-500 object-center" :alt="slotProps.data.name"/>
 							
-              <div class="product-name">{{slotProps.data.name}}</div>
+              <div class="product-name mx-auto text-center text-lg font-semibold">{{slotProps.data.name}}</div>
               </router-link>
-							<div class="product-description">{{slotProps.data.description}}</div>
+							<div class="product-description text-center mx-auto">{{slotProps.data.description}}</div>
 							</div>
-						<div class="product-grid-item-bottom">
-							<span v-if="this.vatRates" class="product-price">€
+						<div class="product-grid-item-bottom text-center  mx-auto ">
+							<span v-if="this.vatRates">€
                                 {{ 
                                     getPrice(slotProps.data.netprice , slotProps.data.vat_id)
                                 }}
                             </span>
-							<Button @click="addToCart(slotProps.data)" class="ml-8" icon="pi pi-shopping-cart"></Button>
+                            <router-link :to="`/${slotProps.data.product_id}`">
+							<Button  class=" block ml-20 mt-4 " >View More</Button>
+                            </router-link>
 						</div>
 					</div>
 				</div>
@@ -74,7 +55,7 @@ import Button from 'primevue/button'
  import InputText from 'primevue/inputtext'
  import { getProducts } from "../../../../api/products/products-api.js";
  import {FilterMatchMode} from 'primevue/api';
-
+import {FilterService} from 'primevue/api';
 import { getVatRates } from '../../../../api/vat/vat-api.js'
 import { onBeforeMount } from '@vue/runtime-core';
 export default {

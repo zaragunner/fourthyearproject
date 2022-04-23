@@ -57,7 +57,7 @@
         </div>
         <h2 class="text-lg">Your Payment Information</h2>
       </div>
-
+<!-- https://tailwindcomponents.com/component/stripe-credit-card -->
       <div class="w-full">
         <label for="payment" class="block text-sm mb-2">Credit Card</label>
         <div class="flex relative">
@@ -132,7 +132,7 @@
           Pay now
         </button>
          <ProgressSpinner v-if="this.payment" style="width:50px;height:50px" strokeWidth="8" fill="#FFFFFF" animationDuration=".5s"/>
-        <span> 4242424242424242</span>
+        <span class="text-white"> 4242424242424242</span>
       </div>
     </div>
   </div>
@@ -142,7 +142,7 @@
 import Toast from "primevue/toast";
 import ProgressSpinner from 'primevue/progressspinner';
 import { getOptions} from '../../../../api/options/options-api.js'
-
+import { v4 as uuidv4 } from 'uuid';
 import {
   createPaymentMethod,
   createPaymentIntent,
@@ -253,13 +253,12 @@ export default {
     },
 
     async confirmPay() {
-      console.log("confirming payment method", this.payment_method);
-      console.log("confirming payment method , intent id", this.payment_intent);
       await confirmPayment({
         payment_method: this.payment_method,
         payment_intent: this.payment_intent,
         order: this.$store.state.cart.cart,
-        customer : this.$store.state.cart.customer
+        customer : this.$store.state.cart.customer,
+        order_id : uuidv4(),
       }).then((result) => {
          if(result.status != 200){
          

@@ -1,9 +1,8 @@
 <template>
 <div class="m-4 flex space-x-4">
     <div class="flex rounded-lg overflow-hidden">
-      <img
-        class="h-64 w-64 object-center object-cover group-hover:opacity-75"
-      />
+       <img v-if="this.product" :src="`http://localhost:4001/${this.product.thumbnail.fileName}`"   class="h-64 w-64 object-center object-cover group-hover:opacity-75" />
+     
     </div>
 
     <div class="flex-1"> 
@@ -79,7 +78,13 @@
       </div>
 
       <div class="mt-2">
-        <span class="inline-block mr-4 w-32"> Product Size Options: </span> <button v-if="this.viewOptions == false" @click="this.viewOptions = true"> View Options </button>
+        <span class="inline-block mr-4 w-32"> Product Size Options: </span> 
+  	    <button class="bg-white outline-gray text-gray-500 p-2 rounded-lg text-md  " 
+         @click="this.viewOptions = !this.viewOptions"> 
+         {{this.viewOptions ? 'Close Options' : 'Select Size Options' }} 
+           <i v-if="this.viewOptions == false" class="pi pi-chevron-down"/>  
+           <i v-if="this.viewOptions == true" class="pi pi-chevron-up"/>
+           </button> <i @click="openNewOption" class="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer inline-block pi pi-plus-circle"></i>
           <Listbox 
           class="ml-24"
           v-if="viewOptions"
@@ -96,10 +101,10 @@
       </div>
 
       <div class="mt-4">
-        <span class="inline-block mr-4 w-32"> Thumbnail </span>
-        <div class="inline-block">
-      
- <button @click="submit($event)"> Submit </button>
+        
+        <div class="relative w-1/3 bg-gray-500 inline-block">
+      <button class="bg-gray-900 absolute right-0 p-3 rounded-lg  text-white outline-none" @click="submit($event)"> Submit </button>
+
 
       </div>
       </div>

@@ -7,11 +7,24 @@ export const getOrders = async() => {
     }).then(res => res.json())
 };
 
-export const getOrder = async(_id)=> {
-    return fetch(`/api/orders/${_id}`,{
+export const getOrder = async(id)=> {
+    return fetch(`/api/orders/${id}`,{
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'get'
     }).then(res => res.json())
 };
+
+export const getMyOrders = async(UserID)=> {
+    return fetch(`/api/orders/user/${UserID}`,{
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'get'
+    }).then(res => res.json())
+};
+
+
+
+

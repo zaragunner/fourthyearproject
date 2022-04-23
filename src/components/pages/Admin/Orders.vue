@@ -38,7 +38,7 @@
            <Column field="image" header="Items" style="min-width: 8rem">
                 <template #body="{data}">
                         <div v-for="item in data.order">
-                            {{item.name}}
+                            {{item.item.name}}
                         </div>
                 </template> 
              </Column>
@@ -49,7 +49,7 @@
              </Column>
              <Column>
              <template #body="{data}">
-                 <router-link :to="`/editorder/${data._id}`">
+                 <router-link :to="`/editorder/${data.order_id}`">
                  <i class="pi pi-pencil text-gray-400 hover:text-gray-600 cursor-pointer" style="font-size: 1rem"></i>
                  </router-link>
              </template>
@@ -88,7 +88,7 @@ export default{
 
      await getOrders().then(result => {
       this.orders = result;
-      
+      console.log("THIS ORDERS" , this.orders)
     })
     },
 }

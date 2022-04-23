@@ -11,6 +11,7 @@
 import NavBar from '@/components/nav/NavBar.vue'
 import {getSite } from '../../../api/sites/sites-api'
 import {getTheme } from '../../../api/themes/themes-api'
+
 export default {
     components :{
         NavBar,

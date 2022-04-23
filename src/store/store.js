@@ -221,13 +221,16 @@ const store = new Vuex.Store({
                 commit('createOrder')
             },
 
-            async setUser({commit} ,{ email, name, phone, address}) {
+            async setUser({commit, rootState } ,{ email, name, phone, address}) {
+               
                 const user = {
+                    "user_id": rootState.account.user.username,
                     "name" : name,
                     "email" : email,
                     "phone" : phone,
                     "address" : address
                 }
+                console.log(user)
                 commit('setUser' , user)
 
         }

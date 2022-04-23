@@ -3,6 +3,15 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      inset: {
+         right :{
+           "18" : "4.5rem"
+         },
+      },
+
+        outline: {
+          gray: '1.5px solid #d1d5db',
+        },
       colors: {
         indigo: {
           // theme('colors.indigo.light')

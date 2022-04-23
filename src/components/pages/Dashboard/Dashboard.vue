@@ -1,32 +1,36 @@
 <template>
   <div class="">
-      <div class="p-2 m-2 bg gray-300 text-center">
-          <h3> Todays special offers! </h3>
-          <p> 10% off X range </p>
+      <div class="p-2 m-2 bg gray-300 w-5/6 mx-auto  shadow-lg text-center">
+          <h3 class="text-2xl font-semibold "> Todays special offers! </h3>
+          <p> 10% off All Cabinets </p>
       </div>
   <div class="card  w-2/3 mx-auto rounded bg-gray-50 p-4 m-2 ">
+    <div class="p-2 m-2 bg gray-300 text-2xl font-semibold shadow-sm text-center">
+        Browse Our Product Range:
+    </div>
             <Carousel v-if="this.vatRates" :value="products" :numVisible="4" :numScroll="1" :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" :autoplayInterval="3000">
                 <template #item="slotProps">
                  
-                    <div class=" product-item">
+                    <div class="relative  product-item">
                         <div class=" h-96 border-solid bg-white border-2 border-gray-200 rounded m-2 text-center p-4">
                             <router-link :to="'/'  + slotProps.data.product_id" >
                             <div class="mb-3">
-                                <img :src="`http://localhost:4001/${slotProps.data.thumbnail.fileName}`" :alt="slotProps.data.name" class="w-1/4 h-1/4 mx-auto object-fit " />
+                                <img :src="`http://localhost:4001/${slotProps.data.thumbnail.fileName}`" :alt="slotProps.data.name" class="w-full w-full mx-auto object-fit " />
                             </div>
                            
                          </router-link>
-                         <div>
+                         <div  class="  ">
                                 <h4 class="mb-1">{{slotProps.data.description }}</h4>
                               
                                 <h6 v-if="this.vatRates" class="mt-0 mb-3"> €{{ 
                                     getPrice(slotProps.data.netprice , slotProps.data.vat_id)
                                 }}</h6>
                                 <!-- <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span> -->
-                                <div class=" mt-5">
-                                    <Button icon="pi pi-shopping-cart"  @click="addToCart(slotProps.data)" class="p-button h-6 w-4 p-button-rounded mr-2" />
-                        
-                                </div>
+                               
+                                      <router-link :to="'/'  + slotProps.data.product_id" class="mx-auto" >
+                                    <button icon="pi pi-shopping-cart" class="absolute bottom-4 right-16  lg:right:-14 bg-gray-400 hover:bg-gray-600 text-white pt-1 pb-1 rounded-sm w-36 " >View More </button>
+                                      </router-link>
+                              
                             </div>
                         </div>
                         </div>
@@ -46,7 +50,7 @@
 
 <script> 
 import Carousel from 'primevue/carousel';
-import Button from 'primevue/button'
+// import Button from 'primevue/button'
  import { getProducts } from "../../../../api/products/products-api.js";
 import { getVatRates } from '../../../../api/vat/vat-api.js'
 import Buffer from 'buffer/';
@@ -54,7 +58,7 @@ export default {
  
     components :{
             Carousel,
-            Button
+            // Button
     },
     data (){
         return {

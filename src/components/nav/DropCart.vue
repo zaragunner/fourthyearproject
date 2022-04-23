@@ -8,35 +8,39 @@
             </div>
           
              <!-- <CartItem/> -->
-             <div class="origin-top-right absolute right-0 mt-2 w-72 rounded-md shadow-lg py-1 pr-2 pl-2 z-10 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" v-if="cartOpen">
+             <div class="origin-top-right absolute right-0 mt-2 w-96 rounded-md shadow-lg py-1 pr-2 pl-2 z-10 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" v-if="cartOpen">
                <div>
                <div v-if="this.$store.state.cart.cart.length == 0 ">
                     There are no items in your cart yet
                </div>
                 <div v-for="product in this.$store.state.cart.cart" :key="product.product_id">
-                  <div class="bg-gray-100 mt-2 p-2 ">
-                     <img :src="`http://localhost:4001/${product.item.thumbnail.fileName}`"  class="inline w-12 h-16 mr-2 object-center object-cover group-hover:opacity-75" />
-                    <span class="text-md font-semibold"> {{product.item.name}} </span>
+                  <div class="bg-gray-100 mt-2 p-2 grid grid-cols-2 gap-1 ">
+                    <div class=" ">
+                     <img :src="`http://localhost:4001/${product.item.thumbnail.fileName}`"  class="inline mr-2 object-center object-cover group-hover:opacity-75" />
+                    </div>
+                    <div class="">
+                    <p class="  text-md font-semibold"> {{product.item.name}} </p>
                 
-                  <span class="ml-4">€ {{ 
-                                    getPrice(product.item.netprice , product.item.vat_id)
-                                }}  </span>
-                     <p v-if="this.options" class="ml-4"><span class="font-semibold"> Product Size : </span>{{ getSize(product.item.size)}} </p>
                   
+                     <p v-if="this.options" class=""><span class="font-semibold">  Size : </span>{{ getSize(product.item.size)}} </p>
+                     <p class="font-medium">€ {{ 
+                                    getPrice(product.item.netprice , product.item.vat_id)
+                                }}  </p>
+                    </div>
                 </div>
                 </div>
                </div>
                <div class="" v-if="this.$store.state.cart.cart.length>0">
-               <div class="inline-block font-semibold"> Total Price  </div>
-               <div class="inline-block ml-6"> €{{this.$store.state.cart.total}} </div>
+               <div class="ml-4 relative inline-block font-semibold"> Total Price :  </div>
+               <div class="inline-block ml-6 mb-14"> €{{this.$store.state.cart.total}} </div>
               
           
              
-                <button class="block m-2 p-1 bg-gray-800 rounded text-white" @click="clearCart">
+                <button class="absolute bottom-4 right-24 block m-2 p-1 bg-gray-800 rounded text-white" @click="clearCart">
                Clear Cart
              </button>
              <router-link :to="this.$store.state.account.user ? '/checkout' : '/login' ">
-             <button @click="cartOpen = false" class="block m-2 p-1 bg-gray-800 rounded text-white">
+             <button @click="cartOpen = false" class=" absolute bottom-4 right-0 block m-2 p-1 bg-gray-800 rounded text-white">
                Checkout
              </button>
              
