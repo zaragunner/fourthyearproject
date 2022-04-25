@@ -16,7 +16,7 @@
                 <div v-for="product in this.$store.state.cart.cart" :key="product.product_id">
                   <div class="bg-gray-100 mt-2 p-2 grid grid-cols-2 gap-1 ">
                     <div class=" ">
-                     <img :src="`http://localhost:4001/${product.item.thumbnail.fileName}`"  class="inline mr-2 object-center object-cover group-hover:opacity-75" />
+                     <img :src="`https://fyp-express-api.herokuapp.com/${product.item.thumbnail.fileName}`"  class="inline mr-2 object-center object-cover group-hover:opacity-75" />
                     </div>
                     <div class="">
                     <p class="  text-md font-semibold"> {{product.item.name}} </p>

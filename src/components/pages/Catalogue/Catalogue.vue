@@ -32,7 +32,7 @@
 						
 						<div class="product-grid-item-content  mx-auto">
               <router-link :to="`/${slotProps.data.product_id}`">
-							<img :src="`http://localhost:4001/${slotProps.data.thumbnail.fileName}`" class="h-36 w-36 mx-auto bg-red-500 object-center" :alt="slotProps.data.name"/>
+							<img :src="`https://fyp-express-api.herokuapp.com/${slotProps.data.thumbnail.fileName}`" class="h-36 w-36 mx-auto bg-red-500 object-center" :alt="slotProps.data.name"/>
 							
               <div class="product-name mx-auto text-center text-lg font-semibold">{{slotProps.data.name}}</div>
               </router-link>
@@ -116,7 +116,7 @@ export default {
         this.vatRates = result;
         console.log(this.vatRates)
     })
-     await getCategories().then(res => {
+     await getCategories(process.env.VUE_APP_SITEID).then(res => {
     this.categories = res;
    
     this.categories.forEach(cat => {

@@ -1,14 +1,18 @@
-export const getCategories = async() => {
-    return fetch('/api/categories', {
+export const getCategories = async({site_id}) => {
+   
+    return fetch('https://fyp-express-api.herokuapp.com/api/categories', {
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'get'
+        method: 'get',
+        body:JSON.stringify({
+            site_id : site_id
+        })
     }).then(res => res.json())
 };
 
 export const addCategory = async({site_id, name, description, category_id}) => {
-    return fetch('/api/categories?action=create',{
+    return fetch('https://fyp-express-api.herokuapp.com/api/categories?action=create',{
         headers: {
             'Content-Type': 'application/json'
         },
@@ -17,17 +21,20 @@ export const addCategory = async({site_id, name, description, category_id}) => {
     }).then(res => res.json())
 };
 
-export const deleteCategory = async(category_id) => {
-    return fetch(`/api/categories/${category_id}?action=delete`, {
+export const deleteCategory = async({category_id, site_id}) => {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/categories/${category_id}?action=delete`, {
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'delete'
+        method: 'delete',
+        body: JSON.stringify({
+            site_id : site_id
+        })
     }).then(res => res.json())
 };
 
 export const updateCategory = async({category_id, name, description}) => {
-    return fetch(`/api/categories/${category_id}`, {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/categories/${category_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },

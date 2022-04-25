@@ -65,7 +65,7 @@
         <Column selectionMode="single" headerStyle="width: 3rem"></Column>
            <Column field="image" header="" style="min-width: 8rem">
                 <template #body="{data}">
-                   <img class="w-24 h-24" :src="`http://localhost:4001/${data.thumbnail.fileName}`"/>
+                   <img class="w-24 h-24" :src="`https://fyp-express-api.herokuapp.com/${data.thumbnail.fileName}`"/>
                 </template>
              </Column>
         <Column field="name" header="Name" sortable style="min-width: 14rem">
@@ -157,7 +157,7 @@ export default {
         }
     },
     async created(){
-   await getCategories().then(res => {
+   await getCategories(process.env.VUE_APP_SITEID).then(res => {
     this.categories = res;
    
     this.categories.forEach(cat => {

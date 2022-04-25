@@ -1,6 +1,6 @@
 
 export const addSite = async({ site_id,name,contact_no,email,status,registration_date,expiry,contact_us,managers}) => {
-    return fetch('/api/sites?action=create',{
+    return fetch('https://fyp-express-api.herokuapp.com/api/sites?action=create',{
         headers: {
             'Content-Type': 'application/json'
         },
@@ -19,7 +19,7 @@ export const addSite = async({ site_id,name,contact_no,email,status,registration
 };
 
 export const getSite = async(site_id) => {
-    return fetch(`/api/sites/${site_id}`, {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/sites/${site_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },

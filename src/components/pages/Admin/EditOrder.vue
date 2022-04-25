@@ -9,7 +9,7 @@
             <div class="card bg-gray-50 rounded-sm shadow-sm m-2 " v-for="item in this.order[0].order">
               <div class="grid grid-cols-2 ">
                 <div class="items-center">
-           <img :src="`http://localhost:4001/${item.item.thumbnail.fileName}`"  class="inline object-center mx-auto group-hover:opacity-75" />
+           <img :src="`https://fyp-express-api.herokuapp.com/${item.item.thumbnail.fileName}`"  class="inline object-center mx-auto group-hover:opacity-75" />
         </div>
         <div class="w-full ml-2 mt-4 ">
               <p><span class="font-semibold"> Product Name:  </span>{{item.item.name}} </p>

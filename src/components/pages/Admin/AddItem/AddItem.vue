@@ -206,7 +206,7 @@ export default {
   },
   methods: {
 async getCategories(){
- await getCategories().then(result => {
+ await getCategories(process.env.VUE_APP_SITEID).then(result => {
      this.categories = result;  
     })
 },

@@ -2,7 +2,7 @@
 <Toast/>
     <div class="flex space-x-4">
   <div class="flex-1 w-2/3 aspect-w-1 aspect-h-1  bg-red-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
-            <img v-if="this.product" :src="`http://localhost:4001/${product.thumbnail.fileName}`" :alt="product.description" class="w-full h-full object-center object-cover group-hover:opacity-75" />
+            <img v-if="this.product" :src="`https://fyp-express-api.herokuapp.com/${product.thumbnail.fileName}`" :alt="product.description" class="w-full h-full object-center object-cover group-hover:opacity-75" />
           </div>
           <div class="flex-1 mt-8 w-1/4">
           <div>

@@ -1,5 +1,5 @@
 export const getSubCategories = async() => {
-    return fetch('/api/subcategories', {
+    return fetch('https://fyp-express-api.herokuapp.com/api/subcategories', {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -8,7 +8,7 @@ export const getSubCategories = async() => {
 };
 
 export const addSubCategory = async({site_id, name, description, sub_category_id}) => {
-    return fetch('/api/subcategories?action=create',{
+    return fetch('https://fyp-express-api.herokuapp.com/api/subcategories?action=create',{
         headers: {
             'Content-Type': 'application/json'
         },
@@ -18,7 +18,7 @@ export const addSubCategory = async({site_id, name, description, sub_category_id
 };
 
 export const deleteSubCategory = async(sub_category_id) => {
-    return fetch(`/api/subcategories/${sub_category_id}?action=delete`, {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/subcategories/${sub_category_id}?action=delete`, {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -28,7 +28,7 @@ export const deleteSubCategory = async(sub_category_id) => {
 
 
 export const updateSubCategory = async({sub_category_id, name, description}) => {
-    return fetch(`/api/subcategories/${sub_category_id}`, {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/subcategories/${sub_category_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },

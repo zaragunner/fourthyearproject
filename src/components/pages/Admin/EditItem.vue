@@ -2,7 +2,7 @@
 <Toast/>
 <div class="m-4 flex space-x-4">
     <div class="flex rounded-lg overflow-hidden">
-       <img v-if="this.product" :src="`http://localhost:4001/${this.product.thumbnail.fileName}`"   class="h-64 w-64 object-center object-cover group-hover:opacity-75" />
+       <img v-if="this.product" :src="`https://fyp-express-api.herokuapp.com/${this.product.thumbnail.fileName}`"   class="h-64 w-64 object-center object-cover group-hover:opacity-75" />
      
     </div>
 
@@ -195,7 +195,7 @@ export default {
   },
   methods: {
 async getCategories(){
- await getCategories().then(result => {
+ await getCategories(process.env.VUE_APP_SITEID).then(result => {
      this.categories = result;  
     })
 },

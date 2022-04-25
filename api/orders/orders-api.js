@@ -1,5 +1,5 @@
 export const getOrders = async() => {
-    return fetch('/api/orders', {
+    return fetch('https://fyp-express-api.herokuapp.com/api/orders', {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -8,7 +8,7 @@ export const getOrders = async() => {
 };
 
 export const getOrder = async(id)=> {
-    return fetch(`/api/orders/${id}`,{
+    return fetch(`https://fyp-express-api.herokuapp.com/api/orders/${id}`,{
         headers: {
             'Content-Type': 'application/json'
         },
@@ -17,7 +17,7 @@ export const getOrder = async(id)=> {
 };
 
 export const getMyOrders = async(UserID)=> {
-    return fetch(`/api/orders/user/${UserID}`,{
+    return fetch(`https://fyp-express-api.herokuapp.com/api/orders/user/${UserID}`,{
         headers: {
             'Content-Type': 'application/json'
         },
@@ -26,7 +26,7 @@ export const getMyOrders = async(UserID)=> {
 };
 
 export const updateOrder = async({order_id, name, address, phone, email, status, notes}) => {
-    return fetch(`/api/orders/${order_id}`, {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/orders/${order_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },

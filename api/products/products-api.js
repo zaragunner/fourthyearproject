@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export const getProducts = async() => {
-    return fetch('/api/products', {
+    return fetch('https://fyp-express-api.herokuapp.com/api/products', {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -10,7 +10,7 @@ export const getProducts = async() => {
 };
 
 export const getProduct = async(product_id) => {
-    return fetch(`/api/products/${product_id}`, {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/products/${product_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -41,18 +41,18 @@ export const addProduct = async({product_id, site_id, name, description, categor
         formData.append('options[]', options[i]);
       }
     
-    return fetch('/api/products?action=create',{
+    return fetch('https://fyp-express-api.herokuapp.com/api/products',{
        
         method: 'post',
         body: formData
      
                                   
     }).then(res =>
-         res.json())
+         res)
 };
 
 export const deleteProduct = async(product_id) => {
-    return fetch(`/api/products/${product_id}?action=delete`, {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/products/${product_id}?action=delete`, {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -78,7 +78,7 @@ export const updateProduct  = async({product_id, name, description, category_id,
      for (var i = 0; i < options.length; i++) {
         formData.append('options[]', options[i]);
       }
-      return fetch(`/api/products/${product_id}?action=update`,{
+      return fetch(`https://fyp-express-api.herokuapp.com/api/products/${product_id}?action=update`,{
        
         method: 'put',
         body: formData

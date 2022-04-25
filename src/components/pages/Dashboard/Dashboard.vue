@@ -15,7 +15,7 @@
                         <div class=" h-96 border-solid bg-white border-2 border-gray-200 rounded m-2 text-center p-4">
                             <router-link :to="'/'  + slotProps.data.product_id" >
                             <div class="mb-3">
-                                <img :src="`http://localhost:4001/${slotProps.data.thumbnail.fileName}`" :alt="slotProps.data.name" class="w-full w-full mx-auto object-fit " />
+                                <img :src="`https://fyp-express-api.herokuapp.com/${slotProps.data.thumbnail.fileName}`" :alt="slotProps.data.name" class="w-full w-full mx-auto object-fit " />
                             </div>
                            
                          </router-link>

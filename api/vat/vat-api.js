@@ -1,5 +1,5 @@
 export const getVatRates = async() => {
-    return fetch('/api/vat', {
+    return fetch('https://fyp-express-api.herokuapp.com/api/vat', {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -8,7 +8,7 @@ export const getVatRates = async() => {
 };
 
 export const addVatRate = async({site_id, name, rate, vat_id}) => {
-    return fetch('/api/vat?action=create',{
+    return fetch('https://fyp-express-api.herokuapp.com/api/vat?action=create',{
         headers: {
             'Content-Type': 'application/json'
         },
@@ -18,7 +18,7 @@ export const addVatRate = async({site_id, name, rate, vat_id}) => {
 };
 
 export const updateVatRate = async({vat_id, name, rate}) => {
-    return fetch(`/api/vat/${vat_id}`, {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/vat/${vat_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },

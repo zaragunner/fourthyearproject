@@ -1,5 +1,5 @@
 export const getOptions = async() => {
-    return fetch('/api/options', {
+    return fetch('https://fyp-express-api.herokuapp.com/api/options', {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -7,7 +7,7 @@ export const getOptions = async() => {
     }).then(res => res.json())
 };
 export const getOption = async(option_id) => {
-    return fetch(`/api/options/${option_id}`, {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/options/${option_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -16,7 +16,7 @@ export const getOption = async(option_id) => {
 };
 
 export const addOption = async({site_id, name, option_id}) => {
-    return fetch('/api/options?action=create',{
+    return fetch('https://fyp-express-api.herokuapp.com/api/options?action=create',{
         headers: {
             'Content-Type': 'application/json'
         },
@@ -27,7 +27,7 @@ export const addOption = async({site_id, name, option_id}) => {
 
 
 export const deleteOption = async(option_id) => {
-    return fetch(`/api/options/${option_id}?action=delete`, {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/options/${option_id}?action=delete`, {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -36,7 +36,7 @@ export const deleteOption = async(option_id) => {
 };
 
 export const updateOption = async({option_id, name}) => {
-    return fetch(`/api/options/${option_id}`, {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/options/${option_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },

@@ -20,7 +20,7 @@
             <div class=" w-full m-2 text-lg text-gray-600">
               <div class="inline-block">
                 <img
-                  :src="`http://localhost:4001/${product.item.thumbnail.fileName}`"
+                  :src="`https://fyp-express-api.herokuapp.com/${product.item.thumbnail.fileName}`"
                   class="
                     inline
                     w-28

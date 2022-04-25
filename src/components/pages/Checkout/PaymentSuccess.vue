@@ -8,7 +8,7 @@
         <div v-for="item in this.order.order" :key="item.id">
             <div class=" bg-white m-2 rounded-lg shadow-md">
                 <div class="inline-block">
-                <p><img class="h-34 w-28 mr-4" :src="`http://localhost:4001/${item.item.thumbnail.fileName}`"/></p>
+                <p><img class="h-34 w-28 mr-4" :src="`https://fyp-express-api.herokuapp.com/${item.item.thumbnail.fileName}`"/></p>
                 </div>
                 <div class="inline-block">
                 <p><span class="font-semibold"> Item  : </span> <span>{{item.item.name}} </span> </p>

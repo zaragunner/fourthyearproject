@@ -145,7 +145,8 @@ export default {
 },
 methods:{
     async deleteCategory(category_id){
-        await deleteCategory(category_id).then(res => {
+        const site_id = process.env.VUE_APP_SITEID
+        await deleteCategory({category_id, site_id}).then(res => {
             if(res){
                 console.log("success")
                 this.getCategories()
@@ -169,7 +170,7 @@ methods:{
     },
 
     async getCategories(){
-        await getCategories().then(result => {
+        await getCategories(process.env.VUE_APP_SITEID).then(result => {
       this.categories = result;
     })
     },
