@@ -1,5 +1,5 @@
-export const getSubCategories = async() => {
-    return fetch('https://fyp-express-api.herokuapp.com/api/subcategories', {
+export const getSubCategories = async(site_id) => {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/subcategories?site=${site_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },

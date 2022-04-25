@@ -1,5 +1,5 @@
-export const getVatRates = async() => {
-    return fetch('https://fyp-express-api.herokuapp.com/api/vat', {
+export const getVatRates = async(site_id) => {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/vat?site=${site_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },

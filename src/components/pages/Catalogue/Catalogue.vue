@@ -106,17 +106,17 @@ export default {
     }
     },
     async created(){
-
-    await  getProducts().then(result => {
+        const site = process.env.VUE_APP_SITEID
+    await  getProducts(site).then(result => {
       this.products = result;
       
     })
   
-    await getVatRates().then(result => {
+    await getVatRates(site).then(result => {
         this.vatRates = result;
         console.log(this.vatRates)
     })
-     await getCategories(process.env.VUE_APP_SITEID).then(res => {
+     await getCategories(site).then(res => {
     this.categories = res;
    
     this.categories.forEach(cat => {
@@ -167,7 +167,8 @@ export default {
                  })
              }
              else{
-           await getProducts().then(result =>{
+                   const site = process.env.VUE_APP_SITEID
+           await getProducts(site).then(result =>{
             const value = event.value.value;
             const sortValue = event.value;
             console.log("VALUE " , value)

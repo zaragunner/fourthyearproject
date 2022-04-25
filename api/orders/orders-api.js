@@ -1,5 +1,5 @@
-export const getOrders = async() => {
-    return fetch('https://fyp-express-api.herokuapp.com/api/orders', {
+export const getOrders = async(site_id) => {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/orders?site=${site_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },

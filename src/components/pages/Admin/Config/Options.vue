@@ -169,7 +169,8 @@ methods:{
     },
 
     async getOptions(){
-        await getOptions().then(result => {
+       const site = process.env.VUE_APP_SITEID;
+    await getOptions(site).then(result => {
       this.options = result;
     })
     },

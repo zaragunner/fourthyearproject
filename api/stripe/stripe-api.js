@@ -62,7 +62,8 @@ export const createPaymentMethod = async ({number, exp_month, exp_year, cvc}) =>
 };
 
 export const confirmCardPayment = async ({ clientSecret, cardElement }) => {
-    return fetch('https://fyp-express-api.herokuapp.com/api/stripe/confirm-card-payment', {
+    const site = process.env.VUE_APP.SITEID
+    return fetch(`https://fyp-express-api.herokuapp.com/api/stripe/confirm-card-payment?site=${site}`, {
         headers: {
             'Content-Type': 'application/json'
         },

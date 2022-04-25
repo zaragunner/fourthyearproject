@@ -178,7 +178,8 @@ export default {
   },
   methods: {
     async getSubCategories() {
-      await getSubCategories().then((result) => {
+     const site = process.env.VUE_APP_SITEID
+    await getSubCategories(site).then((result) => {
         this.subcategories = result;
       });
     },

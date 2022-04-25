@@ -121,11 +121,12 @@ getImage(data){
          }
  },
 async created(){
-       await getProducts().then(result => {
+      const site = process.env.VUE_APP_SITEID
+       await getProducts(site).then(result => {
       this.products = result;
       console.log("products" , this.products)
     })
-    await  getVatRates().then(result => {
+    await  getVatRates(site).then(result => {
         this.vatRates = result;
         console.log("vat rates" , this.vatRates)
     })

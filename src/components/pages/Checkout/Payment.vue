@@ -156,7 +156,8 @@ export default {
     ProgressSpinner
   },
     async created(){
-         await getOptions().then(res=> {
+       const site = process.env.VUE_APP_SITEID;
+    await getOptions(site).then(res=> {
       this.options = res
       console.log(this.options)
     })

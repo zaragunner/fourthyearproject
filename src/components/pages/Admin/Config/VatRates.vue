@@ -139,7 +139,8 @@ export default {
 methods:{ 
 
     async getVatRates(){
-         await getVatRates().then(result => {
+      const site = process.env.VUE_APP_SITEID
+    await getVatRates(site).then(result => {
       this.vatrates = result;
     })
     },

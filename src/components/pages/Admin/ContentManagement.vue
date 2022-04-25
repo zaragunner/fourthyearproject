@@ -157,7 +157,9 @@ export default {
         }
     },
     async created(){
-   await getCategories(process.env.VUE_APP_SITEID).then(res => {
+         const site = process.env.VUE_APP_SITEID;
+   await getCategories(site).then(res => {
+       console.log(res)
     this.categories = res;
    
     this.categories.forEach(cat => {
@@ -166,11 +168,12 @@ export default {
  
     })
     
-     getProducts().then(result => {
+     await getProducts(site).then(result => {
       this.products = result;
       
     })
-      await getVatRates().then(res => {
+
+    await getVatRates(site).then(res => {
     this.vatRates = res
  
     })
@@ -199,13 +202,15 @@ export default {
          
 
          async onSortChange(event){
+              const site = process.env.VUE_APP_SITEID;
              if(event.value.label == 'All'){
-                 await getProducts().then(result =>{
+                
+                 await getProducts(site).then(result =>{
                      this.products = result
                  })
              }
              else{
-           await getProducts().then(result =>{
+           await getProducts(site).then(result =>{
             const value = event.value.value;
             const sortValue = event.value;
             console.log("VALUE " , value)
@@ -225,11 +230,12 @@ export default {
             console.log(this.selectedProduct)
         },
        async deleteItems(){
+           const site = process.env.VUE_APP_SITEID
                 await deleteProduct(this.selectedProduct.product_id).then(result =>  {
                     if(result)
                     {
                     this.$toast.add({severity:'success', summary: 'Item deleted', life: 1500});
-                      getProducts().then(result => {
+                      getProducts(site).then(result => {
                         this.products = result;
                       })
                     

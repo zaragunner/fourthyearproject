@@ -1,5 +1,5 @@
-export const getOptions = async() => {
-    return fetch('https://fyp-express-api.herokuapp.com/api/options', {
+export const getOptions = async(site_id) => {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/options?site=${site_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },

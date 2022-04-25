@@ -62,8 +62,10 @@ export default {
        }
    },
   async  beforeCreate(){
+    const site = process.env.VUE_APP_SITEID
+
    try {
-      getProduct(this.$route.params.id).then(result => {
+      getProduct(this.$route.params.id,site).then(result => {
       this.product = result;
       this.product.options.forEach(option => {
         console.log("OPTION IN LOOP " , option)
@@ -82,7 +84,7 @@ export default {
 
   
    
-    getVatRates().then(res => {
+    await getVatRates(site).then(res => {
     this.vatRates = res
    console.log(this.vatRates)
     })  

@@ -71,11 +71,13 @@ import {getOption, getOptions} from '../../../api/options/options-api.js'
     catch{
       console.log("empty")
     }
-    await getOptions().then(res=> {
+    const site = process.env.VUE_APP_SITEID;
+    await getOptions(site).then(res=> {
       this.options = res
       console.log(this.options)
     })
-    await getVatRates().then(res => {
+  
+    await getVatRates(site).then(res => {
     this.vatRates = res
  
     })

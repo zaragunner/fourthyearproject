@@ -169,7 +169,7 @@ export default {
    },
    async beforeCreate(){
      try {
-      getProduct(this.$route.params.id).then(result => {
+      getProduct(this.$route.params.id, process.env.VUE_APP_SITEID).then(result => {
       
       this.product = result;
       this.name = this.product.name;
@@ -200,18 +200,21 @@ async getCategories(){
     })
 },
 async getSubCategories(){
-    await getSubCategories().then(res => {
+  const site = process.env.VUE_APP_SITEID
+    await getSubCategories(site).then(res => {
       this.subCategories = res;
     })
 },
 async getVatRates(){
-    await getVatRates().then(res => {
+   const site = process.env.VUE_APP_SITEID
+    await getVatRates(site).then(res => {
       this.vatRates = res
     })
 },
 
 async getOptions(){
-  await getOptions().then(res =>{
+  const site = process.env.VUE_APP_SITEID;
+    await getOptions(site).then(res =>{
     console.log("OPTIONS RES" , res)
     this.allOptions = res
   })

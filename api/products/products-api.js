@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export const getProducts = async() => {
-    return fetch('https://fyp-express-api.herokuapp.com/api/products', {
+export const getProducts = async(site_id) => {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/products?site=${site_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -9,8 +9,8 @@ export const getProducts = async() => {
     }).then(res => res.json())
 };
 
-export const getProduct = async(product_id) => {
-    return fetch(`https://fyp-express-api.herokuapp.com/api/products/${product_id}`, {
+export const getProduct = async(product_id, site_id) => {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/products/${product_id}?site=${site_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },
