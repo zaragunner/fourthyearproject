@@ -1,5 +1,5 @@
 <template>
-<div class="w-4/5 mx-auto">
+<div class="w-full mx-auto">
 <div class=" w-full p-2 ">
     <div class="">
         <p class="font-semibold text-lg "> Edit Configurations </p>
@@ -11,7 +11,7 @@
     <router-link to="/options"><button class="p-2 m-2 bg-gray-700 text-white rounded"  > Size Options </button></router-link>
 </div>
 <Toast/>
-    <div class="bg-gray-200 w-6/8 p-2 m-1 ">
+    <div class="bg-gray-200 w-11/12 mx-auto p-2 m-1 ">
       <DataTable 
       class="p-datatable-sm"
       :value="products" 
@@ -147,10 +147,7 @@ export default {
             sortKey: null,
             sortOrder: null,
             sortField: null,
-            sortOptions: [
-                {label: 'Price High to Low', value: '!price'},
-                {label: 'Price Low to High', value: 'price'},
-            ],
+            sortOptions: [{"label" : "All" , "value" : 0}],
               filters: {
                 'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
               },
@@ -161,7 +158,11 @@ export default {
     },
     async created(){
    await getCategories().then(res => {
-    this.categories = res
+    this.categories = res;
+   
+    this.categories.forEach(cat => {
+        this.sortOptions.push({"label" : cat.name , "value" : cat.category_id })
+    })
  
     })
     
@@ -194,21 +195,31 @@ export default {
              
             return cat[0].name
          },
+      
+         
 
-        onSortChange(event){
+         async onSortChange(event){
+             if(event.value.label == 'All'){
+                 await getProducts().then(result =>{
+                     this.products = result
+                 })
+             }
+             else{
+           await getProducts().then(result =>{
             const value = event.value.value;
             const sortValue = event.value;
-
-            if (value.indexOf('!') === 0) {
-                this.sortOrder = -1;
-                this.sortField = value.substring(1, value.length);
-                this.sortKey = sortValue;
-            }
-            else {
-                this.sortOrder = 1;
-                this.sortField = value;
-                this.sortKey = sortValue;
-            }
+            console.log("VALUE " , value)
+            console.log("SORT VALUE " , sortValue)
+            console.log(this.products)
+            let prods= []
+            result.forEach(prod =>{
+                if(prod.category_id == value){
+                    prods.push(prod)
+                }
+            })
+            this.products = prods;
+           })
+             }
         },
         onRowSelect(){
             console.log(this.selectedProduct)

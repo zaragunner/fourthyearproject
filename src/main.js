@@ -54,9 +54,13 @@ library.add(faUser, faShoppingCart)
       aws_user_pools_id: pool[0].aws_user_pools_id ,// (optional) -  Amazon Cognito User Pool ID
       aws_user_pools_web_client_id: pool[0].aws_user_pools_web_client_id
     })
+
+
+
+
     console.log("9")
 
-  }
+  }  
 setTimeout(() => {
     console.log("inside timer")
      

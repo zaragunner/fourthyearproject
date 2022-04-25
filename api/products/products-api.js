@@ -85,7 +85,7 @@ export const updateProduct  = async({product_id, name, description, category_id,
      
                                   
     }).then(res =>
-         res.json())
+         res)
 }
 
 

@@ -1,6 +1,6 @@
 <template>
 
-<div class="w-2/3 mx-auto" v-if="this.orders != null">
+<div class="w-3/4 mx-auto" v-if="this.orders != null">
       <DataTable 
       class="p-datatable-sm"
       :value="orders" 

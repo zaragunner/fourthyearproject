@@ -28,7 +28,7 @@
                                 <!-- <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span> -->
                                
                                       <router-link :to="'/'  + slotProps.data.product_id" class="mx-auto" >
-                                    <button icon="pi pi-shopping-cart" class="absolute bottom-4 right-16  lg:right:-14 bg-gray-400 hover:bg-gray-600 text-white pt-1 pb-1 rounded-sm w-36 " >View More </button>
+                                    <button icon="pi pi-shopping-cart" class="absolute bottom-4 right-11  lg:right:-14 bg-gray-400 hover:bg-gray-600 text-white pt-1 pb-1 rounded-sm w-36 " >View More </button>
                                       </router-link>
                               
                             </div>

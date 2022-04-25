@@ -35,7 +35,7 @@
         class="absolute top-0 right-0 bg-gray-800 rounded  text-white pr-2 pl-2 pt-1 pb-1"
         @click="openNewOption"
       >
-        Add
+        Add New Option
       </button>
          </div>
      

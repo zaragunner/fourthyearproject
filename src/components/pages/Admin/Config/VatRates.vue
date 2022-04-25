@@ -46,7 +46,7 @@
               "
               @click="openNewVatRate"
             >
-              Add Vat Rate
+              Add New Vat Rate
             </button>
           </div>
         </div> 

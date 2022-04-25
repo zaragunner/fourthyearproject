@@ -1,4 +1,5 @@
 <template>
+<Toast/>
 <div class="m-4 flex space-x-4">
     <div class="flex rounded-lg overflow-hidden">
        <img v-if="this.product" :src="`http://localhost:4001/${this.product.thumbnail.fileName}`"   class="h-64 w-64 object-center object-cover group-hover:opacity-75" />
@@ -16,10 +17,10 @@
           v-model="name"
         />
       </div>
-      <div class="inline-block bg-red-500 mt-2">
+      <div class="inline-block align-top mt-2">
         <span class="inline-block mr-4 mt-2 w-32"> Description </span>
       </div>
-      <div class="inline-block bg-blue-600 mt-2">
+      <div class="inline-block align-top mt-2">
         <TextArea
           v-model="description"
           :autoResize="true"
@@ -50,7 +51,7 @@
         optionLabel="name" 
         optionValue="sub_category_id"
          :filter="subCategories.length > 5 ? true : false"
-         :showClear="subCategories.length > 5 ? true : false"
+         
         />
        
       <i @click="openNewSubCategory" class="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer inline-block pi pi-plus-circle"></i>
@@ -130,13 +131,15 @@ import {getVatRates} from '../../../../api/vat/vat-api'
 import {getOptions} from "../../../../api/options/options-api.js";
 import InputText from 'primevue/inputtext';
 import TextArea from 'primevue/textarea'
+import Toast from 'primevue/toast'
 export default {
   components : {
     //   SelectButton,
       InputText,
       TextArea,
       Dropdown,
-      Listbox
+      Listbox,
+      Toast
     },
    data () {
        return{
@@ -227,9 +230,12 @@ async submit(e){
         },
         options: this.options
       }).then(res => {
-          if(res){
+          if(res.status == 200){
        this.$toast.add({severity:'success', summary: 'Item Updated', life: 1500});
           }
+           else{
+           this.$toast.add({severity:'error', summary: 'Update failed', life: 1500});
+         }
       });
 }
   }

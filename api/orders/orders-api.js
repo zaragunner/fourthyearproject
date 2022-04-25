@@ -25,6 +25,16 @@ export const getMyOrders = async(UserID)=> {
     }).then(res => res.json())
 };
 
+export const updateOrder = async({order_id, name, address, phone, email, status, notes}) => {
+    return fetch(`/api/orders/${order_id}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'put',
+        body: JSON.stringify({order_id : order_id, name : name, address: address, phone : phone, email : email, status: status, notes: notes})
+    }).then(res => res)
+};
+
 
 
 

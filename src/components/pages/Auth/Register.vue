@@ -1,5 +1,6 @@
 
 <template>
+<Toast/>
   <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <div class="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -30,7 +31,7 @@
           </div>
 
           <div>
-            <label  for="phone" class="sr-only">Contact Number</label>
+            <label  for="phone" >Contact Number</label>
             <input v-model="phone" id="phone" name="phone" type="text"  required="true" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Contact Number" />
           </div>
 
@@ -51,7 +52,7 @@
 
            <div>
             <label  for="address-line4" class="sr-only">Line 4</label>
-              <input v-model="addressLine4" id="address-line4" name="address-line4" type="text"  required="false" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Line 4 (optional)" />
+              <input v-model="addressLine4" id="address-line4" name="address-line4" type="text"   class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Line 4 (optional)" />
           </div> 
 
            <div>
@@ -73,7 +74,7 @@
         </div>
 
         <div>
-          <button @click="register()" type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button @click="register($event)" type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               
             </span>
@@ -95,6 +96,8 @@
 
 
 <script>
+import Toast from 'primevue/toast';
+
  export default {
  
     name: 'Register',
@@ -102,7 +105,7 @@
       return {
           firstName : '',
           lastName: '',
-          phone: '',
+          phone: '+353',
           email: '',
           addressLine1: '',
           addressLine2: '',
@@ -115,10 +118,15 @@
      
     },
     components: {
-      
+      Toast
     },
     methods: {
-      async register(){
+      async register(e){
+        e.preventDefault();
+      
+        if(this.password == this.confirmPassword){
+          var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+          if(this.password.match(decimal)) {
        await this.$store.dispatch('account/register', { 
          username : this.email,
           email: this.email,
@@ -129,6 +137,14 @@
           phone_number : this.phone,
           address: this.addressLine1 + " " + this.addressLine2 + " " +  this.addressLine3 + " " + this.addressLine4  + " " +  this.postcode })
        .then(this.$router.push('/verify'))
+      }
+      else {
+         this.$toast.add({severity:'error', summary: 'Password must contain 1 uppercase character, 1 lowercase character, 1 number and 1 special character', life: 3000});
+      }
+        }else{
+          this.$toast.add({severity:'error', summary: 'Passwords do not match', life: 1500});
+         
+        }
       }
     }
  }

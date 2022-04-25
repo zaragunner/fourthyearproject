@@ -1,22 +1,33 @@
 <template>
 <Toast/>
     <div class="w-2/3 mx-auto card">
-        <DataView   :globalFilterFields="['name']"  :value="products" layout="grid" :sortOrder="sortOrder" :sortField="sortField" :paginator="true" :rows="9" >
+        <DataView   
+        v-model:filters="filters" 
+        :globalFilterFields="['name']"   
+        :value="products" 
+        layout="grid" 
+        :sortOrder="sortOrder" 
+        :sortField="sortField" 
+        :paginator="true" 
+        :rows="9" >
 			<template #header>
                 <div class="grid grid-nogutter">
-                    <div class="col-6" style="text-align: left">
-                        <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By Price" @change="onSortChange($event)"/>
-                    </div>
-                      <span class="m-2 block p-input-icon-left">
+                     <span class="m-2 block p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText v-model="filters['global'].value"  placeholder="Keyword Search" />
                     </span>
+
+                    <div class="col-6" style="text-align: left">
+                        <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By Price" @change="onSortChange($event)"/>
+                        <Dropdown v-model="sortKey2" :options="sortOptions2" optionLabel="label" placeholder="Sort By Category" @change="onSortChangeCategory($event)"/>
+                    </div>
+                    
                     
                 </div>
 			</template>
 
 			<template #grid="slotProps">
-				<div class="col-12 md:col-4 mt-2 m-2 p-2  border-4 border-gray-100 ">
+				<div class="col-12 md:col-4 mt-2 m-1 p-1  border-4 border-gray-100 ">
 					<div class="product-grid-item   w-64 card">
 						
 						<div class="product-grid-item-content  mx-auto">
@@ -57,6 +68,7 @@ import Button from 'primevue/button'
  import {FilterMatchMode} from 'primevue/api';
 import {FilterService} from 'primevue/api';
 import { getVatRates } from '../../../../api/vat/vat-api.js'
+import {getCategories} from '../../../../api/categories/categories-api.js'
 import { onBeforeMount } from '@vue/runtime-core';
 export default {
     components: {
@@ -84,7 +96,11 @@ export default {
             ],  
       filters: {
                 'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
-              } ,
+              },
+        sortKey2: null,
+            sortField2: null,
+            sortOptions2: [{"label" : "All" , "value" : 0}],
+             
       vatRates: null
      
     }
@@ -99,6 +115,14 @@ export default {
     await getVatRates().then(result => {
         this.vatRates = result;
         console.log(this.vatRates)
+    })
+     await getCategories().then(res => {
+    this.categories = res;
+   
+    this.categories.forEach(cat => {
+        this.sortOptions2.push({"label" : cat.name , "value" : cat.category_id })
+    })
+ 
     })
     },
      methods: {
@@ -135,7 +159,30 @@ export default {
                 this.sortField = value;
                 this.sortKey = sortValue;
             }
-        }
+        },
+         async onSortChangeCategory(event){
+             if(event.value.label == 'All'){
+                 await getProducts().then(result =>{
+                     this.products = result
+                 })
+             }
+             else{
+           await getProducts().then(result =>{
+            const value = event.value.value;
+            const sortValue = event.value;
+            console.log("VALUE " , value)
+            console.log("SORT VALUE " , sortValue)
+            console.log(this.products)
+            let prods= []
+            result.forEach(prod =>{
+                if(prod.category_id == value){
+                    prods.push(prod)
+                }
+            })
+            this.products = prods;
+           })
+             }
+        },
      }
 
 }

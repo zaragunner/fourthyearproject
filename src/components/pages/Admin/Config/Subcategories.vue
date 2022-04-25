@@ -41,7 +41,7 @@
               "
               @click="openNewSubCategory"
             >
-              Add Sub-Category
+              Add New Sub-Category
             </button>
           </div>
         </div>

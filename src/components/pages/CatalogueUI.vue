@@ -17,18 +17,12 @@ export default {
         NavBar,
         // Footer
     },
-      async beforeCreate(){
+async beforeCreate(){
         await getSite(process.env.VUE_APP_SITEID).then(result => {
-            console.log("RESULT" , result)
-     this.$store.dispatch('site/setSite' , result)
-    })
-
-    await getTheme(process.env.VUE_APP_SITEID).then(result => {
-        this.$store.dispatch('site/setTheme' , result)    })
-    
-    
-    
-    
+        this.$store.dispatch('site/setSite' , result)
+         })
+         await getTheme(process.env.VUE_APP_SITEID).then(result => {
+        this.$store.dispatch('site/setTheme' , result)    })   
     }
     
 }
