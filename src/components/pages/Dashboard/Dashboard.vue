@@ -12,25 +12,25 @@
                 <template #item="slotProps">
                  
                     <div class="relative  product-item">
-                        <div class=" h-96 border-solid bg-white border-2 border-gray-200 rounded m-2 text-center p-4">
+                        <div class="  border-solid bg-white border-2 border-gray-200 rounded m-2 text-center p-4 product-item-content">
                             <router-link :to="'/'  + slotProps.data.product_id" >
                             <div class="mb-3">
-                                <img :src="`https://fyp-express-api.herokuapp.com/${slotProps.data.thumbnail.fileName}`" :alt="slotProps.data.name" class="w-full w-full mx-auto object-fit " />
+                                <img :src="`https://fyp-express-api.herokuapp.com/${slotProps.data.thumbnail.fileName}`" :alt="slotProps.data.name" class="mx-auto product-image"  />
                             </div>
                            
                          </router-link>
-                         <div  class="  ">
+                         <div  class=" mb-4 ">
                                 <h4 class="mb-1">{{slotProps.data.description }}</h4>
                               
                                 <h6 v-if="this.vatRates" class="mt-0 mb-3"> €{{ 
                                     getPrice(slotProps.data.netprice , slotProps.data.vat_id)
                                 }}</h6>
                                 <!-- <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span> -->
-                               
-                                      <router-link :to="'/'  + slotProps.data.product_id" class="mx-auto" >
-                                    <button icon="pi pi-shopping-cart" class="absolute bottom-4 right-11  lg:right:-14 bg-gray-400 hover:bg-gray-600 text-white pt-1 pb-1 rounded-sm w-36 " >View More </button>
+                               <div class="car-buttons">
+                                      <router-link :to="'/'  + slotProps.data.product_id" class=" mx-auto" >
+                                    <button icon="pi pi-shopping-cart" class="bg-gray-400 hover:bg-gray-600 text-white pt-1 pb-1 rounded-sm w-36 " >View More </button>
                                       </router-link>
-                              
+                              </div>
                             </div>
                         </div>
                         </div>
@@ -133,3 +133,19 @@ async created(){
  }
 }
 </script>
+<style lang="scss" scoped>
+.product-item {
+    .product-item-content {
+        border: 1px solid var(--surface-border);
+        border-radius: 3px;
+        margin: .3rem;
+        text-align: center;
+        padding: 2rem 0;
+    }
+
+    .product-image {
+        width: 50%;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+    }
+}
+</style>

@@ -13,8 +13,8 @@ export const createPaymentIntent = async ({payment_method, amount}) => {
     }).then(res => res.json())
 };
 
-export const confirmPayment = async ({payment_intent , payment_method, order , customer, order_id})=> {
-    return fetch('https://fyp-express-api.herokuapp.com/api/stripe/confirm-payment', {
+export const confirmPayment = async ({site_id, payment_intent , payment_method, order , customer, order_id})=> {
+    return fetch(`https://fyp-express-api.herokuapp.com/api/stripe/confirm-payment?site=${site_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -61,9 +61,9 @@ export const createPaymentMethod = async ({number, exp_month, exp_year, cvc}) =>
     }).then(res => res.json())
 };
 
-export const confirmCardPayment = async ({ clientSecret, cardElement }) => {
-    const site = process.env.VUE_APP.SITEID
-    return fetch(`https://fyp-express-api.herokuapp.com/api/stripe/confirm-card-payment?site=${site}`, {
+export const confirmCardPayment = async ({ clientSecret, cardElement,site_id }) => {
+   
+    return fetch(`https://fyp-express-api.herokuapp.com/api/stripe/confirm-card-payment?site=${site_id}`, {
         headers: {
             'Content-Type': 'application/json'
         },

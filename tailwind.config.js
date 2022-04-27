@@ -8,6 +8,9 @@ module.exports = {
            "18" : "4.5rem"
          },
       },
+     height :{
+        "100" : 	'36rem'
+     },
 
         outline: {
           gray: '1.5px solid #d1d5db',

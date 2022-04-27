@@ -162,7 +162,7 @@ export default {
         },
          async onSortChangeCategory(event){
              if(event.value.label == 'All'){
-                 await getProducts().then(result =>{
+                 await getProducts(process.env.VUE_APP_SITEID).then(result =>{
                      this.products = result
                  })
              }

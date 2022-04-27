@@ -132,7 +132,7 @@
           Pay now
         </button>
          <ProgressSpinner v-if="this.payment" style="width:50px;height:50px" strokeWidth="8" fill="#FFFFFF" animationDuration=".5s"/>
-        <span class="text-white"> 4242424242424242</span>
+        <span class=""> 4242424242424242</span>
       </div>
     </div>
   </div>
@@ -200,8 +200,7 @@ export default {
         });
       } else {
         this.payment = true
-          document.getElementById("submitBtn")
-                .disabled = "true";
+          document.getElementById("submitBtn").setAttribute("disabled","disabled")
         //create payment method and then pass to payment intent
         await createPaymentMethod({
           number: this.cardnumber,
@@ -216,6 +215,8 @@ export default {
           summary: result.error,
           life: 1500,
         });
+        this.payment = false
+          document.getElementById("submitBtn").removeAttribute("disabled")
           }
           else{
             console.log("Success")
@@ -238,6 +239,8 @@ export default {
           summary: "Payment Failed",
           life: 1500,
         });
+        this.payment = false
+          document.getElementById("submitBtn").removeAttribute("disabled")
           }
           else{
              this.$toast.add({
@@ -254,7 +257,9 @@ export default {
     },
 
     async confirmPay() {
+       const site = process.env.VUE_APP_SITEID;
       await confirmPayment({
+         site_id : site,
         payment_method: this.payment_method,
         payment_intent: this.payment_intent,
         order: this.$store.state.cart.cart,
@@ -268,6 +273,8 @@ export default {
           summary: "Payment failed",
           life: 1500,
         });
+        this.payment = false
+          document.getElementById("submitBtn").removeAttribute("disabled")
           }
           else{
               console.log("RESULT FROM CONFIRMATION" , result)

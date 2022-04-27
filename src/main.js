@@ -11,7 +11,8 @@ import 'primevue/resources/primevue.min.css'                //core css
 import 'primeicons/primeicons.css'                           //icons
 import 'primevue/resources/themes/tailwind-light/theme.css'  //tailwind theme
 import './index.css'
-import '/node_modules/primeflex/primeflex.css'
+// import '/node_modules/primeflex/primeflex.css'
+import 'primeflex/primeflex.css';
 // import { getUserPool } from '../api/aws/aws-api'
 import {getUserPool} from '../api/aws/aws-api'
 import Amplify from 'aws-amplify';
